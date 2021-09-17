@@ -1,9 +1,29 @@
-import './App.scss';
+import { Switch, Route } from 'react-router-dom';
 
-function App() {
+import './App.scss';
+import MainLayout from './components/Layout/MainLayout';
+
+import Home from './pages/Home';
+
+const App = () => {
   return (
     <div className="App">
-      <h1>Code here...</h1>
+      <MainLayout>
+        <Switch>
+          <Route path="/" exact>
+            <Home />
+          </Route>
+          <Route path="/login" exact>
+            <h1>Login Disini</h1>
+          </Route>
+          <Route path="/signup" exact>
+            <h1>Sign up disini</h1>
+          </Route>
+          <Route path="*">
+            <h1 className="text-center">404 Not Found</h1>
+          </Route>
+        </Switch>
+      </MainLayout>
     </div>
   );
 }

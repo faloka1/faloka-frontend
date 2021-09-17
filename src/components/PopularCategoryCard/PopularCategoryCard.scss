@@ -1,0 +1,26 @@
+@import '../../styles/variables';
+
+.popular-category-card {
+  position: relative;
+  height: 360px;
+  background-position: center;
+  background-size: cover;
+
+  p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: inline-block;
+    padding: .5rem 1.5rem;
+    font-size: 2rem;
+    font-weight: 600;
+    background-color: $white;
+  }
+
+  &:hover {
+    p {
+      text-decoration: underline;
+    }
+  }
+}

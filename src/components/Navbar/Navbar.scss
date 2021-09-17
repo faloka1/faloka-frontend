@@ -1,0 +1,75 @@
+@import '../../styles/variables';
+@import '../../styles/typography';
+
+.header {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-weight: 500;
+  border-bottom: 1px solid #eeeeee;
+
+  .brand {
+    font-family: $josefin;
+    font-size: 1.5rem;
+    margin-right: 2rem;
+  }
+
+  .category-filter {
+    flex: 1;  
+    flex-wrap: nowrap;
+    
+    a {
+      margin-right: 1rem;
+    }
+  }
+
+  .inspire-me {
+    color: $red !important;
+  }
+
+  &__menu {
+    a {
+      position: relative;
+    }
+  }
+}
+
+.search-input {
+  $searchIconWidth: 2.5rem;
+  position: relative;
+  width: 300px;
+  margin: 0 1.5rem;
+  
+  input {
+    padding-left: calc(#{$searchIconWidth} + 8px) !important;
+    border: 1px solid $black;
+  
+    &:focus {
+      box-shadow: none;
+      border: 1px solid $black;
+    }
+  
+    &::placeholder {
+      font-weight: 500;
+    }
+  }
+
+  .search-icon {
+    border-radius: 4px !important;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(0, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $black;
+    height: 100%;
+    width: $searchIconWidth;
+
+    .icon {   
+      --icon-size: 1rem;
+      color: $white !important;
+    }
+  }
+
+}

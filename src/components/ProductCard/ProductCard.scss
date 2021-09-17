@@ -1,0 +1,70 @@
+@import '../../styles/variables';
+@import '../../styles/typography';
+
+.product-card {
+  height: 400px;
+  font-size: 1rem;
+  font-family: $lato;
+
+  .thumbnail {
+    position: relative;
+    user-select: none;
+    overflow: hidden;
+
+
+    img {
+      height: 300px;
+      object-fit: cover;
+      object-position: center;
+      transition: transform .1s ease-in;
+    }
+
+    &:hover {
+      img {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  .icon {
+    height: 1.5rem;
+  }
+
+  .info {
+    flex: 1;
+    min-width: 0;
+
+    > a {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .price {
+    font-weight: 600;
+
+    &--cut {
+      text-decoration: line-through;
+    }
+
+    &--discount {
+      color: $red !important;
+    }
+  }
+
+  .name {
+    font-weight: 500;
+  }
+}
+
+.discount-tag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: $red;
+  color: $white;
+  padding: .1rem .6rem;
+  font-weight: 500;
+  z-index: 99;
+}
