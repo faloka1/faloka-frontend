@@ -9,16 +9,18 @@
 
   .brand {
     font-family: $josefin;
-    font-size: 1.5rem;
+    font-size: 2rem;
     margin-right: 2rem;
+    text-transform: uppercase;
+
+    &:hover {
+      text-decoration: none;
+    }
   }
 
   .category-filter {
-    flex: 1;  
-    flex-wrap: nowrap;
-    
     a {
-      margin-right: 1rem;
+      margin-right: 1.5rem;
     }
   }
 
