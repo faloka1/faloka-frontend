@@ -1,0 +1,11 @@
+@import '../../../styles/variables';
+
+.nav-dropdown {
+  background-color: $white;
+  display: none;
+  z-index: 99;
+  position: absolute;
+  top: calc(100% + 1px);
+  left: 0;
+  width: 400px;
+}

@@ -4,7 +4,7 @@ import {
   Container,
   Nav,
   NavLink,
-  FormControl,
+  FormControl
 } from 'react-bootstrap';
 import {
   NavLink as RouterNavLink,
@@ -16,6 +16,7 @@ import './Navbar.scss';
 import { ReactComponent as UserIcon } from '../SVG/user.svg';
 import { ReactComponent as BagIcon } from '../SVG/shopping-bag.svg';
 import { ReactComponent as SearchIcon } from '../SVG/search.svg';
+import NavDropdown from './NavDropdown/NavDropdown';
 import CounterBadge from './CounterBadge/CounterBadge';
 
 const Navbar = () => {
@@ -24,10 +25,22 @@ const Navbar = () => {
       <Container>
         <NavbarBrand as={Link} className="brand" to="/">FALOKA</NavbarBrand>
         <Nav as="nav" className="category-filter flex-grow-1">
-          <NavLink as={RouterNavLink} to="#">Cewek</NavLink>
-          <NavLink as={RouterNavLink} to="#">Cowok</NavLink>
-          <NavLink as={RouterNavLink} to="#">Atasan</NavLink>
-          <NavLink as={RouterNavLink} to="#">Bawahan</NavLink>
+          <div className="nav-item-group">
+            <NavLink as={RouterNavLink} to="#">Cewek</NavLink>
+            <NavDropdown />
+          </div>
+          <div className="nav-item-group">
+            <NavLink as={RouterNavLink} to="#">Cowok</NavLink>
+            <NavDropdown />
+          </div>
+          <div className="nav-item-group">
+            <NavLink as={RouterNavLink} to="#">Atasan</NavLink>
+            <NavDropdown />
+          </div>
+          <div className="nav-item-group">
+            <NavLink as={RouterNavLink} to="#">Bawahan</NavLink>
+            <NavDropdown />
+          </div>
         </Nav>
         <div className="search-input">
           <FormControl type="text" placeholder="Search" />
