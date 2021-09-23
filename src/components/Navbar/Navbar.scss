@@ -1,9 +1,11 @@
 @import '../../styles/variables';
 @import '../../styles/typography';
 
+.navbar {
+  padding: 0 !important;
+}
+
 .header {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
   font-weight: 500;
   border-bottom: 1px solid #eeeeee;
 
@@ -11,6 +13,7 @@
     font-family: $josefin;
     font-size: 2rem;
     margin-right: 2rem;
+    padding: 0;
     text-transform: uppercase;
 
     &:hover {
@@ -19,13 +22,22 @@
   }
 
   .category-filter {
-    a {
-      margin-right: 1.5rem;
-    }
-  }
+    .nav-link {
+      display: inline-block !important;
+      padding: 1.5rem 0 !important;
+      margin: 0 !important;
+      margin-right: 2rem !important;
+      width: 3rem;
 
-  .inspire-me {
-    color: $red !important;
+      &:hover {
+        font-weight: 600;
+      }
+    }
+
+    a:hover {
+      text-decoration: none;
+      color: #01B8BC !important;
+    }
   }
 
   &__menu {
@@ -74,4 +86,14 @@
     }
   }
 
+}
+
+.nav-item-group {
+  position: relative;
+
+  &:hover {
+    .nav-dropdown {
+      display: block;
+    }
+  }
 }
