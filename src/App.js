@@ -4,6 +4,7 @@ import './App.scss';
 import MainLayout from './components/Layout/MainLayout';
 
 import Home from './pages/Home';
+import ProductDetail from './pages/Product/Detail/Detail';
 import ProductList from './pages/Product/List/ProductList';
 
 const App = () => {
@@ -22,6 +23,9 @@ const App = () => {
           </Route>
           <Route path="/signup" exact>
             <h1>Sign up disini</h1>
+          </Route>
+          <Route path="/product/detail" exact>
+            <ProductDetail/>
           </Route>
           <Route path="*">
             <h1 className="text-center">404 Not Found</h1>
