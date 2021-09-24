@@ -5,6 +5,7 @@ import MainLayout from './components/Layout/MainLayout';
 
 import Home from './pages/Home';
 import ProductDetail from './pages/Product/Detail/Detail';
+import ProductList from './pages/Product/List/ProductList';
 
 const App = () => {
   return (
@@ -13,6 +14,9 @@ const App = () => {
         <Switch>
           <Route path="/" exact>
             <Home />
+          </Route>
+          <Route path="/products" exact>
+            <ProductList />
           </Route>
           <Route path="/login" exact>
             <h1>Login Disini</h1>
