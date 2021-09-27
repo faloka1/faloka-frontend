@@ -1,7 +1,34 @@
+@import '../../styles/variables';
+
 .banner-carousel {
+  margin-bottom: 7.5rem;
+
   img {
-    height: 612px;
+    height: 34.5rem;
     object-fit: cover;
     object-position: center;
+  }
+
+  .carousel-indicators{
+    bottom:-3.25rem;
+    
+    button {
+      width: .65rem;
+      height: .65rem;
+      border-radius: 100%;
+      margin: 0 0.75rem;
+      background-color: transparent;
+      border: 2px solid $black-muted;
+      border-radius: 100%;
+      background-clip: unset;
+    }
+
+    .active{
+      background-color: $black-muted!important;
+    }
+  }
+
+  .carousel-inner {
+    margin-bottom:3.25rem;
   }
 }

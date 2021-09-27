@@ -6,19 +6,19 @@ const BannerCarousel = ({ className }) => {
   let classes = `banner-carousel${className ? ' ' + className : ''}`;
 
   return (
-    <Carousel className={classes}>
+    <Carousel className={classes} controls={false} fade={true}>
       <CarouselItem>
         <img
           className="d-block w-100"
           src="/assets/images/banners/banner_1.png"
-          alt="banner"
+          alt="Flash Sale"
         />
       </CarouselItem>
       <CarouselItem>
         <img
           className="d-block w-100"
           src="/assets/images/banners/banner_2.png"
-          alt="banner"
+          alt="Sale"
         />
       </CarouselItem>
     </Carousel>

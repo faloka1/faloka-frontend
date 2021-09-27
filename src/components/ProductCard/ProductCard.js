@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Card } from 'react-bootstrap';
+import CurrencyFormat from 'react-currency-format';
 
 import './ProductCard.scss';
 
@@ -17,31 +19,22 @@ const ProductCard = ({ product }) => {
   const discountedPrice = (1 - discount) * price;
 
   return (
-    <div className="product-card border">
-      <Link to="#">
-        <div className="thumbnail">
+    <Card className="product-card">
+      <Link to="/product/detail">
+        <div className="product-image">
           {discount && <div className="discount-tag">{discountPercentage} off</div>}
-          <img className="w-100" src="/assets/images/products/product_1.png" alt="product_thumbnail" />
+          <Card.Img variant="top" src="/assets/images/products/product_1.png" />
         </div>
-      </Link>
-      <div className="d-flex flex-column justify-content-between p-2">
-        <div className="d-inline-flex w-100 justify-content-between align-items-center">
-          <div className="info d-flex flex-column mb-2">
-            <Link to="#" className="text-gray mb-0">
-              {`${location} - ${brandName}`}
-            </Link>
-            <Link to="#" className="name">
-              {name}
-            </Link>
+        <Card.Body className="product-detail">
+          <div className="product-brand text-truncate">{`${location} - ${brandName}`}</div>
+          <div className="product-name text-truncate">{name}</div>
+          <div className="product-prize d-inline-flex">
+            <CurrencyFormat value={price} displayType={'text'} prefix={'Rp'} thousandSeparator="." decimalSeparator="," renderText={value => <span className={` ${discount ? 'price--cut' : ''}`}>{value}</span>} />
+            {discount && <CurrencyFormat value={discountedPrice} displayType={'text'} prefix={'Rp'} thousandSeparator="." decimalSeparator="," renderText={value => <span className="price--discount mx-3">{value}</span>} />}
           </div>
-          <HeartIcon className="icon" />
-        </div>
-        <div className="price-section d-inline-flex">
-          <p className={`price ${discount ? 'price--cut' : ''}`}>Rp{price}</p>
-          {discount && <p className="price price--discount mx-3">Rp{discountedPrice}</p>}
-        </div>
-      </div>
-    </div>
+        </Card.Body>
+      </Link>
+    </Card>
   );
 };
 

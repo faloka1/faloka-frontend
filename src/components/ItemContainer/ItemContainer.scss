@@ -1,8 +1,10 @@
 @import '../../styles/variables';
 
-.item {
+.product-recommend {
+  margin: 3rem 0;
   h5 {
     font-family: $lato;
     font-weight: 500;
+    margin-bottom: 1.5rem !important;
   }
 }

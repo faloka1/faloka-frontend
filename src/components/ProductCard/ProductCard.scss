@@ -1,16 +1,23 @@
 @import '../../styles/variables';
 @import '../../styles/typography';
+@import '../../styles/faloka';
 
 .product-card {
-  height: 400px;
+  border-radius: 0;
   font-size: 1rem;
   font-family: $lato;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
-  .thumbnail {
+  a:hover{
+    text-decoration: none!important;
+  }
+  
+  .product-image {
     position: relative;
     user-select: none;
     overflow: hidden;
-
 
     img {
       height: 300px;
@@ -19,52 +26,45 @@
       transition: transform .1s ease-in;
     }
 
-    &:hover {
-      img {
-        transform: scale(1.05);
+    .discount-tag {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: $green-secondary-accent;
+      color: $white;
+      padding: .25rem 0.75rem;
+      font-size:0.75em;
+      font-weight: 600;
+      z-index: 99;
+    }
+  }
+
+  .product-detail {
+    .product-name{
+      color:$black-muted;
+      font-weight: 375;
+      margin-bottom:.75rem;
+    }
+
+    .product-prize{
+      font-weight: 700!important;
+      .price {
+        &--cut {
+          text-decoration: line-through;
+        }
+    
+        &--discount {
+          color: $green-accent !important;
+        }
       }
     }
-  }
+  }  
+}
 
-  .icon {
-    height: 1.5rem;
-  }
-
-  .info {
-    flex: 1;
-    min-width: 0;
-
-    > a {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-  }
-
-  .price {
-    font-weight: 600;
-
-    &--cut {
-      text-decoration: line-through;
-    }
-
-    &--discount {
-      color: $red !important;
-    }
-  }
-
-  .name {
-    font-weight: 500;
+.product-card :hover {
+  .product-image img {
+    transform: scale(1.05);
   }
 }
 
-.discount-tag {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: $red;
-  color: $white;
-  padding: .1rem .6rem;
-  font-weight: 500;
-  z-index: 99;
-}
+

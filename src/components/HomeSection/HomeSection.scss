@@ -1,8 +1,11 @@
 @import '../../styles/variables';
 
 .home-section {
+  margin: 5.5rem 0;
   h2 {
     font-family: $lato;
     font-weight: 600;
+    margin-bottom: 2rem;
+    text-align: center;
   }
 }

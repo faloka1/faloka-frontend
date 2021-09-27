@@ -19,7 +19,7 @@ const App = () => {
             <ProductList />
           </Route>
           <Route path="/login" exact>
-            <h1>Login Disini</h1>
+            <h1>Login disini</h1>
           </Route>
           <Route path="/signup" exact>
             <h1>Sign up disini</h1>

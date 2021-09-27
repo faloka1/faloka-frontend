@@ -2,12 +2,12 @@ import React from 'react';
 
 import './ItemContainer.scss';
 
-const ItemContainer = ({ title, className, children }) => {
+const ItemContainer = ({ title, children }) => {
   return (
-    <section className={`item ${className}`}>
-      <h5 className="mb-4">{title}</h5>
+    <div className={`product-recommend`}>
+      <h5>{title}</h5>
       {children}
-    </section>
+    </div>
   );
 };
 

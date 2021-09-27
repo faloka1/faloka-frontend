@@ -26,10 +26,6 @@ const NavDropdown = () => {
             key={index}
           >{subcategory.name}</Col>
         ))}
-        {/* <Col as={Link} to="#" lg={3} className="nav-dropdown__item my-2">Blouse</Col> */}
-        {/* <Col as={Link} to="#" lg={3} className="nav-dropdown__item my-2">Kaos</Col>
-        <Col as={Link} to="#" lg={3} className="nav-dropdown__item my-2">Kemeja</Col>
-        <Col as={Link} to="#" lg={3} className="nav-dropdown__item my-2">Jumpsuit</Col>
         <Col as={Link} to="#" lg={3} className="nav-dropdown__item my-2">Blouse</Col>
         <Col as={Link} to="#" lg={3} className="nav-dropdown__item my-2">Kaos</Col>
         <Col as={Link} to="#" lg={3} className="nav-dropdown__item my-2">Kemeja</Col>
@@ -37,7 +33,11 @@ const NavDropdown = () => {
         <Col as={Link} to="#" lg={3} className="nav-dropdown__item my-2">Blouse</Col>
         <Col as={Link} to="#" lg={3} className="nav-dropdown__item my-2">Kaos</Col>
         <Col as={Link} to="#" lg={3} className="nav-dropdown__item my-2">Kemeja</Col>
-        <Col as={Link} to="#" lg={3} className="nav-dropdown__item my-2">Jumpsuit</Col> */}
+        <Col as={Link} to="#" lg={3} className="nav-dropdown__item my-2">Jumpsuit</Col>
+        <Col as={Link} to="#" lg={3} className="nav-dropdown__item my-2">Blouse</Col>
+        <Col as={Link} to="#" lg={3} className="nav-dropdown__item my-2">Kaos</Col>
+        <Col as={Link} to="#" lg={3} className="nav-dropdown__item my-2">Kemeja</Col>
+        <Col as={Link} to="#" lg={3} className="nav-dropdown__item my-2">Jumpsuit</Col>
       </Row>
     </Container>
   );
