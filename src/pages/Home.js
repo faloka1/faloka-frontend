@@ -30,10 +30,10 @@ const Home = () => {
         </HomeSection>
         <HomeSection title="Style Guide">
           <Row md={1} lg={2} className="g-4">
-            <Col className="mb-4">
+            <Col lg={6} className="mb-4">
               <BannerSide backgroundImage="assets/images/side-banners/sidebanner_1.png" />
             </Col>
-            <Col className="mb-4">
+            <Col lg={6} className="mb-4">
               <Row md={1} lg={2} className="g-4">
                 <Col>
                   <ProductCard product={DummyData} />
