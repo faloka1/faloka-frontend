@@ -19,14 +19,14 @@ const ProductDetail = ({ className, product }) => {
 
   return (
     <Row className={`product-item`}>
-      <Col lg={3}>
+      <Col md={6} lg={4} xl={3}>
         <Link to="#">
           <div className="product-image">
             <img src="/assets/images/products/product_1.png" alt={name} />
           </div>
         </Link>
       </Col>
-      <Col lg={9} className="product-info">
+      <Col md={6} lg={8} xl={9} className="product-info">
         <a className="product-brand">{brandName}</a>
         <h4 className="product-name text-uppercase">{name}</h4>
         <div className="product-price">
@@ -43,7 +43,9 @@ const ProductDetail = ({ className, product }) => {
             < InputSpinner type="int" min={0} max={5} variant={'primary'} value={0} size="sm" />
           </div>
         </div>
-        <Button variant={'primary'} type={'button'} className={'mt-3 w-50 btn-flat'}>Beli Sekarang</Button>
+        <Col xl={6} className="product-buy">
+          <Button variant={'primary'} type={'button'} className={'mt-3 btn-flat w-100'}>Beli Sekarang</Button>
+        </Col>
       </Col>
     </Row>
   );

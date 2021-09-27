@@ -109,8 +109,8 @@
       }
     }
 
-    :not(.quantity-spinner button) > button{
-      height: 3rem;
+    .product-buy button{
+      padding: 0.65rem 0;
     }
   }
 }

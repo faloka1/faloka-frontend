@@ -16,7 +16,7 @@ const Home = () => {
       <BannerCarousel />
       <Container>
         <HomeSection title="Kategori Populer">
-          <Row sm={1} md={3} className="g-4">
+          <Row xs={1} md={3} className="g-4">
             <Col>
               <PopularCategoryCard categoryName="Kemeja" backgroundImage="assets/images/popular-categories/popular-category-1.png" />
             </Col>
