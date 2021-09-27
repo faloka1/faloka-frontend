@@ -86,17 +86,17 @@ const ProductList = () => {
   }, []);
 
   return (
-    <Container className="mt-4">
-      <Breadcrumb className="py-5">
+    <Container>
+      <Breadcrumb className="pt-5">
         <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Home</Breadcrumb.Item>
         <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/products" }}>Blouse</Breadcrumb.Item>
         <Breadcrumb.Item linkAs={Link} linkProps={{ to: "#" }} active>Jumpsuit Elegan</Breadcrumb.Item>
       </Breadcrumb>
       <h3 className="text-center">Atasan</h3>
       <p className="text-muted text-center">(1200 produk ditemukan)</p>
-      <Row id="">
+      <Row xs={1} lg={2} xl={4} className="g-4 mb-5">
         {products.map((product, index) => (
-          <Col key={index} className="mb-4" xl={3} lg={3} md={6} sm={6} xs={6}>
+          <Col key={index}>
             <ProductCard product={product} />
           </Col>
         ))}

@@ -1,50 +1,38 @@
 @import '../../styles/variables';
 @import '../../styles/typography';
+@import '../../styles/faloka';
 
 .navbar {
-  padding: 0 !important;
-}
-
-.header {
+  font-family: $lato;
   font-weight: 500;
+  background:$navbar-color;
   border-bottom: 1px solid #eeeeee;
+  padding: 1.25rem 0;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.04);
 
   .brand {
-    font-family: $josefin;
-    font-size: 2rem;
-    margin-right: 2rem;
-    padding: 0;
+    font-size: 1.9em;
+    margin-right: 3rem;
     text-transform: uppercase;
-
     &:hover {
-      text-decoration: none;
+      text-decoration: none!important;
     }
   }
 
   .category-filter {
     .nav-link {
       display: inline-block !important;
-      padding: 1.5rem 0 !important;
-      margin: 0 !important;
-      margin-right: 2rem !important;
-      width: 3rem;
-
+      padding: 1rem 1.5rem !important;
       &:hover {
         font-weight: 600;
       }
     }
 
     a:hover {
-      text-decoration: none;
+      text-decoration: none!important;
       color: #01B8BC !important;
     }
-  }
-
-  &__menu {
-    a {
-      position: relative;
-    }
-  }
+  } 
 }
 
 .search-input {
@@ -59,7 +47,7 @@
   
     &:focus {
       box-shadow: none;
-      border: 1px solid $black;
+      border: 1px solid $green-accent;
     }
   
     &::placeholder {
@@ -85,7 +73,6 @@
       color: $white !important;
     }
   }
-
 }
 
 .nav-item-group {

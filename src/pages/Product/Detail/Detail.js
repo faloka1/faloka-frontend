@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Col, Container, Row, Breadcrumb, Tabs, Tab} from 'react-bootstrap';
 import ItemContainer from '../../../components/ItemContainer/ItemContainer';
 import ScrollableContainer from '../../../components/ScrollableContainer/ScrollableContainer';
@@ -12,35 +11,34 @@ const Detail = () => {
   return (
     <>
       <Container>
-        <Breadcrumb className="mt-5 mb-3">
+        <Breadcrumb className="pt-5">
           <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
           <Breadcrumb.Item href="#">Blouse</Breadcrumb.Item>
           <Breadcrumb.Item href="#">Jumpsuit Elegan</Breadcrumb.Item>
           <Breadcrumb.Item active>Detail</Breadcrumb.Item>
         </Breadcrumb>
-
-        <ProductDetail className="mt-4 mb-3" product={DummyData} />
-
-        <Tabs defaultActiveKey="description" id="product-tab" className="mt-5 mb-3 product-tab">
-          <Tab eventKey="description" title="Deskripsi">
-            <ScrollableContainer product={DummyData} />
-          </Tab>
-          <Tab eventKey="size-detail" title="Detail Ukuran">
-          </Tab>
-        </Tabs>
-        
-        <ItemContainer title="Mungkin Kamu Suka" className="my-5">
-          <Row>
-            <Col lg={3} className="mb-4">
+        <ProductDetail product={DummyData} />
+        <div className="product-tab">
+          <Tabs defaultActiveKey="description" id="product-tab">
+            <Tab eventKey="description" title="Deskripsi">
+              <ScrollableContainer product={DummyData} />
+            </Tab>
+            <Tab eventKey="size-detail" title="Detail Ukuran">
+            </Tab>
+          </Tabs>
+        </div>
+        <ItemContainer title="Mungkin Kamu Suka">
+          <Row xs={1} lg={2} xl={4} className="g-4">
+            <Col>
               <ProductCard product={DummyData} />
             </Col>
-            <Col lg={3} className="mb-4">
+            <Col>
               <ProductCard product={DummyData} />
             </Col>
-            <Col lg={3} className="mb-4">
+            <Col>
               <ProductCard product={DummyData} />
             </Col>
-            <Col lg={3} className="mb-4">
+            <Col>
               <ProductCard product={DummyData} />
             </Col>
           </Row>

@@ -1,10 +1,7 @@
 import {
-  Navbar as BootstrapNavbar,
-  NavbarBrand,
   Container,
-  Nav,
-  NavLink,
-  FormControl
+  Navbar as BootstrapNavbar, Nav, NavLink, NavbarBrand,
+  Form, FormControl
 } from 'react-bootstrap';
 import {
   NavLink as RouterNavLink,
@@ -21,82 +18,53 @@ import CounterBadge from './CounterBadge/CounterBadge';
 
 const Navbar = () => {
   return (
-    <BootstrapNavbar as="header" className="header">
+    <BootstrapNavbar fixed="top">
       <Container>
         <NavbarBrand as={Link} className="brand" to="/">FALOKA</NavbarBrand>
-        <Nav as="nav" className="category-filter flex-grow-1">
-          <div className="nav-item-group">
-            <NavLink as={RouterNavLink} to="#">Cewek</NavLink>
-            <NavDropdown />
-          </div>
-          <div className="nav-item-group">
-            <NavLink as={RouterNavLink} to="#">Cowok</NavLink>
-            <NavDropdown />
-          </div>
-          <div className="nav-item-group">
-            <NavLink as={RouterNavLink} to="#">Atasan</NavLink>
-            <NavDropdown />
-          </div>
-          <div className="nav-item-group">
-            <NavLink as={RouterNavLink} to="#">Bawahan</NavLink>
-            <NavDropdown />
-          </div>
-        </Nav>
-        <div className="search-input">
+          <Nav as="nav" className="me-auto category-filter flex-grow-1">
+            <ul className="navbar-nav">
+              <li className="nav-item-group">
+                <NavLink as={RouterNavLink} to="#">Cewek</NavLink>
+                <NavDropdown />
+              </li>
+              <li className="nav-item-group">
+                <NavLink as={RouterNavLink} to="#">Cowok</NavLink>
+                <NavDropdown />
+              </li>
+              <li className="nav-item-group">
+                <NavLink as={RouterNavLink} to="#">Atasan</NavLink>
+                <NavDropdown />
+              </li>
+              <li className="nav-item-group">
+                <NavLink as={RouterNavLink} to="#">Bawahan</NavLink>
+                <NavDropdown />
+              </li>
+            </ul>
+          </Nav>
+        <Form className="d-flex search-input">
           <FormControl type="text" placeholder="Search" />
           <div className="search-icon">
             <SearchIcon className="icon" />
           </div>
-        </div>
-        <Nav className="header__menu">
-          <NavLink as={Link} to="#">
-            <UserIcon className="icon" />
-          </NavLink>
-          <NavLink as={Link} to="#">
-            <CounterBadge count={5} />
-            <BagIcon className="icon" />
-          </NavLink>
+        </Form>
+        <Nav className="header__menu ml-auto">
+          <ul className="navbar-nav">
+            <li className="nav-item dropdown">
+              <NavLink as={Link} to="#">
+                <UserIcon className="icon" />
+              </NavLink>
+            </li>
+            <li className="nav-item dropdown">
+              <NavLink as={Link} to="#">
+                <BagIcon className="icon" />
+                <CounterBadge count={5} />
+              </NavLink>
+            </li>
+          </ul>
         </Nav>
       </Container >
     </BootstrapNavbar >
   );
 };
-
-/* const Navbar = () => {
-  return (
-    <BootstrapNavbar as="header" className="header">
-      <Container>
-        <NavbarBrand as={Link} to="/" className="brand">Faloka</NavbarBrand>
-        <Nav as="nav" className="category-filter">
-          <NavLink as={RouterNavLink} to="#">Cowok</NavLink>
-          <NavLink as={RouterNavLink} to="#">Cewek</NavLink>
-          <NavLink as={RouterNavLink} to="#">Atasan</NavLink>
-          <NavLink as={RouterNavLink} to="#">Bawahan</NavLink>
-          <NavLink as={RouterNavLink} to="#">Sale</NavLink>
-          <NavLink className="inspire-me" as={RouterNavLink} to="#">Inspire me</NavLink>
-        </Nav>
-        <div className="search-input">
-          <FormControl type="text" placeholder="Search" />
-          <div className="search-icon">
-            <SearchIcon className="icon" />
-          </div>
-        </div>
-        <Nav className="header__menu">
-          <NavLink as={Link} to="#">
-            <UserIcon className="icon" />
-          </NavLink>
-          <NavLink as={Link} to="#">
-            <CounterBadge count={5} />
-            <HeartIcon />
-          </NavLink>
-          <NavLink as={Link} to="#">
-            <CounterBadge count={20} />
-            <BagIcon className="icon" />
-          </NavLink>
-        </Nav>
-      </Container >
-    </BootstrapNavbar >
-  );
-}; */
 
 export default Navbar;

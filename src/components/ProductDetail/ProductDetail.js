@@ -18,7 +18,7 @@ const ProductDetail = ({ className, product }) => {
   const discountedPrice = (1 - discount) * price;
 
   return (
-    <Row className={`product-item ${className}`}>
+    <Row className={`product-item`}>
       <Col lg={3}>
         <Link to="#">
           <div className="product-image">

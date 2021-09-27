@@ -1,10 +1,11 @@
 @import '../../styles/variables';
 @import '../../styles/typography';
+@import '../../styles/faloka';
 
 .product-item {
+  margin: 3rem 0;
   font-size: 1rem;
   font-family: $lato;
-  color:#333;
 
   .product-image {
     position: relative;
@@ -38,7 +39,7 @@
     .product-brand {
       font-size: 1.05em;
       font-weight: 400;
-      color:#006E87!important;
+      color:$green-secondary-accent!important;
       cursor: pointer;
     }
 
@@ -57,7 +58,7 @@
       }
   
       &--discount {
-        color: $red !important;
+        color: $green-accent !important;
       }
     }
 
@@ -87,7 +88,6 @@
         
         input {
           border: 1px solid #C1C1C1!important;
-
           margin-left:0.25rem !important;
           margin-right:0.25rem !important;
           text-align: center !important;
