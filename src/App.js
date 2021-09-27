@@ -4,6 +4,7 @@ import './App.scss';
 import MainLayout from './components/Layout/MainLayout';
 
 import Home from './pages/Home';
+import Login from './pages/Auth/Login/Login';
 import ProductDetail from './pages/Product/Detail/Detail';
 import ProductList from './pages/Product/List/ProductList';
 
@@ -19,10 +20,10 @@ const App = () => {
             <ProductList />
           </Route>
           <Route path="/login" exact>
-            <h1>Login disini</h1>
+            <Login />
           </Route>
-          <Route path="/signup" exact>
-            <h1>Sign up disini</h1>
+          <Route path="/register" exact>
+            <h1>Register disini</h1>
           </Route>
           <Route path="/product/detail" exact>
             <ProductDetail/>
