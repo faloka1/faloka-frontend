@@ -5,8 +5,6 @@ import CurrencyFormat from 'react-currency-format';
 
 import './ProductCard.scss';
 
-import { ReactComponent as HeartIcon } from '../SVG/heart.svg';
-
 const ProductCard = ({ product }) => {
   const {
     name,
