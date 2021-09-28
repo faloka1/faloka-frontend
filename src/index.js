@@ -17,7 +17,8 @@ ReactDOM.render(
         <Provider store={store}>
           <App />
         </Provider>
-        <ReactQueryDevtools initialIsOpen={false} />
+        {/* ReactQueryDevTools is for debugging  */}
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </QueryClientProvider>
     </Router>
   </React.StrictMode>,
