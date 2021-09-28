@@ -10,17 +10,20 @@ import MainLayout from './components/Layout/MainLayout';
 import ProductDetail from './pages/Product/Detail/Detail';
 import ProductList from './pages/Product/List/ProductList';
 import { runLogoutTimer } from './stores/auth/auth-actions';
+import Logout from './pages/Auth/Logout/Logout';
 
 const App = () => {
   const expirationTime = useSelector(state => state.auth.expirationTime);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(runLogoutTimer(expirationTime));
+    if (expirationTime) {
+      dispatch(runLogoutTimer(expirationTime));
+    }
   }, [dispatch, expirationTime]);
 
   return (
-    <div className="App">
+    <>
       <MainLayout>
         <Switch>
           <Route path="/" exact>
@@ -35,6 +38,9 @@ const App = () => {
           <Route path="/register" exact>
             <h1>Register disini</h1>
           </Route>
+          <Route path="/logout" exact>
+            <Logout />
+          </Route>
           <Route path="/product/detail" exact>
             <ProductDetail />
           </Route>
@@ -43,7 +49,7 @@ const App = () => {
           </Route>
         </Switch>
       </MainLayout>
-    </div>
+    </>
   );
 }
 

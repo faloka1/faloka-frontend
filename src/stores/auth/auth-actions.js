@@ -9,7 +9,7 @@ import {
 export const login = (token, expiresIn) => {
   return async (dispatch) => {
     const now = Math.floor(Date.now());
-    const later = now + (+expiresIn) * 1000;
+    const later = now + (+expiresIn) * 1000 * 60;
 
     dispatch(authActions.login());
     processLogin(token);
