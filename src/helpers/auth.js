@@ -6,6 +6,10 @@ export const logout = () => {
   localStorage.removeItem('token');
 };
 
+export const getToken = () => {
+  localStorage.getItem('token');
+};
+
 export const isLoggedIn = () => {
   const token = localStorage.getItem('token');
 

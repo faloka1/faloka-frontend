@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory, Prompt } from 'react-router-dom';
 import { Form, Button, Container, Spinner } from 'react-bootstrap';
@@ -18,6 +17,7 @@ const loginURL = "http://192.168.100.7:8000/api/auth/login";
 
 const Login = () => {
   const [formIsFilled, setFormIsFilled] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [isInitial, setIsInitial] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const dispatch = useDispatch();
@@ -25,7 +25,13 @@ const Login = () => {
 
   const loginMutation = useMutation(async loginData => {
     try {
-      const response = await axios.post(loginURL, loginData);
+      const response = await axios.post(
+        loginURL,
+        loginData,
+        {
+          timeout: 5000,
+        }
+      );
 
       return response.data;
     } catch (error) {
@@ -40,6 +46,7 @@ const Login = () => {
   }, {
     onSuccess: (result, variables, context) => {
       dispatch(login(result.access_token, result.expires_in));
+      setIsSuccess(true);
 
       history.replace('/');
     },
@@ -77,7 +84,7 @@ const Login = () => {
   return (
     <>
       <Prompt
-        when={formIsFilled}
+        when={formIsFilled && !isSuccess}
         message="You have unsaved changes, are you sure you want to leave?"
       />
       <Container className="d-flex align-items-center justify-content-center">

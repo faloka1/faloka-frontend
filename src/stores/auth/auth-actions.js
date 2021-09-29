@@ -1,7 +1,7 @@
 import { authActions } from './auth-slice';
 import {
   setExpirationTimestamp,
-  login as processLogin,
+  login as saveLoginToken,
   logout as processLogout,
   removeExpirationTimestamp
 } from '../../helpers/auth';
@@ -11,8 +11,8 @@ export const login = (token, expiresIn) => {
     const now = Math.floor(Date.now());
     const later = now + (+expiresIn) * 1000 * 60;
 
-    dispatch(authActions.login());
-    processLogin(token);
+    dispatch(authActions.login({ token, expirationTime: later }));
+    saveLoginToken(token);
 
     setExpirationTimestamp(later);
     dispatch(runLogoutTimer(later));
@@ -34,8 +34,6 @@ export const runLogoutTimer = (expirationTime) => {
   return (dispatch) => {
     const now = Math.floor(Date.now());
     const remainingTime = expirationTime - now;
-
-    console.log(remainingTime);
 
     if (remainingTime > 0) {
       setTimeout(() => {
