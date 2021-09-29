@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory, Prompt } from 'react-router-dom';
 import { Form, Button, Container, Spinner } from 'react-bootstrap';
@@ -12,12 +11,10 @@ import './Login.scss';
 import { ReactComponent as EmailIcon } from '../../../components/SVG/email.svg';
 import { ReactComponent as PasswordIcon } from '../../../components/SVG/key.svg';
 import { login } from '../../../stores/auth/auth-actions';
-import axios from 'axios';
-
-const loginURL = "http://192.168.100.7:8000/api/auth/login";
 
 const Login = () => {
   const [formIsFilled, setFormIsFilled] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [isInitial, setIsInitial] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const dispatch = useDispatch();
@@ -25,9 +22,10 @@ const Login = () => {
 
   const loginMutation = useMutation(async loginData => {
     try {
-      const response = await axios.post(loginURL, loginData);
+      await dispatch(login(loginData));
 
-      return response.data;
+      setIsSuccess(true);
+      history.replace('/');
     } catch (error) {
       if (error.response) {
         setErrorMessage('Login gagal. Pastikan email dan password benar!');
@@ -38,11 +36,6 @@ const Login = () => {
       }
     }
   }, {
-    onSuccess: (result, variables, context) => {
-      dispatch(login(result.access_token, result.expires_in));
-
-      history.replace('/');
-    },
     onError: (error, variables, context) => {
       console.log(error);
     },
@@ -58,8 +51,7 @@ const Login = () => {
       password: Yup.string().required('Password required.')
     }),
     onSubmit: values => {
-      const loginData = values;
-      loginMutation.mutate(loginData);
+      loginMutation.mutate(values);
     },
   });
 
@@ -73,11 +65,10 @@ const Login = () => {
     setIsInitial(false);
   }, []);
 
-
   return (
     <>
       <Prompt
-        when={formIsFilled}
+        when={formIsFilled && !isSuccess}
         message="You have unsaved changes, are you sure you want to leave?"
       />
       <Container className="d-flex align-items-center justify-content-center">

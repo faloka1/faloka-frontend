@@ -1,18 +1,33 @@
 import { authActions } from './auth-slice';
 import {
   setExpirationTimestamp,
-  login as processLogin,
+  login as saveLoginToken,
   logout as processLogout,
-  removeExpirationTimestamp
+  removeExpirationTimestamp,
+  getToken
 } from '../../helpers/auth';
+import axios from 'axios';
 
-export const login = (token, expiresIn) => {
+const logoutURL = "http://192.168.100.7:8000/api/auth/logout";
+const loginURL = "http://192.168.100.7:8000/api/auth/login";
+
+export const login = (loginData) => {
   return async (dispatch) => {
+    const response = await axios.post(
+      loginURL,
+      loginData,
+      {
+        timeout: 5000,
+      }
+    );
+
+    const { access_token: token, expires_in: expiresIn } = response.data;
+
     const now = Math.floor(Date.now());
     const later = now + (+expiresIn) * 1000 * 60;
 
-    dispatch(authActions.login());
-    processLogin(token);
+    dispatch(authActions.login({ token, expirationTime: later }));
+    saveLoginToken(token);
 
     setExpirationTimestamp(later);
     dispatch(runLogoutTimer(later));
@@ -20,7 +35,15 @@ export const login = (token, expiresIn) => {
 };
 
 export const logout = () => {
-  return (dispatch) => {
+  return async (dispatch, getState) => {
+    axios.post(
+      logoutURL,
+      {},
+      {
+        headers: { Authorization: `Bearer ${getToken()}` },
+      },
+    );
+
     dispatch(
       authActions.logout()
     );
@@ -35,14 +58,12 @@ export const runLogoutTimer = (expirationTime) => {
     const now = Math.floor(Date.now());
     const remainingTime = expirationTime - now;
 
-    console.log(remainingTime);
-
     if (remainingTime > 0) {
       setTimeout(() => {
-        dispatch(logout())
+        dispatch(authActions.logout())
       }, remainingTime);
     } else {
-      dispatch(logout());
+      dispatch(authActions.logout());
     }
   };
 };

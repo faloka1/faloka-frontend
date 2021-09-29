@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { Spinner } from 'react-bootstrap';
+
 import { logout } from '../../../stores/auth/auth-actions';
 
 const Logout = () => {
@@ -13,7 +14,11 @@ const Logout = () => {
   useEffect(() => {
     dispatch(logout());
 
-    history.replace(from);
+    if (from) {
+      history.replace(from);
+    } else {
+      history.replace('/');
+    }
   }, [dispatch, from, history]);
 
   return (
