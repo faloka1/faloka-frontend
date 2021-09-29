@@ -9,9 +9,20 @@ import {
 import axios from 'axios';
 
 const logoutURL = "http://192.168.100.7:8000/api/auth/logout";
+const loginURL = "http://192.168.100.7:8000/api/auth/login";
 
-export const login = (token, expiresIn) => {
+export const login = (loginData) => {
   return async (dispatch) => {
+    const response = await axios.post(
+      loginURL,
+      loginData,
+      {
+        timeout: 5000,
+      }
+    );
+
+    const { access_token: token, expires_in: expiresIn } = response.data;
+
     const now = Math.floor(Date.now());
     const later = now + (+expiresIn) * 1000 * 60;
 

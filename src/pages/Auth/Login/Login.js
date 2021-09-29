@@ -11,9 +11,6 @@ import './Login.scss';
 import { ReactComponent as EmailIcon } from '../../../components/SVG/email.svg';
 import { ReactComponent as PasswordIcon } from '../../../components/SVG/key.svg';
 import { login } from '../../../stores/auth/auth-actions';
-import axios from 'axios';
-
-const loginURL = "http://192.168.100.7:8000/api/auth/login";
 
 const Login = () => {
   const [formIsFilled, setFormIsFilled] = useState(false);
@@ -25,15 +22,10 @@ const Login = () => {
 
   const loginMutation = useMutation(async loginData => {
     try {
-      const response = await axios.post(
-        loginURL,
-        loginData,
-        {
-          timeout: 5000,
-        }
-      );
+      await dispatch(login(loginData));
 
-      return response.data;
+      setIsSuccess(true);
+      history.replace('/');
     } catch (error) {
       if (error.response) {
         setErrorMessage('Login gagal. Pastikan email dan password benar!');
@@ -44,12 +36,6 @@ const Login = () => {
       }
     }
   }, {
-    onSuccess: (result, variables, context) => {
-      dispatch(login(result.access_token, result.expires_in));
-      setIsSuccess(true);
-
-      history.replace('/');
-    },
     onError: (error, variables, context) => {
       console.log(error);
     },
@@ -65,8 +51,7 @@ const Login = () => {
       password: Yup.string().required('Password required.')
     }),
     onSubmit: values => {
-      const loginData = values;
-      loginMutation.mutate(loginData);
+      loginMutation.mutate(values);
     },
   });
 
@@ -79,7 +64,6 @@ const Login = () => {
   useEffect(() => {
     setIsInitial(false);
   }, []);
-
 
   return (
     <>
