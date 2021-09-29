@@ -7,7 +7,7 @@ export const logout = () => {
 };
 
 export const getToken = () => {
-  localStorage.getItem('token');
+  return localStorage.getItem('token');
 };
 
 export const isLoggedIn = () => {

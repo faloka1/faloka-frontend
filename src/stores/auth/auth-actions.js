@@ -3,8 +3,12 @@ import {
   setExpirationTimestamp,
   login as saveLoginToken,
   logout as processLogout,
-  removeExpirationTimestamp
+  removeExpirationTimestamp,
+  getToken
 } from '../../helpers/auth';
+import axios from 'axios';
+
+const logoutURL = "http://192.168.100.7:8000/api/auth/logout";
 
 export const login = (token, expiresIn) => {
   return async (dispatch) => {
@@ -20,7 +24,15 @@ export const login = (token, expiresIn) => {
 };
 
 export const logout = () => {
-  return (dispatch) => {
+  return async (dispatch, getState) => {
+    axios.post(
+      logoutURL,
+      {},
+      {
+        headers: { Authorization: `Bearer ${getToken()}` },
+      },
+    );
+
     dispatch(
       authActions.logout()
     );
@@ -37,10 +49,10 @@ export const runLogoutTimer = (expirationTime) => {
 
     if (remainingTime > 0) {
       setTimeout(() => {
-        dispatch(logout())
+        dispatch(authActions.logout())
       }, remainingTime);
     } else {
-      dispatch(logout());
+      dispatch(authActions.logout());
     }
   };
 };
