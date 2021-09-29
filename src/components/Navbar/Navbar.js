@@ -22,7 +22,7 @@ import { ReactComponent as SearchIcon } from '../SVG/search.svg';
 import NavDropdown from './NavDropdown/NavDropdown';
 import CounterBadge from './CounterBadge/CounterBadge';
 
-const Navbar = () => {
+const Navbar = ({ categories }) => {
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
   const { pathname, search } = useLocation();
   const currentUrl = encodeURIComponent(pathname + search);
@@ -33,22 +33,12 @@ const Navbar = () => {
         <NavbarBrand as={Link} className="brand" to="/">FALOKA</NavbarBrand>
         <Nav as="nav" className="me-auto category-filter flex-grow-1">
           <ul className="navbar-nav">
-            <li className="nav-item-group">
-              <NavLink as={RouterNavLink} to="#">Cewek</NavLink>
-              <NavDropdown />
-            </li>
-            <li className="nav-item-group">
-              <NavLink as={RouterNavLink} to="#">Cowok</NavLink>
-              <NavDropdown />
-            </li>
-            <li className="nav-item-group">
-              <NavLink as={RouterNavLink} to="#">Atasan</NavLink>
-              <NavDropdown />
-            </li>
-            <li className="nav-item-group">
-              <NavLink as={RouterNavLink} to="#">Bawahan</NavLink>
-              <NavDropdown />
-            </li>
+            {categories.map(category => (
+              <li key={category.slug} className="nav-item-group">
+                <NavLink as={RouterNavLink} to="">{category.name}</NavLink>
+                {category.sub_categories.length > 0 && <NavDropdown category={category.slug} subcategories={category.sub_categories} />}
+              </li>
+            ))}
           </ul>
         </Nav>
         <Form className="d-flex search-input">
