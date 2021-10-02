@@ -3,14 +3,17 @@
 .banner-carousel {
   margin-bottom: 7.5rem;
 
+  &__item {
+    height: 32.5rem;
+  }
+
   img {
-    height: 34.5rem;
     object-fit: cover;
     object-position: center;
   }
 
   .carousel-indicators{
-    bottom:-3.25rem;
+    bottom: -3.25rem;
     
     button {
       width: .65rem;
@@ -30,5 +33,11 @@
 
   .carousel-inner {
     margin-bottom:3.25rem;
+  }
+}
+
+@keyframes loading {  
+  to {
+    background-position: 100% 0, 0 0;
   }
 }

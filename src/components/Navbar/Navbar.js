@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import {
   Container,
   Navbar as BootstrapNavbar,
@@ -8,7 +9,6 @@ import {
   FormControl
 } from 'react-bootstrap';
 import {
-  NavLink as RouterNavLink,
   Link,
   useLocation
 } from 'react-router-dom';
@@ -21,11 +21,16 @@ import { ReactComponent as BagIcon } from '../SVG/shopping-bag.svg';
 import { ReactComponent as SearchIcon } from '../SVG/search.svg';
 import NavDropdown from './NavDropdown/NavDropdown';
 import CounterBadge from './CounterBadge/CounterBadge';
+import { HomeContext } from '../../context/HomeContext/HomeContext';
 
-const Navbar = () => {
+import DUMMY_CATEGORIES from '../../data/dummy-categories';
+
+const Navbar = ({ categories }) => {
+  const { category: currentCategory, setCategory } = useContext(HomeContext);
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
   const { pathname, search } = useLocation();
   const currentUrl = encodeURIComponent(pathname + search);
+  categories = !!categories ? categories : DUMMY_CATEGORIES;
 
   return (
     <BootstrapNavbar fixed="top">
@@ -33,22 +38,12 @@ const Navbar = () => {
         <NavbarBrand as={Link} className="brand" to="/">FALOKA</NavbarBrand>
         <Nav as="nav" className="me-auto category-filter flex-grow-1">
           <ul className="navbar-nav">
-            <li className="nav-item-group">
-              <NavLink as={RouterNavLink} to="#">Cewek</NavLink>
-              <NavDropdown />
-            </li>
-            <li className="nav-item-group">
-              <NavLink as={RouterNavLink} to="#">Cowok</NavLink>
-              <NavDropdown />
-            </li>
-            <li className="nav-item-group">
-              <NavLink as={RouterNavLink} to="#">Atasan</NavLink>
-              <NavDropdown />
-            </li>
-            <li className="nav-item-group">
-              <NavLink as={RouterNavLink} to="#">Bawahan</NavLink>
-              <NavDropdown />
-            </li>
+            {categories.map(category => (
+              <li key={category.slug} className="nav-item-group">
+                <NavLink onClick={() => setCategory(category.slug)} className={`${category.slug === currentCategory ? 'active' : ''}`}>{category.name}</NavLink>
+                {category.sub_categories.length > 0 && <NavDropdown category={category.slug} subcategories={category.sub_categories} />}
+              </li>
+            ))}
           </ul>
         </Nav>
         <Form className="d-flex search-input">

@@ -6,14 +6,14 @@ import './PopularCategoryCard.scss';
 
 const PopularCategoryCard = ({ categoryName, backgroundImage }) => {
   return (
-    <Card className="popular-category-card">
-      <Link to="/products">
+    <Link to="/products">
+      <Card className="popular-category-card">
         <Card.Img src={backgroundImage} alt="Card image" />
         <Card.ImgOverlay>
           <Card.Text>{categoryName}</Card.Text>
         </Card.ImgOverlay>
-      </Link>
-    </Card>
+      </Card>
+    </Link>
   );
 };
 

@@ -1,33 +1,23 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 
 import BannerCarousel from '../components/BannerCarousel/BannerCarousel'
 import BannerSide from '../components/BannerSide/BannerSide'
 import HomeSection from '../components/HomeSection/HomeSection';
-import PopularCategoryCard from '../components/PopularCategoryCard/PopularCategoryCard';
 import ProductCard from '../components/ProductCard/ProductCard';
 
-import DummyData from '../components/DummyData/DummyData';
+import { HomeContext } from '../context/HomeContext/HomeContext';
+import PopularCategory from '../components/PopularCategory/PopularCategory';
 
 const Home = () => {
+  const { category, homeData } = useContext(HomeContext);
+  const filteredCategories = homeData.find(ctgr => ctgr.slug === category);
+
   return (
     <>
-      <BannerCarousel />
+      <BannerCarousel carousels={filteredCategories.carousels} />
       <Container>
-        <HomeSection title="Kategori Populer">
-          <Row xs={1} md={3} className="g-4">
-            <Col>
-              <PopularCategoryCard categoryName="Kemeja" backgroundImage="assets/images/popular-categories/popular-category-1.png" />
-            </Col>
-            <Col>
-              <PopularCategoryCard categoryName="Blouse" backgroundImage="assets/images/popular-categories/popular-category-2.png" />
-            </Col>
-            <Col>
-              <PopularCategoryCard categoryName="Sweater" backgroundImage="assets/images/popular-categories/popular-category-3.png" />
-            </Col>
-          </Row>
-        </HomeSection>
+        <PopularCategory category={category} />
         <HomeSection title="Style Guide">
           <Row md={1} lg={2} className="g-4">
             <Col lg={6} className="mb-4">
@@ -35,18 +25,11 @@ const Home = () => {
             </Col>
             <Col lg={6} className="mb-4">
               <Row md={1} lg={2} className="g-4">
-                <Col>
-                  <ProductCard product={DummyData} />
-                </Col>
-                <Col>
-                  <ProductCard product={DummyData} />
-                </Col>
-                <Col>
-                  <ProductCard product={DummyData} />
-                </Col>
-                <Col>
-                  <ProductCard product={DummyData} />
-                </Col>
+                {filteredCategories.products.map(product => (
+                  <Col key={product.slug}>
+                    <ProductCard product={product} />
+                  </Col>
+                ))}
               </Row>
             </Col>
           </Row>
