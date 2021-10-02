@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 
 import HomeSection from '../HomeSection/HomeSection';
 import PopularCategoryCard from './PopularCategoryCard/PopularCategoryCard';
-import axios from 'axios';
+import getPopularCategory from '../../helpers/api/get-popular-category';
 
 const PopularCategory = ({ category }) => {
   const popularSubCategoriesQuery = useQuery(
@@ -13,7 +13,7 @@ const PopularCategory = ({ category }) => {
       const [, { category }] = queryKey;
 
       try {
-        const response = await axios.get(`http://192.168.100.7:8000/api/home/populer/${category}`);
+        const response = await getPopularCategory(category);
 
         return response.data.sub_categories;
       } catch (error) {

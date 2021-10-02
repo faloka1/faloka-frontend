@@ -4,7 +4,7 @@ import { Card, Button } from 'react-bootstrap';
 
 import './BannerSide.scss';
 
-const BannerSide = ({backgroundImage }) => {
+const BannerSide = ({ backgroundImage }) => {
   return (
     <Card variant="top" className="sidebanner-card">
       <Link to="#">

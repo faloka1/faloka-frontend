@@ -3,16 +3,14 @@ import { useQuery } from "react-query";
 
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
-import axios from "axios";
 import { HomeContext } from "../../context/HomeContext/HomeContext";
-
-const homeURL = 'http://192.168.100.7:8000/api/home';
+import getHomeData from "../../helpers/api/get-home-data";
 
 const MainLayout = ({ children }) => {
   const { setCategory, setHomeData } = useContext(HomeContext);
   const categoriesQuery = useQuery('home', async () => {
     try {
-      const response = await axios.get(homeURL);
+      const response = await getHomeData();
       const categories = response.data;
 
       setCategory(categories[0].slug);
