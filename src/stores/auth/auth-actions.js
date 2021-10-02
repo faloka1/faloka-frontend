@@ -4,22 +4,13 @@ import {
   login as saveLoginToken,
   logout as processLogout,
   removeExpirationTimestamp,
-  getToken
 } from '../../helpers/auth';
-import axios from 'axios';
-
-const logoutURL = "http://192.168.100.7:8000/api/auth/logout";
-const loginURL = "http://192.168.100.7:8000/api/auth/login";
+import postLoginData from '../../helpers/api/post-login-data';
+import postLogoutData from '../../helpers/api/post-logout-data';
 
 export const login = (loginData) => {
   return async (dispatch) => {
-    const response = await axios.post(
-      loginURL,
-      loginData,
-      {
-        timeout: 5000,
-      }
-    );
+    const response = await postLoginData(loginData);
 
     const { access_token: token, expires_in: expiresIn } = response.data;
 
@@ -35,14 +26,8 @@ export const login = (loginData) => {
 };
 
 export const logout = () => {
-  return async (dispatch, getState) => {
-    axios.post(
-      logoutURL,
-      {},
-      {
-        headers: { Authorization: `Bearer ${getToken()}` },
-      },
-    );
+  return async (dispatch) => {
+    postLogoutData();
 
     dispatch(
       authActions.logout()
