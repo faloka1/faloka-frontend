@@ -13,7 +13,7 @@ const PopularCategory = ({ category }) => {
       const [, { category }] = queryKey;
 
       try {
-        const response = await axios.get(`http://192.168.100.7:8000/api/categories/${category}/populer`);
+        const response = await axios.get(`http://192.168.100.7:8000/api/home/populer/${category}`);
 
         return response.data.sub_categories;
       } catch (error) {

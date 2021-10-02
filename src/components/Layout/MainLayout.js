@@ -6,18 +6,17 @@ import Footer from "../Footer/Footer";
 import axios from "axios";
 import { HomeContext } from "../../context/HomeContext/HomeContext";
 
-const categoriesURL = 'http://192.168.100.7:8000/api/categories';
+const homeURL = 'http://192.168.100.7:8000/api/home';
 
 const MainLayout = ({ children }) => {
-  const { setCategory } = useContext(HomeContext);
-  const categoriesQuery = useQuery('categories', async () => {
+  const { setCategory, setHomeData } = useContext(HomeContext);
+  const categoriesQuery = useQuery('home', async () => {
     try {
-      const response = await axios.get(categoriesURL);
+      const response = await axios.get(homeURL);
       const categories = response.data;
 
-      console.log(categories);
-
       setCategory(categories[0].slug);
+      setHomeData(categories);
 
       return categories;
     } catch (error) {
