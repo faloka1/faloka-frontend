@@ -8,6 +8,7 @@ import MainLayout from './components/Layout/MainLayout';
 import { runLogoutTimer } from './stores/auth/auth-actions';
 import { routes } from './routes/routes';
 import RouteComponent from './routes/RouteComponent';
+import { HomeContextProvider } from './context/HomeContext/HomeContext';
 
 const App = () => {
   const expirationTime = useSelector(state => state.auth.expirationTime);
@@ -21,14 +22,16 @@ const App = () => {
 
   return (
     <>
-      <MainLayout>
-        <Switch>
-          {routes.map(route => {
-            console.log('test');
-            return <RouteComponent path={route.path} key={route.name} page={route.pageComponent} middleware={route.middleware} exact={route.exact} />
-          })}
-        </Switch>
-      </MainLayout>
+      <HomeContextProvider>
+        <MainLayout>
+          <Switch>
+            {routes.map(route => {
+              console.log('test');
+              return <RouteComponent path={route.path} key={route.name} page={route.pageComponent} middleware={route.middleware} exact={route.exact} />
+            })}
+          </Switch>
+        </MainLayout>
+      </HomeContextProvider>
     </>
   );
 }

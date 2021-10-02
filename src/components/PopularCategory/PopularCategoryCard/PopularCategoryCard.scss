@@ -1,9 +1,9 @@
-@import '../../styles/variables';
+@import '../../../styles/variables';
 
 .popular-category-card {
   height: auto;
   border-radius: 0;
-  border: 0;
+  border: none;
   white-space: nowrap;
   user-select: none;
   overflow: hidden;
@@ -32,10 +32,10 @@
     font-weight: 600;
     background-color: $white;
   }
-}
 
-.popular-category-card:hover {
-  img {
-    transform: scale(1.05);
+  &:hover {
+    img {
+      transform: scale(1.05);
+    }
   }
 }
