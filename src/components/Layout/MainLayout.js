@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { useQuery } from "react-query";
+import { useLocation } from "react-router";
 
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
@@ -7,7 +8,8 @@ import { HomeContext } from "../../context/HomeContext/HomeContext";
 import getHomeData from "../../helpers/api/get-home-data";
 
 const MainLayout = ({ children }) => {
-  const { setCategory, setHomeData } = useContext(HomeContext);
+  const { setCategory, setHomeData, setOnHome } = useContext(HomeContext);
+  const { pathname } = useLocation();
   const categoriesQuery = useQuery('home', async () => {
     try {
       const response = await getHomeData();
@@ -21,6 +23,12 @@ const MainLayout = ({ children }) => {
       console.log(error);
     }
   });
+
+  if (pathname == '/') {
+    setOnHome(true);
+  } else {
+    setOnHome(false);
+  }
 
   return (!categoriesQuery.isLoading &&
     <>
