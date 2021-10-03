@@ -26,7 +26,7 @@ import { HomeContext } from '../../context/HomeContext/HomeContext';
 import DUMMY_CATEGORIES from '../../data/dummy-categories';
 
 const Navbar = ({ categories }) => {
-  const { category: currentCategory, setCategory } = useContext(HomeContext);
+  const { category: currentCategory, setCategory, onHome } = useContext(HomeContext);
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
   const { pathname, search } = useLocation();
   const currentUrl = encodeURIComponent(pathname + search);
@@ -40,7 +40,13 @@ const Navbar = ({ categories }) => {
           <ul className="navbar-nav">
             {categories.map(category => (
               <li key={category.slug} className="nav-item-group">
-                <NavLink onClick={() => setCategory(category.slug)} className={`${category.slug === currentCategory ? 'active' : ''}`}>{category.name}</NavLink>
+                <Link
+                  to="/"
+                  onClick={() => setCategory(category.slug)}
+                  className={`${category.slug === currentCategory && onHome ? 'active' : ''}`}
+                >
+                  {category.name}
+                </Link>
                 {category.sub_categories.length > 0 && <NavDropdown category={category.slug} subcategories={category.sub_categories} />}
               </li>
             ))}
