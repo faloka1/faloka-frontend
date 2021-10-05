@@ -1,10 +1,10 @@
 import axios from "axios";
-import { BASE_URL } from "../../config/api";
+import { BASE_API_URL } from "../../config/api";
 import { getToken } from "../auth";
 
 const postLogoutData = async () => {
   const response = await axios.post(
-    BASE_URL + "/auth/logout",
+    BASE_API_URL + "/auth/logout",
     {},
     {
       headers: { Authorization: `Bearer ${getToken()}` },

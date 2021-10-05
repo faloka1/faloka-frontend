@@ -43,7 +43,7 @@ export const routes = [
   },
   {
     name: 'Product Detail',
-    path: '/product/detail',
+    path: '/products/:productSlug',
     pageComponent: ProductDetail,
     exact: true,
   },

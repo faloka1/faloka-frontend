@@ -1,27 +1,49 @@
 import React from 'react';
-import { Col, Container, Row, Breadcrumb, Tabs, Tab} from 'react-bootstrap';
+import { Col, Container, Row, Breadcrumb, Tabs, Tab } from 'react-bootstrap';
+
+import './Detail.scss';
+
 import ItemContainer from '../../../components/ItemContainer/ItemContainer';
 import ScrollableContainer from '../../../components/ScrollableContainer/ScrollableContainer';
 import ProductCard from '../../../components/ProductCard/ProductCard';
 import ProductDetail from '../../../components/ProductDetail/ProductDetail';
 import DummyData from '../../../components/DummyData/DummyData';
-import './Detail.scss';
+import { useParams } from 'react-router';
+import { useQuery } from 'react-query';
+import getProductDetail from '../../../helpers/api/get-product-detail';
+import { Link } from 'react-router-dom';
 
 const Detail = () => {
-  return (
+  const { productSlug } = useParams();
+  const { data: product, isLoading, isError } = useQuery(
+    ['popular-sub-categories', { productSlug }],
+    async ({ queryKey }) => {
+      const [, { productSlug }] = queryKey;
+
+      try {
+        const response = await getProductDetail(productSlug);
+
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  );
+
+
+  return (!isLoading && !isError &&
     <>
       <Container>
         <Breadcrumb className="pt-5">
-          <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
-          <Breadcrumb.Item href="#">Blouse</Breadcrumb.Item>
-          <Breadcrumb.Item href="#">Jumpsuit Elegan</Breadcrumb.Item>
-          <Breadcrumb.Item active>Detail</Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Home</Breadcrumb.Item>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/products", search: `${product.sub_categories.name}` }}>{product.sub_categories.name}</Breadcrumb.Item>
+          <Breadcrumb.Item href="#" active>{product.name}</Breadcrumb.Item>
         </Breadcrumb>
-        <ProductDetail product={DummyData} />
+        <ProductDetail product={product} />
         <div className="product-tab">
           <Tabs defaultActiveKey="description" id="product-tab">
             <Tab eventKey="description" title="Deskripsi">
-              <ScrollableContainer product={DummyData} />
+              <ScrollableContainer product={product} />
             </Tab>
             <Tab eventKey="size-detail" title="Detail Ukuran">
             </Tab>
