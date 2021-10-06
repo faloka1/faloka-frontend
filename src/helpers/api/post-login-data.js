@@ -1,9 +1,9 @@
 import axios from "axios";
-import { BASE_URL } from "../../config/api";
+import { BASE_API_URL } from "../../config/api";
 
 const postLoginData = async (loginData) => {
   const response = await axios.post(
-    BASE_URL + "/auth/login",
+    BASE_API_URL + "/auth/login",
     loginData,
     {
       timeout: 5000,

@@ -1,8 +1,8 @@
 import axios from "axios";
-import { BASE_URL } from "../../config/api";
+import { BASE_API_URL } from "../../config/api";
 
 const getPopularCategory = async (category) => {
-  const response = await axios.get(BASE_URL + `/home/populer/${category}`);
+  const response = await axios.get(BASE_API_URL + `/home/populer/${category}`);
 
   return response;
 };
