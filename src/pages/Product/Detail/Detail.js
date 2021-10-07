@@ -1,5 +1,14 @@
 import React from 'react';
-import { Col, Container, Row, Breadcrumb, Tabs, Tab } from 'react-bootstrap';
+import {
+  Col,
+  Container,
+  Row,
+  Breadcrumb,
+  Tabs,
+  Tab,
+  Spinner
+} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import './Detail.scss';
 
@@ -7,16 +16,16 @@ import ItemContainer from '../../../components/ItemContainer/ItemContainer';
 import ScrollableContainer from '../../../components/ScrollableContainer/ScrollableContainer';
 import ProductCard from '../../../components/ProductCard/ProductCard';
 import ProductDetail from '../../../components/ProductDetail/ProductDetail';
-import DummyData from '../../../components/DummyData/DummyData';
 import { useParams } from 'react-router';
 import { useQuery } from 'react-query';
 import getProductDetail from '../../../helpers/api/get-product-detail';
-import { Link } from 'react-router-dom';
+import getRelatedProducts from '../../../helpers/api/get-related-products';
+import ProductNotFound from '../../Error/ProductNotFound';
 
 const Detail = () => {
   const { productSlug } = useParams();
-  const { data: product, isLoading, isError } = useQuery(
-    ['popular-sub-categories', { productSlug }],
+  const { data: product, ...productDetailQuery } = useQuery(
+    ['product-detail', { productSlug }],
     async ({ queryKey }) => {
       const [, { productSlug }] = queryKey;
 
@@ -29,9 +38,32 @@ const Detail = () => {
       }
     }
   );
+  const { data: relatedProducts, ...relatedProductQuery } = useQuery(
+    ['related-products', { productSlug }],
+    async ({ queryKey }) => {
+      const [, { productSlug }] = queryKey;
+
+      try {
+        const response = await getRelatedProducts(productSlug);
+
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    {
+      enabled: productDetailQuery.isSuccess
+    }
+  );
+
+  if (productDetailQuery.isSuccess && Object.keys(product).length === 0) {
+    return (
+      <ProductNotFound />
+    );
+  }
 
 
-  return (!isLoading && !isError &&
+  return (!productDetailQuery.isLoading && !productDetailQuery.isError &&
     <>
       <Container>
         <Breadcrumb className="pt-5">
@@ -50,20 +82,20 @@ const Detail = () => {
           </Tabs>
         </div>
         <ItemContainer title="Mungkin Kamu Suka">
-          <Row xs={1} lg={2} xl={4} className="g-4">
-            <Col>
-              <ProductCard product={DummyData} />
-            </Col>
-            <Col>
-              <ProductCard product={DummyData} />
-            </Col>
-            <Col>
-              <ProductCard product={DummyData} />
-            </Col>
-            <Col>
-              <ProductCard product={DummyData} />
-            </Col>
-          </Row>
+          {relatedProductQuery.isLoading &&
+            <div className="d-flex justify-content-center my-3">
+              <Spinner />
+            </div>
+          }
+          {relatedProductQuery.isSuccess &&
+            <Row md={2} lg={4} xl={4} className="g-4">
+              {relatedProducts.map(rp => (
+                <Col key={rp.slug}>
+                  <ProductCard product={rp} />
+                </Col>
+              ))}
+            </Row>
+          }
         </ItemContainer>
       </Container>
     </>
