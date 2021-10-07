@@ -19,11 +19,12 @@
     user-select: none;
     overflow: hidden;
 
-    img {
+    img, .placeholder {
       height: 300px;
       object-fit: cover;
       object-position: center;
       transition: transform .1s ease-in;
+      border-radius: 0;
     }
 
     .discount-tag {
