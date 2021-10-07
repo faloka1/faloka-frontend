@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Col,
   Container,
@@ -23,6 +23,7 @@ import getRelatedProducts from '../../../helpers/api/get-related-products';
 import ProductNotFound from '../../Error/ProductNotFound';
 
 const Detail = () => {
+  const [foundProduct, setFoundProduct] = useState(true);
   const { productSlug } = useParams();
   const { data: product, ...productDetailQuery } = useQuery(
     ['product-detail', { productSlug }],
@@ -35,6 +36,9 @@ const Detail = () => {
         return response.data;
       } catch (error) {
         console.log(error);
+        if (error.response.status === 404) {
+          setFoundProduct(false);
+        }
       }
     }
   );
@@ -56,7 +60,7 @@ const Detail = () => {
     }
   );
 
-  if (productDetailQuery.isSuccess && Object.keys(product).length === 0) {
+  if (!foundProduct) {
     return (
       <ProductNotFound />
     );
