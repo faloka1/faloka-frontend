@@ -1,0 +1,22 @@
+@import '../../styles/variables';
+
+.checkout-progress {
+  user-select: none;
+  font-weight: 300;
+
+  p.active {
+    font-weight: 600;
+    color: $accent-2;
+  }
+
+  &__path {
+    background-color: $gray;
+    width: 13rem;
+    height: 3px;
+    margin: 0 1rem;
+
+    &.active {
+      background-color: $accent-2;
+    }
+  }
+}

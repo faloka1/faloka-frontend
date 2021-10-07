@@ -1,0 +1,26 @@
+@import '../../styles/variables';
+
+.shipment-address {
+  background: $blue-light;
+
+  .address-detail {
+    margin-left: 1rem;
+
+    &__label {
+      color: $gray;
+    }
+  }
+
+  .actions {
+    > * {
+      font-weight: 600;
+      margin-bottom: 0;
+      color: $accent-2;
+      cursor: pointer;
+
+      &:last-child {
+        margin-left: 1rem;
+      }
+    }
+  }
+}

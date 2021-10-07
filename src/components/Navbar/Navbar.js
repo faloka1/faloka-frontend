@@ -13,6 +13,10 @@ import {
   useLocation
 } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import {
+  Switch,
+  Route
+} from 'react-router-dom'
 
 import './Navbar.scss';
 
@@ -22,6 +26,7 @@ import { ReactComponent as SearchIcon } from '../SVG/search.svg';
 import NavDropdown from './NavDropdown/NavDropdown';
 import CounterBadge from './CounterBadge/CounterBadge';
 import { HomeContext } from '../../context/HomeContext/HomeContext';
+import CheckoutProgressBar from '../CheckoutProgressBar/CheckoutProgressBar';
 
 import DUMMY_CATEGORIES from '../../data/dummy-categories';
 
@@ -34,54 +39,61 @@ const Navbar = ({ categories }) => {
 
   return (
     <BootstrapNavbar fixed="top">
-      <Container>
+      <Container className="position-relative">
         <NavbarBrand as={Link} className="brand" to="/">FALOKA</NavbarBrand>
-        <Nav as="nav" className="me-auto category-filter flex-grow-1">
-          <ul className="navbar-nav">
-            {categories.map(category => (
-              <li key={category.slug} className="nav-item-group">
-                <Link
-                  to="/"
-                  onClick={() => setCategory(category.slug)}
-                  className={`${category.slug === currentCategory && onHome ? 'active' : ''}`}
-                >
-                  {category.name}
-                </Link>
-                {category.sub_categories.length > 0 && <NavDropdown category={category.slug} subcategories={category.sub_categories} />}
-              </li>
-            ))}
-          </ul>
-        </Nav>
-        <Form className="d-flex search-input">
-          <FormControl type="text" placeholder="Search" />
-          <div className="search-icon">
-            <SearchIcon className="icon" />
-          </div>
-        </Form>
-        <Nav className="header__menu ml-auto">
-          {isLoggedIn &&
-            <ul className="navbar-nav">
-              <li className="nav-item dropdown">
-                <NavLink as={Link} to="#">
-                  <UserIcon className="icon" />
-                </NavLink>
-              </li>
-              <li className="nav-item dropdown">
-                <NavLink as={Link} to="#">
-                  <BagIcon className="icon" />
-                  <CounterBadge count={5} />
-                </NavLink>
-              </li>
-              <li className="nav-item dropdown">
-                <NavLink as={Link} to={`/logout?from=${currentUrl}`}>
-                  Logout
-                </NavLink>
-              </li>
-            </ul>
-          }
-          {!isLoggedIn && <NavLink as={Link} to="/login">Login</NavLink>}
-        </Nav>
-      </Container >
+        <Switch>
+          <Route path="/checkout">
+            <CheckoutProgressBar className="d-none d-lg-block" />
+          </Route>
+          <Route path="*">
+            <Nav as="nav" className="me-auto category-filter flex-grow-1">
+              <ul className="navbar-nav">
+                {categories.map(category => (
+                  <li key={category.slug} className="nav-item-group">
+                    <Link
+                      to="/"
+                      onClick={() => setCategory(category.slug)}
+                      className={`${category.slug === currentCategory && onHome ? 'active' : ''}`}
+                    >
+                      {category.name}
+                    </Link>
+                    {category.sub_categories.length > 0 && <NavDropdown category={category.slug} subcategories={category.sub_categories} />}
+                  </li>
+                ))}
+              </ul>
+            </Nav>
+            <Form className="d-flex search-input">
+              <FormControl type="text" placeholder="Search" />
+              <div className="search-icon">
+                <SearchIcon className="icon" />
+              </div>
+            </Form>
+            <Nav className="header__menu ml-auto">
+              {isLoggedIn &&
+                <ul className="navbar-nav">
+                  <li className="nav-item dropdown">
+                    <NavLink as={Link} to="#">
+                      <UserIcon className="icon" />
+                    </NavLink>
+                  </li>
+                  <li className="nav-item dropdown">
+                    <NavLink as={Link} to="#">
+                      <BagIcon className="icon" />
+                      <CounterBadge count={5} />
+                    </NavLink>
+                  </li>
+                  <li className="nav-item dropdown">
+                    <NavLink as={Link} to={`/logout?from=${currentUrl}`}>
+                      Logout
+                    </NavLink>
+                  </li>
+                </ul>
+              }
+              {!isLoggedIn && <NavLink as={Link} to="/login">Login</NavLink>}
+            </Nav>
+          </Route>
+        </Switch>
+      </Container>
     </BootstrapNavbar >
   );
 };

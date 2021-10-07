@@ -35,6 +35,11 @@ a {
   color: $gray;
 }
 
+.btn-black {
+  background: $black;
+  color: $white;
+}
+
 .icon {
   --icon-size: 1.5rem;
   height: var(--icon-size);
