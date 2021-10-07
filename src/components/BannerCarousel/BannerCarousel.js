@@ -7,10 +7,10 @@ const BannerCarousel = ({ className, carousels }) => {
   return (
     <Carousel className={classes} controls={false} fade={true}>
       {carousels.map(carousel => (
-        <CarouselItem key={carousel.image} className="banner-carousel__item">
+        <CarouselItem key={carousel.image_url} className="banner-carousel__item">
           <img
             className={`d-block h-100 w-100`}
-            src={`http://192.168.100.7:8000${carousel.image}`}
+            src={`http://13.59.13.137${carousel.image_url}`}
             alt="Carousel_image"
           />
         </CarouselItem>

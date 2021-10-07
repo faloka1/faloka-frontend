@@ -26,7 +26,6 @@ const App = () => {
         <MainLayout>
           <Switch>
             {routes.map(route => {
-              console.log('test');
               return <RouteComponent path={route.path} key={route.name} page={route.pageComponent} middleware={route.middleware} exact={route.exact} />
             })}
           </Switch>

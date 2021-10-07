@@ -25,15 +25,13 @@ const PopularCategory = ({ category }) => {
     }
   );
 
-  const content = popularSubCategoriesQuery.isLoading
-    ? (
+  const content = popularSubCategoriesQuery.isLoading ? (
       <div className="d-flex justify-content-center">
         <Spinner animation="border" role="status" className="mx-auto">
           <span className="visually-hidden">Loading...</span>
         </Spinner>
       </div>
-    )
-    : (
+    ) : (
       <Row xs={1} md={3} className="g-4">
         {popularSubCategoriesQuery.data.map(sub_category => (
           <Col key={sub_category.slug}>
