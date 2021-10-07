@@ -20,7 +20,7 @@ const ProductCard = ({ product }) => {
 
   return (
     <Card className="product-card">
-      <Link to="/product/detail">
+      <Link to={`/products/${slug}`}>
         <div className="product-image">
           {discount > 0 && <div className="discount-tag">{discountPercentage} off</div>}
           <Card.Img variant="top" src="/assets/images/products/product_1.png" />

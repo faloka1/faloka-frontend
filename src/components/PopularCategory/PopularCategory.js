@@ -7,7 +7,7 @@ import PopularCategoryCard from './PopularCategoryCard/PopularCategoryCard';
 import getPopularCategory from '../../helpers/api/get-popular-category';
 
 const PopularCategory = ({ category }) => {
-  const popularSubCategoriesQuery = useQuery(
+  const { data, isLoading, isSuccess } = useQuery(
     ['popular-sub-categories', { category }],
     async ({ queryKey }) => {
       const [, { category }] = queryKey;
@@ -25,27 +25,30 @@ const PopularCategory = ({ category }) => {
     }
   );
 
-  const content = popularSubCategoriesQuery.isLoading ? (
+  const content = isLoading
+    ? (
       <div className="d-flex justify-content-center">
         <Spinner animation="border" role="status" className="mx-auto">
           <span className="visually-hidden">Loading...</span>
         </Spinner>
       </div>
-    ) : (
-      <Row xs={1} md={3} className="g-4">
-        {popularSubCategoriesQuery.data.map(sub_category => (
-          <Col key={sub_category.slug}>
-            <PopularCategoryCard categoryName={sub_category.name} backgroundImage="assets/images/popular-categories/popular-category-1.png" />
-          </Col>
-        ))}
-      </Row>
-    );
+    )
+    : isSuccess && data.length > 0
+      ? (
+        <HomeSection title="Kategori Populer">
+          <Row xs={1} md={3} className="g-4">
+            {data.map(sub_category => (
+              <Col key={sub_category.slug}>
+                <PopularCategoryCard categoryName={sub_category.name} backgroundImage="assets/images/popular-categories/popular-category-1.png" />
+              </Col>
+            ))}
+          </Row>
+        </HomeSection>
+      ) : null;
 
-  return (!!category &&
+  return (
     <>
-      <HomeSection title="Kategori Populer">
-        {content}
-      </HomeSection>
+      {content}
     </>
   );
 };

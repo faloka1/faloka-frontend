@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import store from './stores/index';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import ScrollRestoration from 'react-scroll-restoration';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,6 +22,7 @@ ReactDOM.render(
     <Router>
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
+          <ScrollRestoration />
           <App />
         </Provider>
         {/* ReactQueryDevTools is for debugging  */}

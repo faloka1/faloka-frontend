@@ -2,7 +2,7 @@ import React from 'react';
 
 const RouteNotFound = () => {
   return (
-    <h1 className="text-center">Halaman tidak ditemukan!</h1>
+    <h1 className="text-center mt-5">Halaman tidak ditemukan!</h1>
   );
 };
 

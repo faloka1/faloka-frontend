@@ -3,6 +3,7 @@ import Login from "../pages/Auth/Login/Login";
 import Logout from "../pages/Auth/Logout/Logout";
 import ProductList from "../pages/Product/List/ProductList";
 import ProductDetail from "../pages/Product/Detail/Detail";
+import Shipment from "../pages/Checkout/Shipment/Shipment";
 import RouteNotFound from "../pages/Error/RouteNotFound";
 
 import { isGuest } from "../middleware/is-guest";
@@ -43,8 +44,14 @@ export const routes = [
   },
   {
     name: 'Product Detail',
-    path: '/product/detail',
+    path: '/products/:productSlug',
     pageComponent: ProductDetail,
+    exact: true,
+  },
+  {
+    name: 'Checkout Shipment',
+    path: '/checkout/shipment',
+    pageComponent: Shipment,
     exact: true,
   },
   {
