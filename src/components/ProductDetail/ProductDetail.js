@@ -3,7 +3,7 @@ import InputSpinner from 'react-bootstrap-input-spinner'
 import { Link } from 'react-router-dom';
 import { Col, Row, Button } from 'react-bootstrap';
 import CurrencyFormat from 'react-currency-format';
-import { BASE_URL } from '../../config/api';
+import { BASE_CONTENT_URL } from '../../config/api';
 
 import './ProductDetail.scss';
 
@@ -24,7 +24,7 @@ const ProductDetail = ({ className, product }) => {
       <Col md={6} lg={4} xl={3}>
         <Link to="#">
           <div className="product-image">
-            <img src={`${BASE_URL}${variants_image[0].image_url}`} alt={name} />
+            <img src={`${BASE_CONTENT_URL}${variants_image[0].image_url}`} alt={name} />
           </div>
         </Link>
       </Col>

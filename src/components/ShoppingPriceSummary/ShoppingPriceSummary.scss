@@ -1,0 +1,17 @@
+@import '../../styles/variables';
+
+.shopping-price-summary {
+
+  .pay-btn {
+    cursor: pointer;
+
+    &:hover {
+      color: $white !important;
+      text-decoration: none !important;
+    }
+  }
+
+  .total-price {
+    color: $accent-1;
+  }
+}
