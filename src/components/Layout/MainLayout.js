@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useQuery } from "react-query";
 import { useLocation } from "react-router";
 
@@ -24,11 +24,13 @@ const MainLayout = ({ children }) => {
     }
   });
 
-  if (pathname == '/') {
-    setOnHome(true);
-  } else {
-    setOnHome(false);
-  }
+  useEffect(() => {
+    if (pathname === '/') {
+      setOnHome(true);
+    } else {
+      setOnHome(false);
+    }
+  }, [setOnHome, pathname]);
 
   return (!categoriesQuery.isLoading &&
     <>

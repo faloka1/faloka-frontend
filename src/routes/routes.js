@@ -3,11 +3,11 @@ import Login from "../pages/Auth/Login/Login";
 import Logout from "../pages/Auth/Logout/Logout";
 import ProductList from "../pages/Product/List/ProductList";
 import ProductDetail from "../pages/Product/Detail/Detail";
-import Shipment from "../pages/Checkout/Shipment/Shipment";
 import RouteNotFound from "../pages/Error/RouteNotFound";
 
 import { isGuest } from "../middleware/is-guest";
 import { isLoggedIn } from "../middleware/is-logged-in";
+import Checkout from "../pages/Checkout/Checkout";
 
 export const routes = [
   {
@@ -49,10 +49,10 @@ export const routes = [
     exact: true,
   },
   {
-    name: 'Checkout Shipment',
-    path: '/checkout/shipment',
-    pageComponent: Shipment,
-    exact: true,
+    name: 'Checkout',
+    path: '/checkout',
+    pageComponent: Checkout,
+    exact: false,
   },
   {
     name: 'Any',

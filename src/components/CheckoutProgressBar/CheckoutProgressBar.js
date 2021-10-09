@@ -16,7 +16,7 @@ const CheckoutProgressBar = ({ className }) => {
     <div className={classes}>
       <div className="checkout-progress d-flex align-items-center">
         <p className="mb-0 active">Pengiriman</p>
-        <div className="checkout-progress__path active"></div>
+        <div className={`checkout-progress__path ${isPayment ? 'active' : ''}`}></div>
         <p className={`mb-0 ${isPayment ? 'active' : ''}`}>Pembayaran</p>
       </div>
     </div>
