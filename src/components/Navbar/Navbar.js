@@ -8,93 +8,83 @@ import {
   Form,
   FormControl
 } from 'react-bootstrap';
-import {
-  Link,
-  useLocation
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import {
-  Switch,
-  Route
-} from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 
 import './Navbar.scss';
 
 import { ReactComponent as UserIcon } from '../SVG/user.svg';
-import { ReactComponent as BagIcon } from '../SVG/shopping-bag.svg';
 import { ReactComponent as SearchIcon } from '../SVG/search.svg';
 import NavDropdown from './NavDropdown/NavDropdown';
-import CounterBadge from './CounterBadge/CounterBadge';
 import { HomeContext } from '../../context/HomeContext/HomeContext';
 import CheckoutProgressBar from '../CheckoutProgressBar/CheckoutProgressBar';
 
 import DUMMY_CATEGORIES from '../../data/dummy-categories';
+import useToggle from '../../hooks/use-toggle';
+import LoginRegisterModal from '../LoginRegisterModal/LoginRegisterModal';
+import UserDropdown from './UserDropdown/UserDropdown';
 
 const Navbar = ({ categories }) => {
+  const { setToggleOff, setToggleOn, toggle } = useToggle();
   const { category: currentCategory, setCategory, onHome } = useContext(HomeContext);
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
-  const { pathname, search } = useLocation();
-  const currentUrl = encodeURIComponent(pathname + search);
   categories = !!categories ? categories : DUMMY_CATEGORIES;
 
+  const userClickHandler = () => {
+    if (!isLoggedIn) {
+      setToggleOn();
+    }
+  };
+
   return (
-    <BootstrapNavbar fixed="top">
-      <Container className="position-relative">
-        <NavbarBrand as={Link} className="brand" to="/">FALOKA</NavbarBrand>
-        <Switch>
-          <Route path="/checkout">
-            <CheckoutProgressBar className="d-none d-lg-block" />
-          </Route>
-          <Route path="*">
-            <Nav as="nav" className="me-auto category-filter flex-grow-1">
-              <ul className="navbar-nav">
-                {categories.map(category => (
-                  <li key={category.slug} className="nav-item-group">
-                    <Link
-                      to="/"
-                      onClick={() => setCategory(category.slug)}
-                      className={`${category.slug === currentCategory && onHome ? 'active' : ''}`}
-                    >
-                      {category.name}
-                    </Link>
-                    {category.sub_categories.length > 0 && <NavDropdown category={category.slug} subcategories={category.sub_categories} />}
-                  </li>
-                ))}
-              </ul>
-            </Nav>
-            <Form className="d-flex search-input">
-              <FormControl type="text" placeholder="Search" />
-              <div className="search-icon">
-                <SearchIcon className="icon" />
-              </div>
-            </Form>
-            <Nav className="header__menu ml-auto">
-              {isLoggedIn &&
+    <>
+      <LoginRegisterModal show={toggle} onHide={setToggleOff} closeFunc={setToggleOff} centered />
+      <BootstrapNavbar fixed="top">
+        <Container className="position-relative">
+          <NavbarBrand as={Link} className="brand" to="/">FALOKA</NavbarBrand>
+          <Switch>
+            <Route path="/checkout">
+              <CheckoutProgressBar className="d-none d-lg-block" />
+            </Route>
+            <Route path="*">
+              <Nav as="nav" className="me-auto category-filter flex-grow-1">
                 <ul className="navbar-nav">
-                  <li className="nav-item dropdown">
+                  {categories.map(category => (
+                    <li key={category.slug} className="nav-item-group">
+                      <Link
+                        to="/"
+                        onClick={() => setCategory(category.slug)}
+                        className={`${category.slug === currentCategory && onHome ? 'active' : ''}`}
+                      >
+                        {category.name}
+                      </Link>
+                      {category.sub_categories.length > 0 && <NavDropdown category={category.slug} subcategories={category.sub_categories} />}
+                    </li>
+                  ))}
+                </ul>
+              </Nav>
+              <Form className="d-flex search-input">
+                <FormControl type="text" placeholder="Search" />
+                <div className="search-icon">
+                  <SearchIcon className="icon" />
+                </div>
+              </Form>
+              <Nav className="header__menu ml-auto">
+                <ul className="navbar-nav">
+                  <li className="nav-item nav-item-group dropdown position-relative">
                     <NavLink as={Link} to="#">
-                      <UserIcon className="icon" />
+                      <UserIcon onClick={userClickHandler} className="icon" />
                     </NavLink>
-                  </li>
-                  <li className="nav-item dropdown">
-                    <NavLink as={Link} to="#">
-                      <BagIcon className="icon" />
-                      <CounterBadge count={5} />
-                    </NavLink>
-                  </li>
-                  <li className="nav-item dropdown">
-                    <NavLink as={Link} to={`/logout?from=${currentUrl}`}>
-                      Logout
-                    </NavLink>
+                    {isLoggedIn && <UserDropdown />}
                   </li>
                 </ul>
-              }
-              {!isLoggedIn && <NavLink as={Link} to="/login">Login</NavLink>}
-            </Nav>
-          </Route>
-        </Switch>
-      </Container>
-    </BootstrapNavbar >
+              </Nav>
+            </Route>
+          </Switch>
+        </Container>
+      </BootstrapNavbar >
+    </>
   );
 };
 
