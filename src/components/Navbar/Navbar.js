@@ -16,7 +16,6 @@ import './Navbar.scss';
 
 import { ReactComponent as UserIcon } from '../SVG/user.svg';
 import { ReactComponent as SearchIcon } from '../SVG/search.svg';
-import NavDropdown from './NavDropdown/NavDropdown';
 import { HomeContext } from '../../context/HomeContext/HomeContext';
 import CheckoutProgressBar from '../CheckoutProgressBar/CheckoutProgressBar';
 
@@ -24,6 +23,7 @@ import DUMMY_CATEGORIES from '../../data/dummy-categories';
 import useToggle from '../../hooks/use-toggle';
 import LoginRegisterModal from '../LoginRegisterModal/LoginRegisterModal';
 import UserDropdown from './UserDropdown/UserDropdown';
+import CategoryDropdown from './CategoryDropdown/CategoryDropdown';
 
 const Navbar = ({ categories }) => {
   const { setToggleOff, setToggleOn, toggle } = useToggle();
@@ -59,7 +59,7 @@ const Navbar = ({ categories }) => {
                       >
                         {category.name}
                       </Link>
-                      {category.sub_categories.length > 0 && <NavDropdown category={category.slug} subcategories={category.sub_categories} />}
+                      {category.sub_categories.length > 0 && <CategoryDropdown category={category.slug} subcategories={category.sub_categories} />}
                     </li>
                   ))}
                 </ul>
