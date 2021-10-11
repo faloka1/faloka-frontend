@@ -1,0 +1,13 @@
+@import '../../styles/variables';
+
+.payment-method-item {
+  margin-left: .5rem;
+
+  &__detail {
+    background-color: $blue-light;
+  }
+
+  &__more-detail {
+    color: $accent-2;
+  }
+}

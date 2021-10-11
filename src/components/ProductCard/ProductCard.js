@@ -9,14 +9,14 @@ const ProductCard = ({ product }) => {
   let {
     name,
     // location,
-    // brandName,
+    brands,
     price,
     discount,
     slug
   } = product;
-  // discount = 0.3;
   const discountPercentage = `${discount * 100}%`;
   const discountedPrice = (1 - discount) * price;
+  const brandName = brands.name;
 
   return (
     <Card className="product-card">
@@ -26,7 +26,7 @@ const ProductCard = ({ product }) => {
           <Card.Img variant="top" src="/assets/images/products/product_1.png" />
         </div>
         <Card.Body className="product-detail">
-          {/* <div className="product-brand text-truncate">{`${location} - ${brandName}`}</div> */}
+          <div className="product-brand text-truncate">{brandName}</div>
           <div className="product-name text-truncate">{name}</div>
           <div className="product-prize d-inline-flex">
             <CurrencyFormat

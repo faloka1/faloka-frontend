@@ -18,7 +18,6 @@ a {
   text-decoration: none!important;
 
   &:hover {
-    color: inherit;
     text-decoration: underline!important;
   }
 }
@@ -35,9 +34,35 @@ a {
   color: $gray;
 }
 
+.text-accent {
+  color: $accent-1;
+}
+
 .btn-black {
+  border: 1px solid $black;
   background: $black;
   color: $white;
+  cursor: pointer;
+
+  &:hover {
+    color: $white;
+    text-decoration: underline;
+  }
+
+  &--invert {
+    background: $white;
+    color: $black;
+
+    &:hover {
+      color: $black;
+    }
+  }
+
+  &.disabled {
+    opacity: .5;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
 }
 
 .icon {

@@ -3,12 +3,12 @@ import { Modal } from 'react-bootstrap';
 import { Formik, Form as FormikForm, Field } from 'formik';
 import { Form as BootstrapForm } from 'react-bootstrap'
 
-const EditAddressModal = ({ setShow, ...props }) => {
+const EditAddressModal = ({ closeFunc, ...props }) => {
 
   const formSubmitHandler = (values) => {
     console.log(values);
-    if (setShow) {
-      setShow(false)
+    if (closeFunc) {
+      closeFunc();
     }
   };
 
