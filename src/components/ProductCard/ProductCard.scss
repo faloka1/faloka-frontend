@@ -11,7 +11,7 @@
   text-overflow: ellipsis;
 
   a:hover{
-    text-decoration: none!important;
+    text-decoration: none !important;
   }
   
   .product-image {
@@ -31,7 +31,7 @@
       position: absolute;
       top: 0;
       left: 0;
-      background-color: $green-secondary-accent;
+      background-color: $accent-1;
       color: $white;
       padding: .25rem 0.75rem;
       font-size:0.75em;
@@ -41,21 +41,27 @@
   }
 
   .product-detail {
-    .product-name{
-      color:$black-muted;
+    .product-brand {
+      font-size: 1.25rem;
+    }
+
+    .product-name {
+      color: $black-muted;
       font-weight: 375;
       margin-bottom:.75rem;
     }
 
-    .product-prize{
+    .product-prize {
       font-weight: 700!important;
+
       .price {
         &--cut {
           text-decoration: line-through;
+          color: $gray-light;
         }
     
         &--discount {
-          color: $green-accent !important;
+          color: $black;
         }
       }
     }
