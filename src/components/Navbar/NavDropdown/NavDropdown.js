@@ -1,31 +1,25 @@
 import React from 'react';
-import {
-  Container,
-  Row,
-  Col
-} from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
 
 import './NavDropdown.scss';
 
-const NavDropdown = ({ category, subcategories }) => {
+const NavDropdown = ({ children, centered, className }) => {
+  let classes = 'nav-dropdown top-100';
+
+  if (centered) {
+    classes += ' start-50 translate-middle-x';
+  } else {
+    classes += ' start-0';
+  }
+
+  if (className) {
+    classes += ' ' + className;
+  }
+
   return (
-    <Container className="nav-dropdown">
-      <Row className="p-2">
-        {subcategories.map((subcategory, index) => (
-          <Col
-            as={Link}
-            to={{
-              pathname: '/products',
-              search: `categories=${category}&subcategories=${subcategory.slug}`
-            }}
-            lg={3}
-            className="nav-dropdown__item my-2"
-            key={index}
-          >{subcategory.name}</Col>
-        ))}
-      </Row>
-    </Container>
+    <div className={classes}>
+      {children}
+    </div>
   );
 };
 
