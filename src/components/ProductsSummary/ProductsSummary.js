@@ -8,11 +8,7 @@ const ProductsSummary = ({ productsOnly, ...props }) => {
   const [validShipmentSelect, setValidShipmentSelect] = useState(false);
 
   const shipmentSelectHandler = (event) => {
-    if (event.target.value !== "0") {
-      setValidShipmentSelect(true);
-    } else {
-      setValidShipmentSelect(false);
-    }
+    setValidShipmentSelect(event.target.value !== "0");
   };
 
   return (
