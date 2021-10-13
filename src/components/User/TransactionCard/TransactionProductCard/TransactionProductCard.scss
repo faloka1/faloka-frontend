@@ -1,0 +1,63 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/faloka';
+
+.card-product{
+    margin:.5rem 0;
+    border: 1px solid #C1C1C1;
+    background-color: #FAFAFA;
+    display:flex!important;
+    align-items: center !important;
+
+    .product-image{
+        padding: 0;
+        flex:unset;
+        display:content;
+        height: 7.5rem;
+        width: 7.5rem;
+        border-right: 1px solid #C1C1C1;
+
+        img{
+            width:100%;
+            height:100%;
+        }
+    }
+
+    .product-detail{
+        height:100%;
+        padding: 0 1.25rem;
+        display:inline-grid;
+        white-space: nowrap;
+        position: relative;
+
+        .product-name{            
+            font-size:1em;
+            font-weight: 500;
+            margin-bottom: .15rem;
+        }
+
+        .product-size{
+            color: #848484;
+            font-weight:300;
+            margin-bottom:1rem;
+
+            .size-value{
+                color:black;
+                font-weight:500;
+            }
+        }
+
+        .product-price{
+            font-size:1em;
+            font-weight:600;
+        }
+
+        .product-quantity{
+            position: absolute;
+            top:36.845%;
+            right: 0;
+            padding-right: 2rem;
+            text-align: right;
+        }
+    }
+    
+}

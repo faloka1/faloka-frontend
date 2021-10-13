@@ -22,7 +22,7 @@ const Logout = () => {
   }, [dispatch, from, history]);
 
   return (
-    <Spinner animation="border" role="status" class="text-center">
+    <Spinner animation="border" role="status" className="text-center">
       <span className="visually-hidden">Loading...</span>
     </Spinner>
   );
