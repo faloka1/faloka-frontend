@@ -1,6 +1,8 @@
 import Home from "../pages/Home";
 import Login from "../pages/Auth/Login/Login";
 import Logout from "../pages/Auth/Logout/Logout";
+import Profile from "../pages/User/Profile/Profile";
+import Transaction from "../pages/User/Transaction/Transaction";
 import ProductList from "../pages/Product/List/ProductList";
 import ProductDetail from "../pages/Product/Detail/Detail";
 import Shipment from "../pages/Checkout/Shipment/Shipment";
@@ -34,6 +36,26 @@ export const routes = [
       middleware: isLoggedIn,
       redirectPath: '/',
     },
+    exact: true,
+  },
+  {
+    name: 'User Info',
+    path: '/user/profile',
+    pageComponent: Profile,
+    // middleware: {
+    //   middleware: isLoggedIn
+    //   redirectPath: '/login',
+    // },
+    exact: true,
+  },
+  {
+    name: 'Transaction',
+    path: '/user/transaction',
+    pageComponent: Transaction,
+    // middleware: {
+    //   middleware: isLoggedIn
+    //   redirectPath: '/login',
+    // },
     exact: true,
   },
   {

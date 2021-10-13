@@ -1,0 +1,49 @@
+@import '../../../styles/variables';
+@import '../../../styles/faloka';
+
+.card-transaction{
+    margin-top:1.5rem;
+    border: 1px solid #C1C1C1;
+    white-space: nowrap;
+
+    .transaction-brand{
+        padding:1.25rem 1.5rem;
+        font-weight:bold;
+        font-size:1.35em;
+    }
+
+    .transaction-product{
+        padding: 0 1.5rem 1.5rem 1.5rem;
+    }
+
+    .transaction-footer{
+        margin:0!important;
+        padding:0.5rem 1.5rem 1rem 1.5rem;
+        border-top: 1px solid #C1C1C1;
+        display: flex !important;
+        align-items: center !important;
+
+        .total-label{
+            font-size: 1.15em;
+            font-weight: 500;
+            margin-right:1rem;
+        }
+
+        .detail-label{
+            font-weight:600;
+            color:$green-accent; 
+            margin-left:1rem;
+        }
+
+        .transaction-price{
+            font-size:1.25em;
+            font-weight:700;
+            color:$pink-accent;
+            margin-right:1.5rem;
+        }
+
+        button{
+            width:100%;
+        }
+    }
+}
