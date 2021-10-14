@@ -6,9 +6,9 @@ import ShoppingPriceSummary from '../ShoppingPriceSummary/ShoppingPriceSummary';
 
 const CheckoutLayout = ({ children }) => {
   return (
-    <div className="d-md-block d-flex flex-column">
-      <Container className="my-5 h-25">
-        <div className="position-relative w-100 d-block d-md-none">
+    <div className="d-lg-block d-flex flex-column pt-0 pt-lg-5">
+      <Container className="my-5 h-25  d-block d-lg-none">
+        <div className="position-relative w-100">
           <CheckoutProgressBar />
         </div>
       </Container>
