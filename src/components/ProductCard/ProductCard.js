@@ -5,6 +5,8 @@ import CurrencyFormat from 'react-currency-format';
 
 import './ProductCard.scss';
 
+import { BASE_CONTENT_URL } from '../../config/api';
+
 const ProductCard = ({ product }) => {
   let {
     name,
@@ -12,18 +14,21 @@ const ProductCard = ({ product }) => {
     brands,
     price,
     discount,
-    slug
+    slug,
+    variants
   } = product;
   const discountPercentage = `${discount * 100}%`;
   const discountedPrice = (1 - discount) * price;
   const brandName = brands.name;
+  const { variants_image } = variants[0];
+  console.log(product);
 
   return (
     <Card className="product-card">
       <Link to={`/products/${slug}`}>
         <div className="product-image">
           {discount > 0 && <div className="discount-tag">{discountPercentage} off</div>}
-          <Card.Img variant="top" src="/assets/images/products/product_1.png" />
+          <Card.Img variant="top" src={`${BASE_CONTENT_URL}/${variants_image[0].image_url}`} />
         </div>
         <Card.Body className="product-detail">
           <div className="product-brand text-truncate">{brandName}</div>
