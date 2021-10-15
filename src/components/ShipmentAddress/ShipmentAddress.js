@@ -12,7 +12,7 @@ import deleteShipmentAddress from '../../helpers/api/delete-shipment-address';
 import { CheckoutContext } from '../../context/CheckoutContext/CheckoutContext';
 
 const ShipmentAddress = ({ className, shipmentAddress, loading }) => {
-  const { setShipmentAddress } = useContext(CheckoutContext);
+  const { setShipmentAddress, setExpedition } = useContext(CheckoutContext);
   const { toggle, setToggleOff, setToggleOn } = useToggle();
   const { mutate, isLoading } = useMutation(async id => {
     return deleteShipmentAddress(id);
@@ -23,6 +23,11 @@ const ShipmentAddress = ({ className, shipmentAddress, loading }) => {
         address: null,
         phoneNumber: prev.phoneNumber,
       }));
+      setExpedition({
+        name: '',
+        code: '',
+        cost: null,
+      });
     }
   });
   const loadingState = isLoading || loading;

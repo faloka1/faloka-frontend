@@ -6,7 +6,6 @@ import {
   Form as FormikForm,
   Field,
   useFormikContext,
-  ErrorMessage
 } from 'formik';
 import * as Yup from 'yup';
 
@@ -94,7 +93,7 @@ const ShipmentAddressSchema = Yup.object({
 });
 
 const EditAddressModal = ({ closeFunc, ...props }) => {
-  const { shipmentAddress, setShipmentAddress } = useContext(CheckoutContext);
+  const { shipmentAddress, setShipmentAddress, setExpedition } = useContext(CheckoutContext);
   const [provinces, setProvinces] = useState([]);
   useQuery('get-provinces', async () => {
     const response = await getProvinces();
@@ -132,6 +131,11 @@ const EditAddressModal = ({ closeFunc, ...props }) => {
         address: mutateData.addresses,
         phoneNumber: prev.phoneNumber
       }));
+      setExpedition({
+        name: '',
+        code: '',
+        cost: null,
+      });
 
       closeFunc();
     }
