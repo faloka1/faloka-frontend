@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
 import { Card, Row, Col, Form } from 'react-bootstrap';
+import ExpeditionSelector from '../ExpeditionSelector/ExpeditionSelector';
 import ProductCardCart from '../ProductCardCart/ProductCardCart';
 
 import './ProductsSummary.scss';
 
 const ProductsSummary = ({ productsOnly, ...props }) => {
-  const [validShipmentSelect, setValidShipmentSelect] = useState(false);
-
-  const shipmentSelectHandler = (event) => {
-    setValidShipmentSelect(event.target.value !== "0");
-  };
-
   return (
     <Card {...props}>
       <Card.Body>
@@ -31,16 +26,7 @@ const ProductsSummary = ({ productsOnly, ...props }) => {
                 <ProductCardCart className="mb-2" productCart={{}} />
               </Col>
               <Col xl={4} lg={4} md={4}>
-                <Form.Select aria-label="Shipment service" onChange={shipmentSelectHandler}>
-                  <option value="0">Pilihan pengiriman</option>
-                  <option value="1">JNE Regular (Rp10.000,-)</option>
-                  <option value="2">JNE Regular (Rp10.000,-)</option>
-                  <option value="3">JNE Regular (Rp10.000,-)</option>
-                </Form.Select>
-                {validShipmentSelect && <div className="shipment-detail border p-2">
-                  <p className="text-gray">Reguler</p>
-                  <p className="mb-0 text-gray">Estimasi sampai 2 - 3 hari</p>
-                </div>}
+                <ExpeditionSelector />
               </Col>
             </>
           }
