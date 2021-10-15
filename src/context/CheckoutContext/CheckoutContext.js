@@ -16,7 +16,11 @@ const CheckoutContextInitialValue = {
     name: '',
     code: '',
     cost: null,
-  }
+  },
+  product: {
+    product: null,
+    quantity: 0,
+  },
 };
 
 export const CheckoutContext = React.createContext(null);
@@ -27,6 +31,7 @@ export const CheckoutContextProvider = ({ children }) => {
   const [isConfirmed, setIsConfirmed] = useState(CheckoutContextInitialValue.isConfirmed);
   const [shipmentAddress, setShipmentAddress] = useState(CheckoutContextInitialValue.shipmentAddress);
   const [expedition, setExpedition] = useState(CheckoutContextInitialValue.expedition);
+  const [product, setProduct] = useState(CheckoutContextInitialValue.product);
 
   return (
     <CheckoutContext.Provider value={{
@@ -39,7 +44,9 @@ export const CheckoutContextProvider = ({ children }) => {
       shipmentAddress,
       setShipmentAddress,
       expedition,
-      setExpedition
+      setExpedition,
+      product,
+      setProduct
     }}>
       {children}
     </CheckoutContext.Provider>

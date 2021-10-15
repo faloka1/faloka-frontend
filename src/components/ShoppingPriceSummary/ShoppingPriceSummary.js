@@ -7,16 +7,28 @@ import './ShoppingPriceSummary.scss';
 import { CheckoutContext, SHIPMENT_PAGE, PAYMENT_PAGE } from '../../context/CheckoutContext/CheckoutContext';
 import ShoppingSummaryModal from '../ShoppingSummaryModal/ShoppingSummaryModal';
 import useToggle from '../../hooks/use-toggle';
-
+import CurrencyFormat from 'react-currency-format';
 
 const ShoppingPriceSummary = () => {
-  const { currentPage, setCurrentPage, isConfirmed, paymentMethod } = useContext(CheckoutContext);
+  const {
+    currentPage,
+    setCurrentPage,
+    isConfirmed,
+    paymentMethod,
+    product,
+    expedition,
+    shipmentAddress
+  } = useContext(CheckoutContext);
   const { toggle, setToggleOn, setToggleOff } = useToggle();
+  const shipmentNextDisabled = !!!expedition.cost || !!!shipmentAddress.address;
+  const expeditionCost = !!expedition.cost ? expedition.cost.cost[0].value : 0;
+  const itemsPrice = product.product?.price * product.quantity;
 
   const actionButton = currentPage === SHIPMENT_PAGE
     ? <Link
       to="/checkout/payment"
-      className="btn-black pay-btn w-100 d-inline-block w-100 text-center py-2 mt-2"
+      className={`btn-black pay-btn w-100 d-inline-block w-100 text-center py-2 mt-2 ${shipmentNextDisabled ? 'disabled' : ''}`}
+      disabled={shipmentNextDisabled}
       onClick={() => { setCurrentPage(PAYMENT_PAGE); console.log('test') }}
     >Lanjut Bayar</Link>
     : currentPage === PAYMENT_PAGE && !isConfirmed
@@ -37,16 +49,42 @@ const ShoppingPriceSummary = () => {
         <Card.Body>
           <Card.Title className="mb-4"><strong>Ringkasan Jumlah</strong></Card.Title>
           <div className="d-flex justify-content-between">
-            <p>Total Harga ( 1 barang )</p>
-            <p>Rp80.000</p>
+            <p>Total Harga ( {product.quantity} barang )</p>
+            <CurrencyFormat
+              value={itemsPrice}
+              displayType={'text'}
+              prefix={'Rp'}
+              thousandSeparator="."
+              decimalSeparator=","
+              renderText={value => <p>{value}</p>}
+            />
           </div>
           <div className="d-flex justify-content-between">
             <p>Biaya Ongkir</p>
-            <p>-</p>
+            {!!!expedition.cost && <p>-</p>}
+            {!!expedition.cost &&
+              <CurrencyFormat
+                value={expeditionCost}
+                displayType={'text'}
+                prefix={'Rp'}
+                thousandSeparator="."
+                decimalSeparator=","
+                renderText={value => <p>{value}</p>}
+              />
+            }
           </div>
           <div className="d-flex justify-content-between mt-3">
             <p>Total Belanja</p>
-            <p className="total-price"><strong>Rp80.000</strong></p>
+            {!!expedition.cost &&
+              <CurrencyFormat
+                value={expeditionCost + itemsPrice}
+                displayType={'text'}
+                prefix={'Rp'}
+                thousandSeparator="."
+                decimalSeparator=","
+                renderText={value => <p className="total-price"><strong>{value}</strong></p>}
+              />
+            }
           </div>
           {actionButton}
         </Card.Body>
