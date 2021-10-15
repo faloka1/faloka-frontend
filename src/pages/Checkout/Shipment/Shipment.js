@@ -7,7 +7,12 @@ import ShipmentAddress from '../../../components/ShipmentAddress/ShipmentAddress
 import { CheckoutContext, SHIPMENT_PAGE } from '../../../context/CheckoutContext/CheckoutContext';
 
 const Shipment = () => {
-  const { setCurrentPage, setShipmentAddress, shipmentAddress, isSuccess } = useContext(CheckoutContext);
+  const {
+    setCurrentPage,
+    setShipmentAddress,
+    shipmentAddress,
+    product
+  } = useContext(CheckoutContext);
   const { isLoading } = useQuery('user-data', async () => {
     const response = await getProfile();
 
@@ -30,12 +35,12 @@ const Shipment = () => {
 
   useEffect(() => {
     setCurrentPage(SHIPMENT_PAGE);
-  }, [setCurrentPage]);
+  });
 
   return (
     <>
-      {!isSuccess && <ShipmentAddress shipmentAddress={shipmentAddress} loading={isLoading} className="mb-4" />}
-      <ProductsSummary className="mb-4 mb-lg-0" />
+      <ShipmentAddress shipmentAddress={shipmentAddress} loading={isLoading} className="mb-4" />
+      <ProductsSummary productCart={product} className="mb-4 mb-lg-0" />
     </>
   );
 };

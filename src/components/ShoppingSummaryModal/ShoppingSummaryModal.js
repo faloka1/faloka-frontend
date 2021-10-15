@@ -6,7 +6,7 @@ import ProductsSummary from '../ProductsSummary/ProductsSummary';
 import './ShoppingSummaryModal.scss';
 
 const ShoppingSummaryModal = ({ closeFunc, ...props }) => {
-  const { setIsConfirmed } = useContext(CheckoutContext);
+  const { setIsConfirmed, product } = useContext(CheckoutContext);
 
   const finishHandler = (values) => {
 
@@ -27,7 +27,7 @@ const ShoppingSummaryModal = ({ closeFunc, ...props }) => {
         <section className="summary-section">
           <div className="summary-section__container">
             <p className="h5 mb-3 summary-section__title">Daftar Produk</p>
-            <ProductsSummary productsOnly />
+            <ProductsSummary productCart={product} productsOnly />
           </div>
         </section>
         <section className="summary-section">

@@ -42,20 +42,20 @@ export const routes = [
     name: 'User Info',
     path: '/user/profile',
     pageComponent: Profile,
-    // middleware: {
-    //   middleware: isLoggedIn
-    //   redirectPath: '/login',
-    // },
+    middleware: {
+      middleware: isLoggedIn,
+      redirectPath: '/login',
+    },
     exact: true,
   },
   {
     name: 'Transaction',
     path: '/user/transaction',
     pageComponent: Transaction,
-    // middleware: {
-    //   middleware: isLoggedIn
-    //   redirectPath: '/login',
-    // },
+    middleware: {
+      middleware: isLoggedIn,
+      redirectPath: '/login',
+    },
     exact: true,
   },
   {
@@ -75,6 +75,10 @@ export const routes = [
     path: '/checkout',
     pageComponent: Checkout,
     exact: false,
+    middleware: {
+      middleware: isLoggedIn,
+      redirectPath: '/login',
+    },
   },
   {
     name: 'Any',

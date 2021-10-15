@@ -66,7 +66,6 @@ const Detail = () => {
     );
   }
 
-
   return (!productDetailQuery.isLoading && !productDetailQuery.isError &&
     <>
       <Container>
