@@ -1,49 +1,58 @@
-import React, { useContext } from 'react';
-import { Card, Row, Col } from 'react-bootstrap';
-import { Formik, Form, Field } from 'formik';
+import React, { useContext, useEffect, useState } from 'react';
+import { Card, Row } from 'react-bootstrap';
+import { useQuery } from 'react-query';
+import { Form } from 'react-bootstrap';
 
 import './PaymentOptions.scss';
 
 import { CheckoutContext } from '../../context/CheckoutContext/CheckoutContext';
+import getPaymentMethods from '../../helpers/api/get-payment-methods';
 
 const PaymentOptions = ({ className }) => {
+  const [selectedPayment, setSelectedPayment] = useState('');
+  const [paymentMethods, setPaymentMethods] = useState([]);
   const { setPaymentMethod } = useContext(CheckoutContext);
+  useQuery('get-payment-methods', async () => {
+    const response = await getPaymentMethods();
+
+    return response.data;
+  }, {
+    onSuccess: (data) => setPaymentMethods(data),
+    onError: (err) => console.log(err),
+  });
+
+  const onSelectPaymentHandler = (event) => {
+    setSelectedPayment(event.target.value);
+  };
+
+  useEffect(() => {
+    if (selectedPayment !== '') {
+      const payment = paymentMethods.find(pm => +selectedPayment === pm.id);
+      setPaymentMethod(payment);
+    }
+  }, [selectedPayment, paymentMethods, setPaymentMethod]);
 
   return (
     <Card className={`p-3${className ? ' ' + className : ''}`}>
       <Card.Title><strong>Metode Pembayaran</strong></Card.Title>
-      <p>Mohon maaf, Sementara ini pembayaran hanya bisa dilakukan melalui transfer bank atau e-money </p>
+      <p>Mohon maaf, Sementara ini pembayaran hanya bisa dilakukan melalui transfer bank atau e-money</p>
 
-      <Formik
-        initialValues={{
-          paymentMethod: '',
-        }}
-      >
-        {({ values }) => {
-          return (
-            <Form>
-              <p id="my-radio-group" className="text-gray">Pilih tujuan transafer:</p>
-              <Row role="group" aria-labelledby="my-radio-group" onChange={() => setPaymentMethod(values.paymentMethod)}>
-                {[...Array(6)].map((x, i) =>
-                  <Col key={i} sm={6}>
-                    <label key={i} className="d-flex mb-3">
-                      <Field type="radio" name="paymentMethod" value={`${i}`} />
-                      <div className="payment-method-item">
-                        <p className="mb-0">BANK BCA <span className="payment-method-item__more-detail"><small><strong>Lihat rincian</strong></small></span></p>
-                        <div className="payment-method-item__detail p-3">
-                          <p className="mb-2">No. Rekening: 103910932</p>
-                          <p className="mb-0">Atas nama: Rahayu Jiahahay hayu</p>
-                        </div>
-                      </div>
-                    </label>
-                  </Col>
-                )}
-              </Row>
-            </Form>
-          )
-        }}
-
-      </Formik>
+      <Row className="">
+        {paymentMethods.map(pm => (
+          <Form.Check className="col-sm-6 mb-4">
+            <Form.Check.Label className="d-flex">
+              <Form.Check.Input name="paymentMethod" type='radio' value={`${pm.id}`} onChange={onSelectPaymentHandler} />
+              <div className="payment-method-item">
+                <p className="mb-0">{pm.payment_name}</p>
+                <div className="payment-method-item__detail p-3">
+                  <p className="mb-2">No. Rekening: {pm.no_rekening}</p>
+                  <p className="mb-0">Atas nama: {pm.account_name}</p>
+                </div>
+              </div>
+            </Form.Check.Label>
+          </Form.Check>
+        ))}
+      </Row>
     </Card>
   )
 }
