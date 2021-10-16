@@ -10,10 +10,12 @@ import concatAddress from '../../helpers/concat-address';
 import { useMutation } from 'react-query';
 import deleteShipmentAddress from '../../helpers/api/delete-shipment-address';
 import { CheckoutContext } from '../../context/CheckoutContext/CheckoutContext';
+import AddressDeleteDialog from '../AddressDeleteDialog/AddressDeleteDialog';
 
 const ShipmentAddress = ({ className, shipmentAddress, loading }) => {
   const { setShipmentAddress, setExpedition } = useContext(CheckoutContext);
   const { toggle, setToggleOff, setToggleOn } = useToggle();
+  const { toggle: addressDeleteToggle, setToggleOn: addressDeleteOn, setToggleOff: addressDeleteOff } = useToggle();
   const { mutate, isLoading } = useMutation(async id => {
     return deleteShipmentAddress(id);
   }, {
@@ -38,6 +40,7 @@ const ShipmentAddress = ({ className, shipmentAddress, loading }) => {
 
   return (
     <>
+      <AddressDeleteDialog show={addressDeleteToggle} onHide={addressDeleteOff} closeFunc={addressDeleteOff} deleteHandler={deleteHandler} centered />
       <EditAddressModal show={toggle} onHide={setToggleOff} closeFunc={setToggleOff} centered />
       <div className={`shipment-address d-flex p-3${className ? ' ' + className : ''}`}>
         {loadingState &&
@@ -56,7 +59,7 @@ const ShipmentAddress = ({ className, shipmentAddress, loading }) => {
               <p className="text-gray">{shipmentAddress.phoneNumber}</p>
               <div className="actions d-flex justify-content-end">
                 <p onClick={setToggleOn}>{shipmentAddress.address === null ? 'Tambah Alamat' : 'Edit'}</p>
-                {shipmentAddress.address !== null && <p className="ml-3" onClick={deleteHandler}>Hapus</p>}
+                {shipmentAddress.address !== null && <p className="ml-3" onClick={addressDeleteOn}>Hapus</p>}
               </div>
             </div>
           </>
