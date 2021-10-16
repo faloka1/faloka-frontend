@@ -72,8 +72,8 @@ const DistrictSelectField = (props) => {
     {
       onSuccess: (data) => {
         setDistricts(data.map(district => ({
-          key: district.city_id,
-          value: district.city_name
+          key: district.district_id,
+          value: district.title
         })));
       },
       enabled: !!address_province
@@ -103,7 +103,7 @@ const EditAddressModal = ({ closeFunc, ...props }) => {
     onError: (err) => console.log(err),
     onSuccess: (data) => setProvinces(data.map(province => ({
       key: province.province_id,
-      value: province.province
+      value: province.title
     }))),
   });
   const { mutate, isLoading: postLoading } = useMutation(async values => {
