@@ -35,7 +35,7 @@ const ShoppingPriceSummary = () => {
       ? <p
         className={`btn-black w-100 d-inline-block text-center py-2 mt-2 mb-0 ${paymentMethod === null ? 'disabled' : ''}`}
         onClick={() => setToggleOn()}
-      >Konfirmasi</p>
+      >Konfirmasi Detail Pembayaran</p>
       : currentPage === PAYMENT_PAGE && isConfirmed
         ? <div className="d-flex flex-column">
           <p className="btn-black text-center py-2">Upload bukti pembayaran</p>
