@@ -44,6 +44,8 @@ const Navbar = ({ categories }) => {
         <Container className="position-relative">
           <NavbarBrand as={Link} className="brand" to="/">FALOKA</NavbarBrand>
           <Switch>
+            <Route exact path="/checkout/finish">
+            </Route>
             <Route path="/checkout">
               <CheckoutProgressBar className="d-none d-lg-block" />
             </Route>

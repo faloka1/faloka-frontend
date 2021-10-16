@@ -22,6 +22,10 @@ a {
   }
 }
 
+*[role="button"] {
+  cursor: pointer;
+}
+
 .main {
   min-height: 50vh;
 }
