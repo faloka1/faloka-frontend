@@ -79,7 +79,7 @@ const ShoppingSummaryModal = ({ closeFunc, ...props }) => {
           <p
             className="btn-black confirm-btn text-center p-3 d-inline-block w-100"
             onClick={finishHandler}
-          >Konfirmasi</p>
+          >Bayar</p>
         </div>
       </Modal.Body>
     </Modal>
