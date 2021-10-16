@@ -6,6 +6,7 @@ import { CheckoutContextProvider } from '../../context/CheckoutContext/CheckoutC
 import Shipment from './Shipment/Shipment';
 import Payment from './Payment/Payment';
 import CheckoutGateway from './CheckoutGateway/CheckoutGateway';
+import Finish from './Finish/Finish';
 
 const Checkout = () => {
   return (
@@ -13,6 +14,9 @@ const Checkout = () => {
       <Switch>
         <Route exact path="/checkout">
           <CheckoutGateway />
+        </Route>
+        <Route exact path="/checkout/finish">
+          <Finish />
         </Route>
         <Route>
           <CheckoutLayout>

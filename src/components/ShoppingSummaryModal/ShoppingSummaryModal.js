@@ -1,18 +1,24 @@
 import React, { useContext } from 'react'
 import { Modal } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { CheckoutContext } from '../../context/CheckoutContext/CheckoutContext';
 import ProductsSummary from '../ProductsSummary/ProductsSummary';
 
 import './ShoppingSummaryModal.scss';
 
 const ShoppingSummaryModal = ({ closeFunc, ...props }) => {
-  const { setIsConfirmed, product } = useContext(CheckoutContext);
+  const { isConfirmed, setIsConfirmed, product } = useContext(CheckoutContext);
+
+  const closeModal = () => {
+    if (closeFunc) {
+      closeFunc();
+    }
+  };
 
   const finishHandler = (values) => {
-
     if (closeFunc) {
       setIsConfirmed(true);
-      closeFunc();
+      closeModal();
     }
   };
 
@@ -76,10 +82,24 @@ const ShoppingSummaryModal = ({ closeFunc, ...props }) => {
           </div>
         </section>
         <div className="px-3 my-3">
-          <p
-            className="btn-black confirm-btn text-center p-3 d-inline-block w-100"
-            onClick={finishHandler}
-          >Konfirmasi</p>
+          {!isConfirmed &&
+            <Link
+              to="/checkout/finish"
+              className="btn-black confirm-btn text-center p-3 d-inline-block w-100"
+              onClick={finishHandler}
+            >
+              Bayar
+            </Link>
+          }
+          {isConfirmed &&
+            <Link
+              to="/checkout/finish"
+              className="btn-black confirm-btn text-center p-3 d-inline-block w-100"
+              onClick={closeModal}
+            >
+              Tutup
+            </Link>
+          }
         </div>
       </Modal.Body>
     </Modal>
