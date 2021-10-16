@@ -1,10 +1,16 @@
 import React from 'react'
 import { Card } from 'react-bootstrap';
 import useToggle from '../../hooks/use-toggle';
+import PaymentProofDropzone from '../PaymentProofDropzone/PaymentProofDropzone';
 import ShoppingSummaryModal from '../ShoppingSummaryModal/ShoppingSummaryModal';
 
 const FinishedPaymentCard = ({ className }) => {
   const { toggle, setToggleOn, setToggleOff } = useToggle();
+  const {
+    toggle: dropZoneToggle,
+    setToggleOn: setDropZoneOn,
+    setToggleOff: setDropZoneOff
+  } = useToggle();
   let classes = 'rounded-0';
 
   if (className) {
@@ -13,6 +19,7 @@ const FinishedPaymentCard = ({ className }) => {
 
   return (
     <>
+      <PaymentProofDropzone show={dropZoneToggle} closeFunc={setDropZoneOff} onHide={setDropZoneOff} centered />
       <ShoppingSummaryModal show={toggle} closeFunc={setToggleOff} onHide={setToggleOff} />
       <Card className={classes}>
         <Card.Body>
@@ -36,7 +43,7 @@ const FinishedPaymentCard = ({ className }) => {
           </div>
         </Card.Body>
         <Card.Body>
-          <p className="btn-black text-center py-2">Upload bukti pembayaran</p>
+          <p className="btn-black text-center py-2" onClick={setDropZoneOn}>Upload bukti pembayaran</p>
           <p className="btn-black btn-black--invert text-center py-2 mb-0">Bayar nanti</p>
         </Card.Body>
       </Card>
