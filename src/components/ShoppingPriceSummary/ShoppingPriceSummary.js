@@ -33,7 +33,7 @@ const ShoppingPriceSummary = () => {
     >Lanjut Bayar</Link>
     : currentPage === PAYMENT_PAGE && !isConfirmed
       ? <p
-        className={`btn-black w-100 d-inline-block text-center py-2 mt-2 mb-0 ${paymentMethod === null ? 'disabled' : ''}`}
+        className={`btn-black w-100 d-inline-block text-center py-2 mt-2 mb-0 ${!!!paymentMethod ? 'disabled' : ''}`}
         onClick={() => setToggleOn()}
       >Konfirmasi Detail Pembayaran</p>
       : currentPage === PAYMENT_PAGE && isConfirmed

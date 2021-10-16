@@ -7,7 +7,11 @@ import ProductsSummary from '../ProductsSummary/ProductsSummary';
 import './ShoppingSummaryModal.scss';
 
 const ShoppingSummaryModal = ({ closeFunc, ...props }) => {
-  const { isConfirmed, setIsConfirmed, product } = useContext(CheckoutContext);
+  const { isConfirmed, setIsConfirmed, product, paymentMethod } = useContext(CheckoutContext);
+
+  if (!!!paymentMethod) {
+    return null;
+  }
 
   const closeModal = () => {
     if (closeFunc) {
@@ -63,8 +67,8 @@ const ShoppingSummaryModal = ({ closeFunc, ...props }) => {
             <div className="d-flex justify-content-between">
               <p className="text-gray">Metode Pembayaran</p>
               <div>
-                <p className="fw-bold text-end mb-0">Transfer BNI</p>
-                <p>12312312 (ela)</p>
+                <p className="fw-bold text-end mb-0">Transfer {paymentMethod.payment_name}</p>
+                <p>{paymentMethod.no_rekening} ({paymentMethod.payment_name})</p>
               </div>
             </div>
             <div className="d-flex justify-content-between">
