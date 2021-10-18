@@ -1,13 +1,20 @@
 @import '../../styles/variables';
 
-.summary-section {
-  border-bottom: 4px solid $gray-light;
-
-  &__container {
-    padding: 1rem;
+.shopping-summary {
+  .summary-section {
+    border-bottom: 4px solid $gray-light;
+  
+    &__container {
+      padding: 1rem;
+    }
+  
+    &__title {
+      text-transform: uppercase;
+    }
   }
 
-  &__title {
-    text-transform: uppercase;
+  .loading {
+    width: 1.5rem;
+    height: 1.5rem;
   }
 }

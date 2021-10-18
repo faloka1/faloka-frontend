@@ -1,14 +1,20 @@
 import React, { useContext } from 'react'
-import { Modal } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
+import { Link, useHistory } from 'react-router-dom';
 import CurrencyFormat from 'react-currency-format';
-import { Link } from 'react-router-dom';
-import { CheckoutContext } from '../../context/CheckoutContext/CheckoutContext';
-import concatAddress from '../../helpers/concat-address';
-import ProductsSummary from '../ProductsSummary/ProductsSummary';
+import { useMutation } from 'react-query';
+import { Spinner } from 'react-bootstrap';
 
 import './ShoppingSummaryModal.scss';
 
+import { CheckoutContext } from '../../context/CheckoutContext/CheckoutContext';
+import postCheckoutData from '../../helpers/api/post-checkout-data';
+import concatAddress from '../../helpers/concat-address';
+import ProductsSummary from '../ProductsSummary/ProductsSummary';
+
+
 const ShoppingSummaryModal = ({ closeFunc, ...props }) => {
+  const history = useHistory();
   const {
     isConfirmed,
     setIsConfirmed,
@@ -17,6 +23,21 @@ const ShoppingSummaryModal = ({ closeFunc, ...props }) => {
     expedition,
     shipmentAddress
   } = useContext(CheckoutContext);
+  const { mutate, isLoading } = useMutation(async checkoutData => {
+    const response = await postCheckoutData(checkoutData);
+
+    return response.data;
+  }, {
+    onSuccess: () => {
+      setIsConfirmed(true);
+      if (closeFunc) {
+        closeModal();
+      }
+
+      history.push('/checkout/finish');
+    },
+    onError: (err) => console.log(err),
+  });
 
   if (!!!paymentMethod || !!!product.product || !!!expedition.cost) {
     return null;
@@ -33,11 +54,16 @@ const ShoppingSummaryModal = ({ closeFunc, ...props }) => {
     }
   };
 
-  const finishHandler = (values) => {
-    if (closeFunc) {
-      setIsConfirmed(true);
-      closeModal();
-    }
+  const finishHandler = async (values) => {
+    mutate({
+      shipping_price: shipmentCost,
+      expedition_name: expedition.code,
+      payment_id: paymentMethod.id,
+      address_id: shipmentAddress.address.id,
+      quantity: quantity,
+      variant_id: product.product.variants[0].id,
+      service: expedition.cost.service
+    });
   };
 
   return (
@@ -128,27 +154,35 @@ const ShoppingSummaryModal = ({ closeFunc, ...props }) => {
           </div>
         </section>
         <div className="px-3 my-3">
-          {!isConfirmed &&
-            <Link
-              to="/checkout/finish"
+          {!isConfirmed && !isLoading &&
+            <Button
               className="btn-black confirm-btn text-center p-3 d-inline-block w-100"
               onClick={finishHandler}
             >
               Bayar
-            </Link>
+            </Button>
+          }
+          {isLoading &&
+            <Button
+              className="btn-black confirm-btn text-center p-3 d-inline-block w-100 disabled"
+              disabled={isLoading}
+            >
+              <Spinner animation="border" role="status" className="loading">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            </Button>
           }
           {isConfirmed &&
-            <Link
-              to="/checkout/finish"
+            <Button
               className="btn-black confirm-btn text-center p-3 d-inline-block w-100"
               onClick={closeModal}
             >
               Tutup
-            </Link>
+            </Button>
           }
         </div>
       </Modal.Body>
-    </Modal>
+    </Modal >
   )
 }
 
