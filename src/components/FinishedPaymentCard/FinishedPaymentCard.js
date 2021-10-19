@@ -1,25 +1,34 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import { Card } from 'react-bootstrap';
+import CurrencyFormat from 'react-currency-format';
+import { Link } from 'react-router-dom';
+import { CheckoutContext } from '../../context/CheckoutContext/CheckoutContext';
 import useToggle from '../../hooks/use-toggle';
 import PaymentProofDropzone from '../PaymentProofDropzone/PaymentProofDropzone';
 import ShoppingSummaryModal from '../ShoppingSummaryModal/ShoppingSummaryModal';
 
 const FinishedPaymentCard = ({ className }) => {
   const { toggle, setToggleOn, setToggleOff } = useToggle();
+  const [isUploaded, setIsUploaded] = useState(false);
   const {
     toggle: dropZoneToggle,
     setToggleOn: setDropZoneOn,
     setToggleOff: setDropZoneOff
   } = useToggle();
   let classes = 'rounded-0';
+  const { orderId, totalPrice } = useContext(CheckoutContext);
 
   if (className) {
     classes += ` ${className}`;
   }
 
+  const uploadSuccessHandler = () => {
+    setIsUploaded(true);
+  };
+
   return (
     <>
-      <PaymentProofDropzone show={dropZoneToggle} closeFunc={setDropZoneOff} onHide={setDropZoneOff} centered />
+      <PaymentProofDropzone show={dropZoneToggle} onSuccess={uploadSuccessHandler} closeFunc={setDropZoneOff} onHide={setDropZoneOff} orderId={orderId} centered />
       <ShoppingSummaryModal show={toggle} closeFunc={setToggleOff} onHide={setToggleOff} />
       <Card className={classes}>
         <Card.Body>
@@ -37,14 +46,31 @@ const FinishedPaymentCard = ({ className }) => {
           <div className="d-flex justify-content-between">
             <p className="text-gray">
               Total Pembayaran
-              <span className="ms-2 text-info " role="button" onClick={setToggleOn}><small>Lihat rincian</small></span>
+              <span className="ms-2 text-info" role="button" onClick={setToggleOn}><small>Lihat rincian</small></span>
             </p>
-            <p className="fw-bold text-accent">Rp80000</p>
+            <CurrencyFormat
+              value={totalPrice}
+              displayType={'text'}
+              prefix={'Rp'}
+              thousandSeparator="."
+              decimalSeparator=","
+              renderText={value => <p className="fw-bold text-accent">{value}</p>}
+            />
           </div>
         </Card.Body>
         <Card.Body>
-          <p className="btn-black text-center py-2" onClick={setDropZoneOn}>Upload bukti pembayaran</p>
-          <p className="btn-black btn-black--invert text-center py-2 mb-0">Bayar nanti</p>
+          {!isUploaded &&
+            <>
+              <p className="btn-black text-center py-2" onClick={setDropZoneOn}>Upload bukti pembayaran</p>
+              <Link to="/user/transaction" className="btn-black d-block btn-black--invert text-center py-2 mb-0">Bayar nanti</Link>
+            </>
+          }
+          {isUploaded &&
+            <>
+              <p className="text-accent text-center">Bukti pembayaran berhasil di-upload</p>
+              <Link className="btn btn-black d-block text-center py-2 mb-0 rounded-0" to="/">Kembali ke beranda</Link>
+            </>
+          }
         </Card.Body>
       </Card>
     </>
