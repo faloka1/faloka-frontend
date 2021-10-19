@@ -21,15 +21,19 @@ const ShoppingSummaryModal = ({ closeFunc, ...props }) => {
     product,
     paymentMethod,
     expedition,
-    shipmentAddress
+    shipmentAddress,
+    setOrderId,
+    setTotalPrice
   } = useContext(CheckoutContext);
   const { mutate, isLoading } = useMutation(async checkoutData => {
     const response = await postCheckoutData(checkoutData);
 
     return response.data;
   }, {
-    onSuccess: () => {
+    onSuccess: (data) => {
+      setOrderId(data.order_id);
       setIsConfirmed(true);
+      setTotalPrice(totalPrice);
       if (closeFunc) {
         closeModal();
       }
@@ -47,6 +51,7 @@ const ShoppingSummaryModal = ({ closeFunc, ...props }) => {
   const quantity = product.quantity;
   const itemsPrice = itemPrice * quantity;
   const shipmentCost = expedition.cost.cost[0].value;
+  const totalPrice = shipmentCost + itemsPrice;
 
   const closeModal = () => {
     if (closeFunc) {
@@ -54,7 +59,7 @@ const ShoppingSummaryModal = ({ closeFunc, ...props }) => {
     }
   };
 
-  const finishHandler = async (values) => {
+  const finishHandler = async () => {
     mutate({
       shipping_price: shipmentCost,
       expedition_name: expedition.code,
@@ -143,7 +148,7 @@ const ShoppingSummaryModal = ({ closeFunc, ...props }) => {
             <div className="d-flex justify-content-between border-top pt-2">
               <p className="text-uppercase mb-0">Total Pembayaran</p>
               <CurrencyFormat
-                value={(shipmentCost + itemsPrice)}
+                value={totalPrice}
                 displayType={'text'}
                 prefix={'Rp'}
                 thousandSeparator="."
