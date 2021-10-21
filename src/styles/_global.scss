@@ -69,6 +69,14 @@ a {
   }
 }
 
+*:focus {
+  box-shadow: none!important;
+}
+
+input:focus {
+  border: 1px solid $green-accent !important;
+}
+
 .icon {
   --icon-size: 1.5rem;
   height: var(--icon-size);

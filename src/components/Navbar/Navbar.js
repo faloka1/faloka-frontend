@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import {
   Container,
   Navbar as BootstrapNavbar,
@@ -6,7 +6,9 @@ import {
   NavLink,
   NavbarBrand,
   Form,
-  FormControl
+  FormControl,
+  InputGroup,
+  Button
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -22,11 +24,17 @@ import CheckoutProgressBar from '../CheckoutProgressBar/CheckoutProgressBar';
 import DUMMY_CATEGORIES from '../../data/dummy-categories';
 import useToggle from '../../hooks/use-toggle';
 import LoginRegisterModal from '../LoginRegisterModal/LoginRegisterModal';
+import SearchModal from '../SearchModal/SearchModal';
 import UserDropdown from './UserDropdown/UserDropdown';
 import CategoryDropdown from './CategoryDropdown/CategoryDropdown';
 
 const Navbar = ({ categories }) => {
   const { setToggleOff, setToggleOn, toggle } = useToggle();
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const { category: currentCategory, setCategory, onHome } = useContext(HomeContext);
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
   categories = !!categories ? categories : DUMMY_CATEGORIES;
@@ -39,10 +47,37 @@ const Navbar = ({ categories }) => {
 
   return (
     <>
+      <SearchModal show={show} onHide={handleClose} closeFunc={handleClose} centered />
       <LoginRegisterModal show={toggle} onHide={setToggleOff} closeFunc={setToggleOff} centered />
-      <BootstrapNavbar fixed="top">
+      <BootstrapNavbar fixed="top" expand="lg">
         <Container className="position-relative">
+          <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
           <NavbarBrand as={Link} className="brand" to="/">FALOKA</NavbarBrand>
+          <Nav className="navbar-right d-flex order-lg-1">
+            <ul className="navbar-nav">
+              <li className="nav-item-group">
+                <NavLink as={Link} to="#" className="d-block d-lg-none">
+                  <SearchIcon onClick={handleShow} className="icon" />
+                </NavLink>
+                <div className="d-none d-lg-block">
+                  <Form className="d-flex search-input">
+                    <InputGroup>
+                        <Button variant="primary" className="search-icon">
+                          <SearchIcon className="icon" />
+                        </Button>
+                        <FormControl type="text" placeholder="Search" />
+                    </InputGroup>
+                  </Form>
+                </div> 
+              </li>
+              <li className="nav-item-group">
+                <NavLink as={Link} to="#">
+                  <UserIcon onClick={userClickHandler} className="icon" />
+                </NavLink>
+                {isLoggedIn && <UserDropdown />}
+              </li>
+            </ul>
+          </Nav>
           <Switch>
             <Route exact path="/checkout/finish">
             </Route>
@@ -50,6 +85,7 @@ const Navbar = ({ categories }) => {
               <CheckoutProgressBar className="d-none d-lg-block" />
             </Route>
             <Route path="*">
+              <BootstrapNavbar.Collapse id="basic-navbar-nav">
               <Nav as="nav" className="me-auto category-filter flex-grow-1">
                 <ul className="navbar-nav">
                   {categories.map(category => (
@@ -66,22 +102,7 @@ const Navbar = ({ categories }) => {
                   ))}
                 </ul>
               </Nav>
-              <Form className="d-flex search-input">
-                <FormControl type="text" placeholder="Search" />
-                <div className="search-icon">
-                  <SearchIcon className="icon" />
-                </div>
-              </Form>
-              <Nav className="header__menu ml-auto">
-                <ul className="navbar-nav">
-                  <li className="nav-item nav-item-group dropdown position-relative">
-                    <NavLink as={Link} to="#">
-                      <UserIcon onClick={userClickHandler} className="icon" />
-                    </NavLink>
-                    {isLoggedIn && <UserDropdown />}
-                  </li>
-                </ul>
-              </Nav>
+              </BootstrapNavbar.Collapse>
             </Route>
           </Switch>
         </Container>
