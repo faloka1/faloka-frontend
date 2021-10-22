@@ -77,6 +77,10 @@ input:focus {
   border: 1px solid $green-accent !important;
 }
 
+select:focus {
+  border: 1px solid $green-accent !important;
+}
+
 .icon {
   --icon-size: 1.5rem;
   height: var(--icon-size);
@@ -109,5 +113,14 @@ input:focus {
 .left-addon .glyphicon  { left:  0px;}
 .right-addon .glyphicon { right: 0px;}
 
-.left-addon input  { padding-left:  3.75rem !important; }
-.right-addon input { padding-right: 3.75rem !important; }
+.left-addon{ 
+  input, select  {
+    padding-left:  3.75rem !important; 
+  }
+}
+
+.right-addon{ 
+  input, select  {
+    padding-right:  3.75rem !important; 
+  }
+}
