@@ -48,7 +48,7 @@ const Navbar = ({ categories }) => {
   return (
     <>
       <SearchModal show={show} onHide={handleClose} closeFunc={handleClose} centered />
-      <LoginRegisterModal show={toggle} onHide={setToggleOff} closeFunc={setToggleOff} centered />
+      <LoginRegisterModal className="auth-modal" show={toggle} onHide={setToggleOff} closeFunc={setToggleOff} centered />
       <BootstrapNavbar fixed="top" expand="lg">
         <Container className="position-relative">
           <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />

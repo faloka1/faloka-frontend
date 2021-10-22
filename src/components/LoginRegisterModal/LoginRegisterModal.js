@@ -1,6 +1,8 @@
 import React from 'react';
-import { Modal } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+
+import './LoginRegisterModal.scss';
 
 const LoginRegisterModal = ({ closeFunc, ...props }) => {
 
@@ -13,11 +15,13 @@ const LoginRegisterModal = ({ closeFunc, ...props }) => {
 
   return (
     <Modal {...props}>
+      <Modal.Header>
+        <p className="brand text-center">FALOKA</p>
+      </Modal.Header>
       <Modal.Body>
-        <p className="h4 text-center mb-4">FALOKA</p>
-        <Link className="w-100 btn-black text-center py-2 d-block mb-3 d-block" to="/login" onClick={clickHandler}>Login</Link>
-        <p className="text-center">Atau</p>
-        <Link className="w-100 btn-black btn-black--invert text-center py-2 d-block" to="/register" onClick={clickHandler}>Register</Link>
+        <Button as={Link} className="w-100 text-center py-2 d-block" variant="primary" to="/login" onClick={clickHandler}>Login</Button>
+        <p className="text-center my-3">atau</p>
+        <Button as={Link} className="w-100 text-center py-2 d-block" variant="outline-primary" to="/register" onClick={clickHandler}>Register</Button>
       </Modal.Body>
     </Modal>
   );

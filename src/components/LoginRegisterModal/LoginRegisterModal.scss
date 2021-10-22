@@ -1,0 +1,28 @@
+@import '../../styles/variables';
+
+.auth-modal{
+    .modal-header{
+        .brand{
+            font-size: 1.75em;
+            text-transform: uppercase;
+            margin:auto;
+            padding:.125rem;
+        }
+    }
+    .modal-body{
+        padding: 1.25rem;
+
+        .btn{
+            border-radius: 0!important;
+        }
+
+        .btn:hover{
+            text-decoration: none!important;
+        }
+
+        .btn-primary:hover{
+            background-color: unset;
+            color: $black !important;
+        }
+    }
+}

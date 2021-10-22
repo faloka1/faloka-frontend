@@ -1,0 +1,91 @@
+@import '../../../styles/variables';
+@import '../../../styles/typography';
+@import '../../../styles/faloka';
+
+.register-form{
+  background-color: $white;
+  margin-top: 5.5rem;
+  width:42.5rem;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: 1rem;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.04);
+
+  form{
+    padding: 2.5rem;
+
+    .register-title{
+      text-align: center;
+      margin-bottom: 2rem;
+      font-weight: bold;
+    }
+
+    .register-forgot{
+      display: block;
+      width:100%;
+      text-align: right;
+      padding: 0 0.5rem;
+
+      a:hover{
+        color: $green-accent;
+        text-decoration: none!important;
+      }   
+    }
+
+    small.register-error{
+      font-size: 80%;
+      color: red;
+      margin-top: 0.25rem;
+      display: inline-block;
+    }
+
+    input.register-error{
+      border: 1px solid red;
+    }
+
+    select.register-error{
+      border: 1px solid red;
+    }
+  
+    input, select{
+      border: 0;
+      border-radius: 0;
+      background-color: #F1F1F1;
+      padding: 0.75rem;
+    }
+    
+    select{
+      padding-left: 3.5rem!important;
+    }
+
+    select:required:invalid {
+      color: #6c757d;
+    }
+
+    option {
+      color: #212529;
+    }
+
+    button{
+      padding: 0.75rem 0;
+      margin: 0 6.25rem;
+    }
+
+    .register-loading {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+
+  .form-footer{
+    padding: 0.75rem;
+    background-color: #F1F1F1;
+    border-top: 1px solid rgba(0,0,0,.125);
+    border-radius: 0 0 1rem 1rem;
+    text-align: center;
+
+    a{
+      font-weight: 600;
+      color: $green-secondary-accent;
+    }
+  }
+}
