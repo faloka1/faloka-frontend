@@ -1,0 +1,57 @@
+@import '../../styles/variables';
+@import '../../styles/typography';
+@import '../../styles/faloka';
+
+.search-backdrop{
+    opacity: 0.875!important;
+}
+
+.search-modal{
+    .modal-content{
+        border: 0;
+        border-radius: 0;
+        background-color: unset!important;
+    }
+
+    input{
+        height:5rem;
+        font-size:1.75rem;
+        background-color: unset!important;
+        color:#EEE!important;
+        border-radius: 0;
+        border-top: 0;
+        border-bottom: .125rem solid #f8f9fa;
+        border-left: 0;
+        border-right: 0;
+    }
+
+    input:focus{
+        border-top: 0 !important;
+        border-bottom: .125rem solid #f8f9fa !important;
+        border-left: 0 !important;
+        border-right: 0 !important;
+        background-color: #f8f9fa!important;
+        color:#333!important;
+
+    }
+
+    input::placeholder{
+        color:#BBB;
+    }
+
+    button{
+        height:5rem;
+        width:5rem;
+        border-radius: 0;
+        border-top: 0;
+        border-bottom: .125rem solid #f8f9fa;
+        border-left: 0;
+        border-right: 0;
+        
+        .icon{
+            height: 100%!important;
+            width: 100%!important;
+            padding: 0.5rem;
+        }
+    }
+}
