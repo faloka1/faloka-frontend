@@ -103,3 +103,30 @@ a {
 
 .left-addon input  { padding-left:  3.75rem !important; }
 .right-addon input { padding-right: 3.75rem !important; }
+
+.custom-tab {
+  .nav-item {       
+    flex-grow: 1 !important;
+
+    button{
+      width: 100%;
+    }
+
+    .nav-link {
+      font-family: $lato;
+      border: 0px ;
+      color: $black-muted;
+      font-weight: 400;
+    }
+
+    .active{
+      font-weight: 550;
+      color: $green-accent;
+      border-bottom: 2px solid $green-accent;
+    }
+  }
+
+  .tab-content{
+    padding: 1rem .75rem;
+  }
+}

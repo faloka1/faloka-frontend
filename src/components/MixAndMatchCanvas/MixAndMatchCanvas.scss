@@ -1,0 +1,17 @@
+.mix-and-match-canvas {
+  .placeholder {
+    color: #848484;
+    background-color: #f4f4f4;
+  }
+
+  .item {
+    width: 240px;
+    height: 240px;
+  }
+
+  svg {
+    path {
+      stroke: #848484;
+    }
+  }
+}
