@@ -9,62 +9,71 @@ import getProducts from "../../../helpers/api/get-products";
 import '../../../components/ProductCard/ProductCard.scss';
 
 const ProductList = () => {
+  const [count, setCount] = useState(0);
+  const [category, setCategory] = useState('');
+  const [products, setProducts] = useState([]);
+
   let query = new URLSearchParams(useLocation().search);
-  var category = query.get("categories");
+  var categorySlug = query.get("categories");
   var subcategory = query.get("subcategories");
-  const productsQuery = useQuery(
-    ['product-list', { category, subcategory }],
+  const { isLoading } = useQuery(
+    ['product-list', { categorySlug, subcategory }],
     async ({ queryKey }) => {
-      const [, { category, subcategory }] = queryKey;
+      const [, { categorySlug, subcategory }] = queryKey;
       try {
-        const response = await getProducts(category, subcategory);
+        const response = await getProducts(categorySlug, subcategory);
         return response.data;
       } catch (error) {
         console.log(error);
       }
+    },
+    {
+      onSuccess: (data) => {
+        setCount(data.count);
+        setCategory(data.category[0].name);
+        setProducts(data.product);
+      }
     }
   );
-  const content = productsQuery.isLoading ? (
-      <Row xs={1} lg={2} xl={4} className="g-4 mb-5">
-        {[1,2,3,4].map(view => (
-          <Col key={view}>
-            <Card className="product-card">
-              <Placeholder className="product-image" animation="glow">
-                <Placeholder className="card-img-top" bg="secondary"/>
+  const content = isLoading ? (
+    <Row xs={1} lg={2} xl={4} className="g-4 mb-5">
+      {[1, 2, 3, 4].map(view => (
+        <Col key={view}>
+          <Card className="product-card">
+            <Placeholder className="product-image" animation="glow">
+              <Placeholder className="card-img-top" bg="secondary" />
+            </Placeholder>
+            <Card.Body>
+              <Placeholder as={Card.Text} animation="glow">
+                <Placeholder xs={8} bg="secondary" />
+                <Placeholder xs={6} bg="secondary" />
               </Placeholder>
-              <Card.Body>
-                <Placeholder as={Card.Text} animation="glow">
-                  <Placeholder xs={8} bg="secondary"/>
-                  <Placeholder xs={6} bg="secondary"/>
-                </Placeholder>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-    ) : (
-      <Row xs={1} lg={2} xl={4} className="g-4 mb-5">
-        {productsQuery.data.map(product => (
-          <Col key={product.slug}>
-            <ProductCard product={product} />
-          </Col>
-        ))}
-      </Row>
-    );
-  
+            </Card.Body>
+          </Card>
+        </Col>
+      ))}
+    </Row>
+  ) : (
+    <Row xs={1} lg={2} xl={4} className="g-4 mb-5">
+      {products.map(product => (
+        <Col key={product.slug}>
+          <ProductCard product={product} />
+        </Col>
+      ))}
+    </Row>
+  );
+
   return (
-    <>
-      <Container>
-        <Breadcrumb className="pt-5">
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Home</Breadcrumb.Item>
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/products" }}>Blouse</Breadcrumb.Item>
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "#" }} active>Jumpsuit Elegan</Breadcrumb.Item>
-        </Breadcrumb>
-        <h3 className="text-center">Atasan</h3>
-        <p className="text-muted text-center">({productsQuery.isSuccess ? (productsQuery.data.length) : (0)} produk ditemukan)</p>
-        {content}
-      </Container>
-    </>
+    <Container>
+      <Breadcrumb className="pt-5">
+        <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Home</Breadcrumb.Item>
+        <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/products" }}>Blouse</Breadcrumb.Item>
+        <Breadcrumb.Item linkAs={Link} linkProps={{ to: "#" }} active>Jumpsuit Elegan</Breadcrumb.Item>
+      </Breadcrumb>
+      <h3 className="text-center">{category}</h3>
+      <p className="text-muted text-center">({count} produk ditemukan)</p>
+      {content}
+    </Container>
   );
 };
 
