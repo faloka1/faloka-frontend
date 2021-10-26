@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, Tabs, Tab} from 'react-bootstrap';
+import { Container, Row, Col, Tabs, Tab } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import Sidebar from '../../../components/User/Sidebar/Sidebar';
@@ -11,14 +11,14 @@ const Transaction = () => {
         <Container>
             <Row className="profile g-4">
                 <Col xs={12} xxl={2}>
-                    <Sidebar account="cok"/>
+                    <Sidebar account="cok" />
                 </Col>
                 <Col xs={12} xxl={10}>
-                    <div className="tab-transaction">
+                    <div className="custom-tab">
                         <Tabs defaultActiveKey="awaiting-payment" id="transaction-tab">
                             <Tab eventKey="awaiting-payment" title="Menunggu pembayaran">
                                 <span className="info-payment">Pesanan akan hangus jika tidak dibayar selama 24 jam</span>
-                                <TransactionCard transaction="asu"/>
+                                <TransactionCard transaction="asu" />
                             </Tab>
                             <Tab eventKey="awaiting-confirmation" title="Sedang konfirmasi">
                                 <span className="info-confirmation">Pesananmu akan dikemas setelah pembayaran terkonfirmasi</span>

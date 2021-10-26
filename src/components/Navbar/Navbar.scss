@@ -13,13 +13,13 @@
   .brand {
     font-size: 1.9em;
     text-transform: uppercase;
-    margin-right: 0!important;
+    
     &:hover {
-      text-decoration: none!important;
+      text-decoration: none !important;
     }
   }
 
-  .category-filter {
+  .navbar-nav {
     a {
       display: inline-block !important;
       padding: 1rem 1.5rem !important;
@@ -27,12 +27,19 @@
       &:hover,
       &.active {
         font-weight: 600;
+        text-decoration: none !important;
       }
     }
 
+    .mixmatch:hover,
+    .mixmatch.active {
+      color: $accent-1 !important;
+    }
+  }
+
+  .category-filter {
     a:hover,
     a.active {
-      text-decoration: none!important;
       color: #01B8BC !important;
     }
   } 

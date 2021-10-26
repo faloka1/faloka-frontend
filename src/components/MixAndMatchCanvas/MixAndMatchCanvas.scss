@@ -1,0 +1,22 @@
+.mix-and-match-canvas {
+  .placeholder {
+    color: #848484;
+    background-color: #f4f4f4;
+    height: 240px;
+  }
+
+  .item {
+    width: 240px;
+
+    img {
+      object-fit: contain;
+      object-position: center;
+    }
+  }
+
+  svg {
+    path {
+      stroke: #848484;
+    }
+  }
+}

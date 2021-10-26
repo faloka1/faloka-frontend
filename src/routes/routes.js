@@ -11,6 +11,7 @@ import RouteNotFound from "../pages/Error/RouteNotFound";
 import { isGuest } from "../middleware/is-guest";
 import { isLoggedIn } from "../middleware/is-logged-in";
 import Checkout from "../pages/Checkout/Checkout";
+import MixAndMatch from "../pages/MixAndMatch/MixAndMatch";
 
 export const routes = [
   {
@@ -79,6 +80,12 @@ export const routes = [
     name: 'Product Detail',
     path: '/products/:productSlug',
     pageComponent: ProductDetail,
+    exact: true,
+  },
+  {
+    name: 'Mix and Match',
+    path: '/mix-and-match',
+    pageComponent: MixAndMatch,
     exact: true,
   },
   {
