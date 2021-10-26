@@ -10,7 +10,7 @@ import {
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, NavLink as RouterNavLink } from 'react-router-dom'
 
 import './Navbar.scss';
 
@@ -50,10 +50,10 @@ const Navbar = ({ categories }) => {
               <CheckoutProgressBar className="d-none d-lg-block" />
             </Route>
             <Route path="*">
-              <Nav as="nav" className="me-auto category-filter flex-grow-1">
+              <Nav as="nav" className="me-auto flex-grow-1">
                 <ul className="navbar-nav">
                   {categories.map(category => (
-                    <li key={category.slug} className="nav-item-group">
+                    <li key={category.slug} className="nav-item-group category-filter">
                       <Link
                         to="/"
                         onClick={() => setCategory(category.slug)}
@@ -64,6 +64,11 @@ const Navbar = ({ categories }) => {
                       {category.sub_categories.length > 0 && <CategoryDropdown category={category.slug} subcategories={category.sub_categories} />}
                     </li>
                   ))}
+                  <li className="nav-item-group">
+                    <RouterNavLink to="/mix-and-match" className="text-accent mixmatch" activeClassName="active">
+                      Mixmatch
+                    </RouterNavLink>
+                  </li>
                 </ul>
               </Nav>
               <Form className="d-flex search-input">

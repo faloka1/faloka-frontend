@@ -1,49 +1,75 @@
-import React from 'react';
-import { Tabs, Tab, Row, Col } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Tabs, Tab, Row, Col, Spinner } from 'react-bootstrap';
+import { useQuery } from 'react-query';
 
 import './MixAndMatchMenu.scss';
 
 import Item from './Item/Item';
-
-const DUMMY_TOP = {
-  image: "./assets/images/products/product_3.png",
-  slug: "toppp"
-};
-
-const DUMMY_BOTTOM = {
-  image: "./assets/images/products/product_4.png",
-  slug: "bottommmmm"
-};
+import getMixAndMatchItems from '../../helpers/api/get-mix-and-match-items';
+import { BASE_CONTENT_URL } from '../../config/api';
 
 const MixAndMatchMenu = ({ onSetTop, onSetBottom }) => {
+  const [products, setProducts] = useState([]);
+  const [category, setCategory] = useState('atasan');
+  const { isLoading } = useQuery(
+    ['mix-and-match-items', { category }],
+    async ({ queryKey }) => {
+      const [, { category }] = queryKey;
+
+      try {
+        const response = await getMixAndMatchItems(category);
+
+        return response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    {
+      onSuccess: (data) => {
+        setProducts(data.map(d => ({
+          image: `${BASE_CONTENT_URL}${d.mix_and_match_image}`,
+          ...d
+        })));
+      }
+    }
+  );
+
+  const tabsClickHandler = (key) => {
+    setCategory(key);
+  };
+
   return (
     <div className="mix-and-match-menu border custom-tab">
-      <Tabs defaultActiveKey="atasan">
+      <Tabs defaultActiveKey={category} onSelect={tabsClickHandler}>
         <Tab eventKey="atasan" title="Atasan">
           <Row className="g-4">
-            {[...Array(7)].map((x, i) =>
-              <>
-                <Col xs={4} key={x} onClick={() => onSetTop(DUMMY_TOP)}>
-                  <Item image="./assets/images/products/product_3.png" path="#" />
-                </Col>
-                <Col xs={4} key={x} onClick={() => onSetTop({ image: "./assets/images/products/product_5.png", slug: "testtt" })}>
-                  <Item image="./assets/images/products/product_5.png" path="#" />
-                </Col>
-              </>
+            {!isLoading && products.map(p =>
+              <Col xs={4} key={p.slug} onClick={() => onSetTop(p)}>
+                <Item image={p.image} path={`/products/${p.slug}`} />
+              </Col>
+            )}
+            {isLoading && (
+              <div className="d-flex justify-content-center">
+                <Spinner animation="border" role="status" className="mx-auto">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              </div>
             )}
           </Row>
         </Tab>
         <Tab eventKey="bawahan" title="Bawahan">
           <Row className="g-4">
-            {[...Array(14)].map((x, i) =>
-              <>
-                <Col xs={4} key={x} onClick={() => onSetBottom(DUMMY_BOTTOM)}>
-                  <Item image="./assets/images/products/product_4.png" path="#" />
-                </Col>
-                <Col xs={4} key={x} onClick={() => onSetBottom({ image: "./assets/images/products/product_6.png", slug: "tesdwwdd" })}>
-                  <Item image="./assets/images/products/product_6.png" path="#" />
-                </Col>
-              </>
+            {!isLoading && products.map(p =>
+              <Col xs={4} key={p.slug} onClick={() => onSetBottom(p)}>
+                <Item image={p.image} path={`/products/${p.slug}`} />
+              </Col>
+            )}
+            {isLoading && (
+              <div className="d-flex justify-content-center">
+                <Spinner animation="border" role="status" className="mx-auto">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              </div>
             )}
           </Row>
         </Tab>
