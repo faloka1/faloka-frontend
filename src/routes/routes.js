@@ -1,5 +1,6 @@
 import Home from "../pages/Home";
 import Login from "../pages/Auth/Login/Login";
+import Register from "../pages/Auth/Register/Register";
 import Logout from "../pages/Auth/Logout/Logout";
 import Profile from "../pages/User/Profile/Profile";
 import Transaction from "../pages/User/Transaction/Transaction";
@@ -23,6 +24,16 @@ export const routes = [
     name: 'Login',
     path: '/login',
     pageComponent: Login,
+    middleware: {
+      middleware: isGuest,
+      redirectPath: '/',
+    },
+    exact: true,
+  },
+  {
+    name: 'Register',
+    path: '/register',
+    pageComponent: Register,
     middleware: {
       middleware: isGuest,
       redirectPath: '/',

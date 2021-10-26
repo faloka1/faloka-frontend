@@ -80,7 +80,7 @@ const Login = () => {
                 <div className="icon-placeholder">
                   <EmailIcon className="icon" />
                 </div>
-                <Form.Control id="email" name="email" type="email" placeholder="Masukan Email"
+                <Form.Control id="email" name="email" type="email" placeholder="Masukan Email" required
                   onChange={formValidation.handleChange}
                   onBlur={formValidation.handleBlur}
                   value={formValidation.values.email}
@@ -97,7 +97,7 @@ const Login = () => {
                 <div className="icon-placeholder">
                   <PasswordIcon className="icon" />
                 </div>
-                <Form.Control id="password" name="password" type="password" placeholder="Masukan Password"
+                <Form.Control id="password" name="password" type="password" placeholder="Masukan Password" required
                   onChange={formValidation.handleChange}
                   onBlur={formValidation.handleBlur}
                   value={formValidation.values.password}

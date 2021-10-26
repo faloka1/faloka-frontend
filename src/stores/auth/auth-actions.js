@@ -27,7 +27,11 @@ export const login = (loginData) => {
 
 export const logout = () => {
   return async (dispatch) => {
-    postLogoutData();
+    try {
+      postLogoutData();
+    } catch (err) {
+      console.log(err);
+    }
 
     dispatch(
       authActions.logout()
@@ -45,10 +49,10 @@ export const runLogoutTimer = (expirationTime) => {
 
     if (remainingTime > 0) {
       setTimeout(() => {
-        dispatch(authActions.logout())
+        dispatch(logout())
       }, remainingTime);
     } else {
-      dispatch(authActions.logout());
+      dispatch(logout());
     }
   };
 };
