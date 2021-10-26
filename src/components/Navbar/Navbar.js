@@ -49,7 +49,7 @@ const Navbar = ({ categories }) => {
     <>
       <SearchModal show={show} onHide={handleClose} closeFunc={handleClose} centered />
       <LoginRegisterModal className="auth-modal" show={toggle} onHide={setToggleOff} closeFunc={setToggleOff} centered />
-      <BootstrapNavbar fixed="top" expand="lg">
+      <BootstrapNavbar fixed="top" expand="xl">
         <Container className="position-relative">
           <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
           <NavbarBrand as={Link} className="brand" to="/">FALOKA</NavbarBrand>
@@ -62,13 +62,13 @@ const Navbar = ({ categories }) => {
                 <div className="d-none d-lg-block">
                   <Form className="d-flex search-input">
                     <InputGroup>
-                        <Button variant="primary" className="search-icon">
-                          <SearchIcon className="icon" />
-                        </Button>
-                        <FormControl type="text" placeholder="Search" />
+                      <Button variant="primary" className="search-icon">
+                        <SearchIcon className="icon" />
+                      </Button>
+                      <FormControl type="text" placeholder="Search" />
                     </InputGroup>
                   </Form>
-                </div> 
+                </div>
               </li>
               <li className="nav-item-group">
                 <NavLink as={Link} to="#">
@@ -86,27 +86,27 @@ const Navbar = ({ categories }) => {
             </Route>
             <Route path="*">
               <BootstrapNavbar.Collapse id="basic-navbar-nav">
-              <Nav as="nav" className="me-auto flex-grow-1">
-                <ul className="navbar-nav">
-                  {categories.map(category => (
-                    <li key={category.slug} className="nav-item-group category-filter">
-                      <Link
-                        to="/"
-                        onClick={() => setCategory(category.slug)}
-                        className={`${category.slug === currentCategory && onHome ? 'active' : ''}`}
-                      >
-                        {category.name}
-                      </Link>
-                      {category.sub_categories.length > 0 && <CategoryDropdown category={category.slug} subcategories={category.sub_categories} />}
+                <Nav as="nav" className="me-auto flex-grow-1">
+                  <ul className="navbar-nav">
+                    {categories.map(category => (
+                      <li key={category.slug} className="nav-item-group category-filter">
+                        <Link
+                          to="/"
+                          onClick={() => setCategory(category.slug)}
+                          className={`${category.slug === currentCategory && onHome ? 'active' : ''}`}
+                        >
+                          {category.name}
+                        </Link>
+                        {category.sub_categories.length > 0 && <CategoryDropdown category={category.slug} subcategories={category.sub_categories} />}
+                      </li>
+                    ))}
+                    <li className="nav-item-group">
+                      <RouterNavLink to="/mix-and-match" className="text-accent mixmatch" activeClassName="active">
+                        Mixmatch
+                      </RouterNavLink>
                     </li>
-                  ))}
-                  <li className="nav-item-group">
-                    <RouterNavLink to="/mix-and-match" className="text-accent mixmatch" activeClassName="active">
-                      Mixmatch
-                    </RouterNavLink>
-                  </li>
-                </ul>
-              </Nav>
+                  </ul>
+                </Nav>
               </BootstrapNavbar.Collapse>
             </Route>
           </Switch>
