@@ -12,7 +12,7 @@ import {
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Switch, Route, NavLink as RouterNavLink } from 'react-router-dom'
+import { Switch, Route, NavLink as RouterNavLink } from 'react-router-dom';
 
 import './Navbar.scss';
 
@@ -39,6 +39,8 @@ const Navbar = ({ categories }) => {
 
   const { category: currentCategory, setCategory, onHome } = useContext(HomeContext);
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  const cartQuantity = useSelector(state => state.cart.totalQuantity);
+
   categories = !!categories ? categories : DUMMY_CATEGORIES;
 
   const userClickHandler = () => {
@@ -81,7 +83,7 @@ const Navbar = ({ categories }) => {
               <li className="nav-item-group nav-item-right">
                 <NavLink as={Link} to="/cart" className="ps-0">
                   <CartIcon className="icon ps-0" />
-                  <CounterBadge count={4} />
+                  {!!cartQuantity && <CounterBadge count={cartQuantity} />}
                 </NavLink>
               </li>
             </ul>
