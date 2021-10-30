@@ -12,6 +12,7 @@ import { isGuest } from "../middleware/is-guest";
 import { isLoggedIn } from "../middleware/is-logged-in";
 import Checkout from "../pages/Checkout/Checkout";
 import MixAndMatch from "../pages/MixAndMatch/MixAndMatch";
+import Cart from "../pages/Cart/Cart";
 
 export const routes = [
   {
@@ -87,6 +88,16 @@ export const routes = [
     path: '/mix-and-match',
     pageComponent: MixAndMatch,
     exact: true,
+  },
+  {
+    name: 'Cart',
+    path: '/cart',
+    pageComponent: Cart,
+    exact: true,
+    middleware: {
+      middleware: isLoggedIn,
+      redirectPath: '/login',
+    },
   },
   {
     name: 'Checkout',

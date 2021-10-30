@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import InputSpinner from 'react-bootstrap-input-spinner'
 import { Link } from 'react-router-dom';
 import { Col, Row, Button } from 'react-bootstrap';
-import CurrencyFormat from 'react-currency-format';
-
-import { BASE_CONTENT_URL } from '../../config/api';
 
 import './ProductDetail.scss';
+
+import CurrencyFormatter from '../CurrencyFormatter/CurrencyFormatter';
+import { BASE_CONTENT_URL } from '../../config/api';
 
 const ProductDetail = ({ className, product }) => {
   const [quantity, setQuantity] = useState(1);
@@ -35,16 +35,9 @@ const ProductDetail = ({ className, product }) => {
         <Link className="product-brand">{brands.name}</Link>
         <h4 className="product-name text-uppercase">{name}</h4>
         <div className="product-price">
-          <CurrencyFormat value={price} displayType={'text'} prefix={'Rp'} thousandSeparator="." decimalSeparator="," renderText={value => <span className={` ${discount ? 'product-price--cut' : ''}`}>{value}</span>} />
+          <CurrencyFormatter value={price} renderText={value => <span className={` ${discount ? 'product-price--cut' : ''}`}>{value}</span>} />
           {discount &&
-            <CurrencyFormat
-              value={discountedPrice}
-              displayType={'text'}
-              prefix={'Rp'}
-              thousandSeparator="."
-              decimalSeparator=","
-              renderText={value => <span className="product-price--discount mx-3">{value}</span>}
-            />
+            <CurrencyFormatter value={discountedPrice} renderText={value => <span className="product-price--discount mx-3">{value}</span>} />
           }
         </div>
         <div className="product-size">
@@ -57,11 +50,16 @@ const ProductDetail = ({ className, product }) => {
             <InputSpinner type="int" min={1} max={5} variant={'primary'} value={quantity} onChange={num => setQuantity(num)} size="sm" />
           </div>
         </div>
-        <Col xl={6} className="product-buy">
-          <Link to={`/checkout?product=${slug}&quantity=${quantity}`}>
-            <Button variant={'primary'} type={'button'} className="mt-3 btn-flat w-100">Beli Sekarang</Button>
-          </Link>
-        </Col>
+        <Row>
+          <Col xs={12} lg={6} xl={4} className="product-buy">
+            <Button className="mt-3 btn-black btn-black--invert rounded-0 w-100">Masukkan Keranjang</Button>
+          </Col>
+          <Col xs={12} lg={6} xl={4} className="product-buy">
+            <Link to={`/checkout?product=${slug}&quantity=${quantity}`}>
+              <Button className="mt-3 btn-black rounded-0 w-100">Beli Sekarang</Button>
+            </Link>
+          </Col>
+        </Row>
       </Col>
     </Row>
   );

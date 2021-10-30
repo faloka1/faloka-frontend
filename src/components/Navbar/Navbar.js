@@ -17,6 +17,7 @@ import { Switch, Route, NavLink as RouterNavLink } from 'react-router-dom'
 import './Navbar.scss';
 
 import { ReactComponent as UserIcon } from '../SVG/user.svg';
+import { ReactComponent as CartIcon } from '../SVG/shopping-bag.svg';
 import { ReactComponent as SearchIcon } from '../SVG/search.svg';
 import { HomeContext } from '../../context/HomeContext/HomeContext';
 import CheckoutProgressBar from '../CheckoutProgressBar/CheckoutProgressBar';
@@ -27,6 +28,7 @@ import LoginRegisterModal from '../LoginRegisterModal/LoginRegisterModal';
 import SearchModal from '../SearchModal/SearchModal';
 import UserDropdown from './UserDropdown/UserDropdown';
 import CategoryDropdown from './CategoryDropdown/CategoryDropdown';
+import CounterBadge from './CounterBadge/CounterBadge';
 
 const Navbar = ({ categories }) => {
   const { setToggleOff, setToggleOn, toggle } = useToggle();
@@ -70,11 +72,17 @@ const Navbar = ({ categories }) => {
                   </Form>
                 </div>
               </li>
-              <li className="nav-item-group">
+              <li className="nav-item-group nav-item-right">
                 <NavLink as={Link} to="#">
                   <UserIcon onClick={userClickHandler} className="icon" />
                 </NavLink>
                 {isLoggedIn && <UserDropdown />}
+              </li>
+              <li className="nav-item-group nav-item-right">
+                <NavLink as={Link} to="/cart" className="ps-0">
+                  <CartIcon className="icon ps-0" />
+                  <CounterBadge count={4} />
+                </NavLink>
               </li>
             </ul>
           </Nav>
