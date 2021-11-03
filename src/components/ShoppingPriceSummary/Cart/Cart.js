@@ -1,13 +1,30 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import ShoppingPriceSummary from '../ShoppingPriceSummaryV2'
 import CartActionButton from './CartActionButton';
 
 const Cart = () => {
+  const items = useSelector(state => state.cart.items);
+  const totalQuantity = items.reduce((accumulator, item) => {
+    if (!item.checked) {
+      return accumulator;
+    }
+
+    return accumulator + item.quantity;
+  }, 0);
+  const totalPrice = items.reduce((accumulator, item) => {
+    if (!item.checked) {
+      return accumulator;
+    }
+
+    return accumulator + (item.price * item.quantity);
+  }, 0);
+
   const entries = [
     {
-      label: 'Total Harga ( 6 barang )',
-      price: 80000
+      label: `Total Harga ( ${totalQuantity} barang )`,
+      price: totalPrice
     }
   ];
 
