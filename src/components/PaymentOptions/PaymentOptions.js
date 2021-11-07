@@ -1,17 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Card, Row } from 'react-bootstrap';
+import { Card, Row, Form } from 'react-bootstrap';
 import { useQuery } from 'react-query';
-import { Form } from 'react-bootstrap';
 
 import './PaymentOptions.scss';
 
 import { CheckoutContext } from '../../context/CheckoutContext/CheckoutContext';
+import { ADD_PAYMENT_METHOD } from '../../context/CheckoutContext/CheckoutActions';
 import getPaymentMethods from '../../helpers/api/get-payment-methods';
 
 const PaymentOptions = ({ className }) => {
   const [selectedPayment, setSelectedPayment] = useState('');
   const [paymentMethods, setPaymentMethods] = useState([]);
-  const { setPaymentMethod } = useContext(CheckoutContext);
+  const { dispatch } = useContext(CheckoutContext);
   useQuery('get-payment-methods', async () => {
     const response = await getPaymentMethods();
 
@@ -28,9 +28,9 @@ const PaymentOptions = ({ className }) => {
   useEffect(() => {
     if (selectedPayment !== '') {
       const payment = paymentMethods.find(pm => +selectedPayment === pm.id);
-      setPaymentMethod(payment);
+      dispatch({ type: ADD_PAYMENT_METHOD, payload: { payment_method: payment } });
     }
-  }, [selectedPayment, paymentMethods, setPaymentMethod]);
+  }, [selectedPayment, dispatch, paymentMethods]);
 
   return (
     <Card className={`p-3${className ? ' ' + className : ''}`}>
@@ -39,7 +39,7 @@ const PaymentOptions = ({ className }) => {
 
       <Row className="">
         {paymentMethods.map(pm => (
-          <Form.Check className="col-sm-6 mb-4">
+          <Form.Check key={pm.id} className="col-sm-6 mb-4">
             <Form.Check.Label className="d-flex">
               <Form.Check.Input name="paymentMethod" type='radio' value={`${pm.id}`} onChange={onSelectPaymentHandler} />
               <div className="payment-method-item">

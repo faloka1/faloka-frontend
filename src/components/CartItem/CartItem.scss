@@ -1,4 +1,14 @@
 .cart-item {
+  // &.loading {
+  //   opacity: .5;
+  //   pointer-events: none;
+  //   cursor: not-allowed;
+  // }
+
+  &__delete-btn {
+    cursor: pointer;
+  }
+
   &__content {
     img {
       width: 100px;

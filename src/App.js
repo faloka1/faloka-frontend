@@ -6,6 +6,7 @@ import './App.scss';
 
 import MainLayout from './components/Layout/MainLayout';
 import { runLogoutTimer } from './stores/auth/auth-actions';
+import { fetchItems } from './stores/cart/cart-actions';
 import { routes } from './routes/routes';
 import RouteComponent from './routes/RouteComponent';
 import { HomeContextProvider } from './context/HomeContext/HomeContext';
@@ -13,6 +14,10 @@ import { HomeContextProvider } from './context/HomeContext/HomeContext';
 const App = () => {
   const expirationTime = useSelector(state => state.auth.expirationTime);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchItems());
+  });
 
   useEffect(() => {
     if (expirationTime) {

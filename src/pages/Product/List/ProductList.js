@@ -31,7 +31,7 @@ const ProductList = () => {
     {
       onSuccess: (data) => {
         setCount(data.count);
-        setCategory(data.category[0].name);
+        setCategory(data.category[0]?.name);
         setProducts(data.product);
       }
     }
