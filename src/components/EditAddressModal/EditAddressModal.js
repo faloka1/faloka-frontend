@@ -14,6 +14,7 @@ import getProvinces from '../../helpers/api/location/get-provinces';
 import getDistricts from '../../helpers/api/location/get-districts';
 import postShipmentAddress from '../../helpers/api/post-shipment-address';
 import putShipmentAddress from '../../helpers/api/put-shipment-address';
+import { ADD_SHIPMENT_ADDRESS } from '../../context/CheckoutContext/CheckoutActions';
 
 const TextFieldInput = ({ name, disabled, ...props }) => {
   const { values } = useFormikContext();
@@ -93,7 +94,7 @@ const ShipmentAddressSchema = Yup.object({
 });
 
 const EditAddressModal = ({ closeFunc, ...props }) => {
-  const { shipmentAddress, setShipmentAddress, setExpedition } = useContext(CheckoutContext);
+  const { dispatch, shipment_address } = useContext(CheckoutContext);
   const [provinces, setProvinces] = useState([]);
   useQuery('get-provinces', async () => {
     const response = await getProvinces();
@@ -115,27 +116,33 @@ const EditAddressModal = ({ closeFunc, ...props }) => {
       location: values.address_location,
     };
 
-    if (shipmentAddress.address === null) {
+    if (shipment_address.address === null) {
       const response = await postShipmentAddress(postShipmentAddressData);
 
       return response.data;
     } else {
-      const response = await putShipmentAddress(postShipmentAddressData, shipmentAddress.address.id);
+      const response = await putShipmentAddress(postShipmentAddressData, shipment_address.address.id);
 
       return response.data;
     }
   }, {
     onSuccess: (mutateData) => {
-      setShipmentAddress(prev => ({
-        name: prev.name,
-        address: mutateData.addresses,
-        phoneNumber: prev.phoneNumber
-      }));
-      setExpedition({
-        name: '',
-        code: '',
-        cost: null,
+      dispatch({
+        type: ADD_SHIPMENT_ADDRESS,
+        payload: {
+          shipment_address: mutateData.addresses
+        }
       });
+      // setShipmentAddress(prev => ({
+      //   name: prev.name,
+      //   address: mutateData.addresses,
+      //   phoneNumber: prev.phoneNumber
+      // }));
+      // setExpedition({
+      //   name: '',
+      //   code: '',
+      //   cost: null,
+      // });
 
       closeFunc();
     }
@@ -150,20 +157,20 @@ const EditAddressModal = ({ closeFunc, ...props }) => {
       <Modal.Body>
         <p className="h3 text-center mb-4">
           {
-            shipmentAddress.address === null
+            shipment_address.address === null
               ? 'Tambah Alamat'
               : 'Ubah Alamat'
           }
         </p>
         <Formik
           initialValues={{
-            full_name: shipmentAddress.name,
-            phone_number: shipmentAddress.phoneNumber,
-            address_province: !!shipmentAddress.address ? shipmentAddress.address.provinces.province_id : '',
-            address_district: !!shipmentAddress.address ? shipmentAddress.address.districts.district_id : '',
-            address_sub_district: !!shipmentAddress.address ? shipmentAddress.address.sub_district : '',
-            address_location: !!shipmentAddress.address ? shipmentAddress.address.location : '',
-            address_postal_code: !!shipmentAddress.address ? shipmentAddress.address.postal_code : ''
+            full_name: shipment_address.name,
+            phone_number: shipment_address.phone_number,
+            address_province: !!shipment_address.address ? shipment_address.address.provinces.province_id : '',
+            address_district: !!shipment_address.address ? shipment_address.address.districts.district_id : '',
+            address_sub_district: !!shipment_address.address ? shipment_address.address.sub_district : '',
+            address_location: !!shipment_address.address ? shipment_address.address.location : '',
+            address_postal_code: !!shipment_address.address ? shipment_address.address.postal_code : ''
           }}
           onSubmit={formSubmitHandler}
           validationSchema={ShipmentAddressSchema}

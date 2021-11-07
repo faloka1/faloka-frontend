@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import ShoppingPriceSummary from '../ShoppingPriceSummaryV2'
+import ShoppingPriceSummary from '../../../components/ShoppingPriceSummary/ShoppingPriceSummary';
 import CartActionButton from './CartActionButton';
 
-const Cart = () => {
+const CartSummary = () => {
   const items = useSelector(state => state.cart.items);
   const totalQuantity = items.reduce((accumulator, item) => {
     if (!item.checked) {
@@ -33,4 +33,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default CartSummary;

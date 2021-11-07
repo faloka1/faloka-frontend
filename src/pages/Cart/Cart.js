@@ -3,11 +3,13 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
 
+import './Cart.scss';
+
 import CartSelector from '../../components/CartSelector/CartSelector';
 import ItemContainer from '../../components/ItemContainer/ItemContainer';
 import ProductCardPlaceholder from '../../components/ProductCard/Placeholder/Placeholder';
 import ProductCard from '../../components/ProductCard/ProductCard';
-import CartShoppingSummary from '../../components/ShoppingPriceSummary/Cart/Cart';
+import CartSummary from './CartSummary/CartSummary';
 import getCartRelated from '../../helpers/api/get-cart-related';
 
 const Cart = () => {
@@ -22,7 +24,7 @@ const Cart = () => {
   });
 
   return (
-    <Container className="mt-5">
+    <Container className="cart mt-5">
       {!itemsEmpty &&
         <Row className="border-bottom">
           <Col xl={8} lg={8}>
@@ -30,13 +32,13 @@ const Cart = () => {
             <CartSelector />
           </Col>
           <Col xl={4} lg={4}>
-            <CartShoppingSummary />
+            <CartSummary />
           </Col>
         </Row>
       }
       {itemsEmpty &&
         <>
-          <img src="/assets/images/empty-cart.png" alt="empty-cart" className="d-block mx-auto w-25 mb-4 mt-5" />
+          <img src="/assets/images/empty-cart.png" alt="empty-cart" className="cart__empty-image d-block mx-auto w-25 mb-4 mt-5" />
           <p className="text-center h4 text-gray fw-bold">Keranjangmu masih kosong.</p>
         </>
       }

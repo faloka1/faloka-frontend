@@ -16,6 +16,7 @@ export const fetchItems = () => {
           item: {
             id: item.id,
             brand: {
+              id: item.products.brand_id,
               slug: item.products.brands.slug,
               name: item.products.brands.name,
             },
@@ -101,3 +102,28 @@ export const updateQuantity = (cart_id, newQuantity) => {
     }));
   }
 };
+
+export const completeCheckout = (cartIds) => {
+  return (dispatch, getState) => {
+    // const { items } = getState().cart;
+    // const checkedCartIds = items.reduce((ids, item) => {
+    //   if (item.checked) {
+    //     return [...ids, item.id];
+    //   }
+
+    //   return [...ids];
+    // }, []);
+
+    dispatch(cartActions.updateIsLoading({ isLoading: true }));
+
+    try {
+      Promise.all(cartIds.map(cart_id => deleteCartItem(cart_id)));
+    } catch (err) {
+      console.log(err);
+    }
+
+    cartIds.forEach(cart_id => dispatch(cartActions.deleteItem({ cart_id })));
+
+    dispatch(cartActions.updateIsLoading({ isLoading: false }));
+  }
+}

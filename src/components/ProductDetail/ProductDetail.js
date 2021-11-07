@@ -33,6 +33,7 @@ const ProductDetail = ({ className, product }) => {
     dispatch(addItem(
       {
         brand: {
+          id: brands.id,
           slug: brands.slug,
           name: brands.name,
         },
@@ -47,6 +48,39 @@ const ProductDetail = ({ className, product }) => {
     ));
     setShowToast(true);
   };
+
+  const itemJson = {
+    id: null,
+    brand: {
+      id: brands.id,
+      slug: brands.slug,
+      name: brands.name,
+    },
+    product_id: variants[0].product_id,
+    variant_id: variants[0].id,
+    name: name,
+    image: `${BASE_CONTENT_URL}${variants_image[0].image_url}`,
+    size: variantName,
+    price,
+    quantity: +quantity,
+  };
+
+  // state.items.push({
+  //   id: item.id,
+  //   brand: {
+  //     id: item.brand.id,
+  //     slug: item.brand.slug,
+  //     name: item.brand.name,
+  //   },
+  //   product_id: item.product_id,
+  //   variant_id: item.variant_id,
+  //   name: item.name,
+  //   image: item.image,
+  //   size: item.size,
+  //   price: item.price,
+  //   quantity: +quantity,
+  //   checked: true
+  // });
 
   return (
     <>
@@ -87,7 +121,13 @@ const ProductDetail = ({ className, product }) => {
               <Button className={`mt-3 btn-black btn-black--invert rounded-0 w-100 ${isAddingToCart ? 'disabled' : ''}`} onClick={addToCartHandler}>Masukkan Keranjang</Button>
             </Col>
             <Col xs={12} lg={6} xl={4} className="product-buy">
-              <Link to={`/checkout?product=${slug}&quantity=${quantity}`}>
+
+              <Link
+                to={{
+                  pathname: "/checkout",
+                  search: `items=${encodeURIComponent(JSON.stringify([itemJson]))}`
+                }}
+              >
                 <Button className={`mt-3 btn-black rounded-0 w-100 ${isAddingToCart ? 'disabled' : ''}`}>Beli Sekarang</Button>
               </Link>
             </Col>

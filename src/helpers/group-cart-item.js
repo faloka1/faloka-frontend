@@ -7,13 +7,16 @@ const groupCartItem = (items) => {
     return prev.concat(current.brand.slug);
   }, []);
 
-  const grouped = uniqueBrand.map(b => {
-    const brandName = items.find(item => item.brand.slug === b).brand.name;
-    const products = items.filter(item => item.brand.slug === b);
+  const grouped = uniqueBrand.map(brandSlug => {
+    const selectedItem = items.find(item => item.brand.slug === brandSlug);
+    const brandName = selectedItem.brand.name;
+    const brandId = selectedItem.brand.id;
+    const products = items.filter(item => item.brand.slug === brandSlug);
 
     return {
       name: brandName,
-      slug: b,
+      slug: brandSlug,
+      brand_id: brandId,
       items: products
     };
   });
