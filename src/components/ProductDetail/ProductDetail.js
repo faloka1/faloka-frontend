@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import InputSpinner from 'react-bootstrap-input-spinner'
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Col, Row, Button, Toast } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { cartActions } from '../../stores/cart/cart-slice';
 import { addItem } from '../../stores/cart/cart-actions';
-
 
 import './ProductDetail.scss';
 
@@ -13,8 +11,10 @@ import CurrencyFormatter from '../CurrencyFormatter/CurrencyFormatter';
 import { BASE_CONTENT_URL } from '../../config/api';
 
 const ProductDetail = ({ className, product }) => {
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
   const isAddingToCart = useSelector(state => state.cart.isLoading);
   const dispatch = useDispatch();
+  const history = useHistory();
   const [quantity, setQuantity] = useState(1);
   const [showToast, setShowToast] = useState(false);
   const {
@@ -30,23 +30,27 @@ const ProductDetail = ({ className, product }) => {
   const { name: variantName, variants_image } = variants[0];
 
   const addToCartHandler = () => {
-    dispatch(addItem(
-      {
-        brand: {
-          id: brands.id,
-          slug: brands.slug,
-          name: brands.name,
+    if (isLoggedIn) {
+      dispatch(addItem(
+        {
+          brand: {
+            id: brands.id,
+            slug: brands.slug,
+            name: brands.name,
+          },
+          price: price,
+          name: name,
+          variant_id: variants[0].id,
+          product_id: variants[0].product_id,
+          image: `${BASE_CONTENT_URL}${variants_image[0].image_url}`,
+          size: variantName
         },
-        price: price,
-        name: name,
-        variant_id: variants[0].id,
-        product_id: variants[0].product_id,
-        image: `${BASE_CONTENT_URL}${variants_image[0].image_url}`,
-        size: variantName
-      },
-      quantity
-    ));
-    setShowToast(true);
+        quantity
+      ));
+      setShowToast(true);
+    } else {
+      history.push('/login');
+    }
   };
 
   const itemJson = {
@@ -64,23 +68,6 @@ const ProductDetail = ({ className, product }) => {
     price,
     quantity: +quantity,
   };
-
-  // state.items.push({
-  //   id: item.id,
-  //   brand: {
-  //     id: item.brand.id,
-  //     slug: item.brand.slug,
-  //     name: item.brand.name,
-  //   },
-  //   product_id: item.product_id,
-  //   variant_id: item.variant_id,
-  //   name: item.name,
-  //   image: item.image,
-  //   size: item.size,
-  //   price: item.price,
-  //   quantity: +quantity,
-  //   checked: true
-  // });
 
   return (
     <>
