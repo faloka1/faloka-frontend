@@ -130,6 +130,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 ## Contact
 
 * __Mario Prasetya Mulya__ - marioprasetyamulya85@gmail.com
+* __Ilham Santosa__ - ilham.boys20@gmail.com
 
 Project Link: [https://github.com/faloka1/faloka-frontend](https://github.com/faloka1/faloka-frontend)
 
