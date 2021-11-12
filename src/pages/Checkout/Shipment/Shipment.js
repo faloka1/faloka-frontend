@@ -1,46 +1,70 @@
 import React, { useContext, useEffect } from 'react';
-import { useQuery } from 'react-query';
-import getUserProfile from '../../../helpers/api/get-user-profile';
+import { SET_CURRENT_PAGE, ASSIGN_SUMMARY_ENTRIES, SET_BUTTON } from '../../../context/CheckoutContext/CheckoutActions';
 
-import ProductsSummary from '../../../components/ProductsSummary/ProductsSummary';
 import ShipmentAddress from '../../../components/ShipmentAddress/ShipmentAddress';
-import { CheckoutContext, SHIPMENT_PAGE } from '../../../context/CheckoutContext/CheckoutContext';
+import { CheckoutContext, SHIPMENT_PAGE, PAYMENT_PAGE } from '../../../context/CheckoutContext/CheckoutContext';
+import ItemsSummary from '../../../components/ItemsSummary/ItemsSummary';
+import { Link } from 'react-router-dom';
 
 const Shipment = () => {
   const {
-    setCurrentPage,
-    setShipmentAddress,
-    shipmentAddress,
-    product
+    shipment_address,
+    items,
+    total_quantity,
+    total_items_price,
+    total_expedition_cost,
+    dispatch
   } = useContext(CheckoutContext);
-  const { isLoading } = useQuery('user-data', async () => {
-    const response = await getUserProfile();
-
-    return response.data;
-  },
-    {
-      onSuccess: (data) => {
-        setShipmentAddress({
-          name: data.name,
-          address: data.addresses.length > 0
-            ? data.addresses[0]
-            : null,
-          phoneNumber: data.phone_number,
-        });
-      },
-      onError: (err) => {
-        console.log(err);
-      }
-    });
 
   useEffect(() => {
-    setCurrentPage(SHIPMENT_PAGE);
-  });
+    const NextButton = () => {
+      const disabled = items.some(item => !!!item.expedition) || !!!shipment_address.address;
+
+      return (
+        <Link
+          to="/checkout/payment"
+          className={`btn-black pay-btn w-100 d-inline-block w-100 text-center py-2 mt-2 ${disabled ? 'disabled' : ''}`}
+          disabled={disabled}
+          onClick={() => { dispatch({ type: SET_CURRENT_PAGE, payload: { current_page: PAYMENT_PAGE } }) }}
+        >Lanjut Bayar</Link>
+      );
+    };
+
+    dispatch({
+      type: SET_CURRENT_PAGE,
+      payload: {
+        current_page: SHIPMENT_PAGE
+      }
+    });
+    dispatch({
+      type: SET_BUTTON,
+      payload: {
+        button: <NextButton />
+      }
+    });
+    dispatch({
+      type: ASSIGN_SUMMARY_ENTRIES,
+      payload: {
+        summary_entries: [
+          {
+            label: `Total Harga (${total_quantity} barang)`,
+            price: total_items_price
+          },
+          {
+            label: 'Biaya Ongkir',
+            price: total_expedition_cost
+          }
+        ]
+      }
+    });
+  }, [dispatch, total_quantity, total_items_price, items, shipment_address?.address, total_expedition_cost]);
 
   return (
     <>
-      <ShipmentAddress shipmentAddress={shipmentAddress} loading={isLoading} className="mb-4" />
-      <ProductsSummary productCart={product} className="mb-4 mb-lg-0" />
+      <ShipmentAddress shipmentAddress={shipment_address} className="mb-4" />
+      {items.map(item => (
+        <ItemsSummary key={item.slug} brand={{ name: item.name, slug: item.slug }} items={item.items} className="mb-2" />
+      ))}
     </>
   );
 };

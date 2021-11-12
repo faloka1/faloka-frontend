@@ -3,41 +3,44 @@ import { Spinner } from 'react-bootstrap';
 import { useQuery } from 'react-query';
 import { useHistory, useLocation } from 'react-router';
 import { CheckoutContext } from '../../../context/CheckoutContext/CheckoutContext';
+import { INIT_CHECKOUT } from '../../../context/CheckoutContext/CheckoutActions';
 
-import getProductDetail from '../../../helpers/api/get-product-detail';
+import getProfile from '../../../helpers/api/get-profile';
 
 const CheckoutGateway = () => {
   const { search } = useLocation();
   const history = useHistory();
-  const { setProduct } = useContext(CheckoutContext);
+  const { dispatch } = useContext(CheckoutContext);
   const urlSearch = new URLSearchParams(search);
-  const productSlug = urlSearch.get('product');
-  const quantity = +urlSearch.get('quantity');
-  useQuery(
-    ['product-detail', { productSlug }],
-    async ({ queryKey }) => {
-      const [, { productSlug }] = queryKey;
-      const response = await getProductDetail(productSlug);
+  const items = JSON.parse(urlSearch.get('items'));
+  useQuery('user-data', async () => {
+    const response = await getProfile();
 
-      return response.data;
+    return response.data;
+  }, {
+    onSuccess: (data) => {
+      const address = data.addresses.length > 0
+        ? data.addresses[0]
+        : null;
+      dispatch({
+        type: INIT_CHECKOUT,
+        payload: {
+          name: data.name,
+          phone_number: data.phone_number,
+          address,
+          items,
+        }
+      });
+
+      history.replace('/checkout/shipment');
     },
-    {
-      onSuccess: (data) => {
-        setProduct({
-          product: data,
-          quantity,
-        });
-        history.replace('/checkout/shipment');
-      },
-      onError: () => {
-        history.replace('/');
-      }
+    onError: (error) => {
+      console.log(error);
     }
-  );
-
+  });
 
   useEffect(() => {
-    if (!!!productSlug || !!!quantity) {
+    if (!!!items) {
       history.replace('/');
     }
   });

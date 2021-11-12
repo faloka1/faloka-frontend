@@ -1,42 +1,37 @@
 import React, { useContext } from 'react';
+import { Spinner } from 'react-bootstrap';
+import { useMutation } from 'react-query';
 
 import './ShipmentAddress.scss';
 
 import { ReactComponent as LocationIcon } from '../SVG/location.svg';
 import EditAddressModal from '../EditAddressModal/EditAddressModal';
 import useToggle from '../../hooks/use-toggle';
-import { Spinner } from 'react-bootstrap';
 import concatAddress from '../../helpers/concat-address';
-import { useMutation } from 'react-query';
 import deleteShipmentAddress from '../../helpers/api/delete-shipment-address';
 import { CheckoutContext } from '../../context/CheckoutContext/CheckoutContext';
 import AddressDeleteDialog from '../AddressDeleteDialog/AddressDeleteDialog';
+import { DELETE_SHIPMENT_ADDRESS } from '../../context/CheckoutContext/CheckoutActions';
 
 const ShipmentAddress = ({ className, shipmentAddress, loading }) => {
-  const { setShipmentAddress, setExpedition } = useContext(CheckoutContext);
+  const { dispatch } = useContext(CheckoutContext);
   const { toggle, setToggleOff, setToggleOn } = useToggle();
   const { toggle: addressDeleteToggle, setToggleOn: addressDeleteOn, setToggleOff: addressDeleteOff } = useToggle();
   const { mutate, isLoading } = useMutation(async id => {
     return deleteShipmentAddress(id);
   }, {
-    onSuccess: (data) => {
-      setShipmentAddress(prev => ({
-        name: prev.name,
-        address: null,
-        phoneNumber: prev.phoneNumber,
-      }));
-      setExpedition({
-        name: '',
-        code: '',
-        cost: null,
-      });
-    }
+    onError: (error) => console.log(error)
   });
   const loadingState = isLoading || loading;
 
   const deleteHandler = () => {
     mutate(shipmentAddress.address.id);
+    dispatch({ type: DELETE_SHIPMENT_ADDRESS });
   };
+
+  if (shipmentAddress === null) {
+    return null;
+  }
 
   return (
     <>
@@ -56,7 +51,7 @@ const ShipmentAddress = ({ className, shipmentAddress, loading }) => {
               <p>{shipmentAddress.name}</p>
               {!!shipmentAddress.address && <p>{concatAddress(shipmentAddress.address)}</p>}
               {!!!shipmentAddress.address && <p className="text-danger">Kamu belum memiliki alamat untuk pengiriman</p>}
-              <p className="text-gray">{shipmentAddress.phoneNumber}</p>
+              <p className="text-gray">{shipmentAddress.phone_number}</p>
               <div className="actions d-flex justify-content-end">
                 <p onClick={setToggleOn}>{shipmentAddress.address === null ? 'Tambah Alamat' : 'Edit'}</p>
                 {shipmentAddress.address !== null && <p className="ml-3" onClick={addressDeleteOn}>Hapus</p>}

@@ -15,8 +15,8 @@ const FinishedPaymentCard = ({ className }) => {
     setToggleOn: setDropZoneOn,
     setToggleOff: setDropZoneOff
   } = useToggle();
+  const { order_id, total_expedition_cost, total_items_price } = useContext(CheckoutContext);
   let classes = 'rounded-0';
-  const { orderId, totalPrice } = useContext(CheckoutContext);
 
   if (className) {
     classes += ` ${className}`;
@@ -28,7 +28,7 @@ const FinishedPaymentCard = ({ className }) => {
 
   return (
     <>
-      <PaymentProofDropzone show={dropZoneToggle} onSuccess={uploadSuccessHandler} closeFunc={setDropZoneOff} onHide={setDropZoneOff} orderId={orderId} centered />
+      <PaymentProofDropzone show={dropZoneToggle} onSuccess={uploadSuccessHandler} closeFunc={setDropZoneOff} onHide={setDropZoneOff} orderId={order_id} centered />
       <ShoppingSummaryModal show={toggle} closeFunc={setToggleOff} onHide={setToggleOff} />
       <Card className={classes}>
         <Card.Body>
@@ -49,7 +49,7 @@ const FinishedPaymentCard = ({ className }) => {
               <span className="ms-2 text-info" role="button" onClick={setToggleOn}><small>Lihat rincian</small></span>
             </p>
             <CurrencyFormat
-              value={totalPrice}
+              value={total_expedition_cost + total_items_price}
               displayType={'text'}
               prefix={'Rp'}
               thousandSeparator="."

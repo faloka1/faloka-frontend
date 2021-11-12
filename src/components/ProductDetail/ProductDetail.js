@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import InputSpinner from 'react-bootstrap-input-spinner'
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Col, Row, Button, Toast } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import { cartActions } from '../../stores/cart/cart-slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItem } from '../../stores/cart/cart-actions';
 
 import './ProductDetail.scss';
 
@@ -11,7 +11,10 @@ import CurrencyFormatter from '../CurrencyFormatter/CurrencyFormatter';
 import { BASE_CONTENT_URL } from '../../config/api';
 
 const ProductDetail = ({ className, product }) => {
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  const isAddingToCart = useSelector(state => state.cart.isLoading);
   const dispatch = useDispatch();
+  const history = useHistory();
   const [quantity, setQuantity] = useState(1);
   const [showToast, setShowToast] = useState(false);
   const {
@@ -27,8 +30,43 @@ const ProductDetail = ({ className, product }) => {
   const { name: variantName, variants_image } = variants[0];
 
   const addToCartHandler = () => {
-    dispatch(cartActions.addQuantity({ quantity }));
-    setShowToast(true);
+    if (isLoggedIn) {
+      dispatch(addItem(
+        {
+          brand: {
+            id: brands.id,
+            slug: brands.slug,
+            name: brands.name,
+          },
+          price: price,
+          name: name,
+          variant_id: variants[0].id,
+          product_id: variants[0].product_id,
+          image: `${BASE_CONTENT_URL}${variants_image[0].image_url}`,
+          size: variantName
+        },
+        quantity
+      ));
+      setShowToast(true);
+    } else {
+      history.push('/login');
+    }
+  };
+
+  const itemJson = {
+    id: null,
+    brand: {
+      id: brands.id,
+      slug: brands.slug,
+      name: brands.name,
+    },
+    product_id: variants[0].product_id,
+    variant_id: variants[0].id,
+    name: name,
+    image: `${BASE_CONTENT_URL}${variants_image[0].image_url}`,
+    size: variantName,
+    price,
+    quantity: +quantity,
   };
 
   return (
@@ -47,7 +85,7 @@ const ProductDetail = ({ className, product }) => {
           </Link>
         </Col>
         <Col md={6} lg={8} xl={9} className="product-info">
-          <Link className="product-brand">{brands.name}</Link>
+          <Link to="#" className="product-brand">{brands.name}</Link>
           <h4 className="product-name text-uppercase">{name}</h4>
           <div className="product-price">
             <CurrencyFormatter value={price} renderText={value => <span className={` ${discount ? 'product-price--cut' : ''}`}>{value}</span>} />
@@ -67,11 +105,17 @@ const ProductDetail = ({ className, product }) => {
           </div>
           <Row>
             <Col xs={12} lg={6} xl={4} className="product-buy">
-              <Button className="mt-3 btn-black btn-black--invert rounded-0 w-100" onClick={addToCartHandler}>Masukkan Keranjang</Button>
+              <Button className={`mt-3 btn-black btn-black--invert rounded-0 w-100 ${isAddingToCart ? 'disabled' : ''}`} onClick={addToCartHandler}>Masukkan Keranjang</Button>
             </Col>
             <Col xs={12} lg={6} xl={4} className="product-buy">
-              <Link to={`/checkout?product=${slug}&quantity=${quantity}`}>
-                <Button className="mt-3 btn-black rounded-0 w-100">Beli Sekarang</Button>
+
+              <Link
+                to={{
+                  pathname: "/checkout",
+                  search: `items=${encodeURIComponent(JSON.stringify([itemJson]))}`
+                }}
+              >
+                <Button className={`mt-3 btn-black rounded-0 w-100 ${isAddingToCart ? 'disabled' : ''}`}>Beli Sekarang</Button>
               </Link>
             </Col>
           </Row>

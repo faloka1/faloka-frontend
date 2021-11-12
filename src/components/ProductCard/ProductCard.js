@@ -21,7 +21,6 @@ const ProductCard = ({ product }) => {
   const discountedPrice = (1 - discount) * price;
   const brandName = brands.name;
   const { variants_image } = variants[0];
-  console.log(product);
 
   return (
     <Card className="product-card">

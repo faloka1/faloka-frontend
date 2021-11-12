@@ -6,10 +6,10 @@ import FinishedPaymentCard from '../../../components/FinishedPaymentCard/Finishe
 import { CheckoutContext } from '../../../context/CheckoutContext/CheckoutContext';
 
 const Finish = () => {
-  const { isConfirmed } = useContext(CheckoutContext);
+  const { is_confirmed } = useContext(CheckoutContext);
   const history = useHistory();
 
-  if (!isConfirmed) {
+  if (!is_confirmed) {
     history.replace('/');
   }
 
