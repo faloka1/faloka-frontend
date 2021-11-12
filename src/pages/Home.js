@@ -19,14 +19,14 @@ const Home = () => {
       <Container>
         <PopularCategory category={category} />
         <HomeSection title="Style Guide">
-          <Row md={1} lg={2} className="g-4">
+          <Row className="g-4">
             <Col lg={6} className="mb-4">
               <BannerSide backgroundImage="assets/images/side-banners/sidebanner_1.png" />
             </Col>
             <Col lg={6} className="mb-4">
-              <Row md={1} lg={2} className="g-4">
+              <Row className="g-4">
                 {filteredCategories.products.map(product => (
-                  <Col key={product.slug}>
+                  <Col xs={12} sm={6} key={product.slug}>
                     <ProductCard product={product} />
                   </Col>
                 ))}

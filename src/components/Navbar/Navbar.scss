@@ -20,16 +20,6 @@
   }
 
   .navbar-nav {
-    a {
-      display: inline-block;
-      padding: 1rem 1.5rem !important;
-
-      &:hover,
-      &.active {
-        font-weight: 600;
-        text-decoration: none !important;
-      }
-    }
 
     .mixmatch:hover,
     .mixmatch.active {
@@ -38,6 +28,16 @@
   }
 
   .category-filter {
+    a {
+      margin-right: 2rem !important;
+
+      &:hover,
+      &.active {
+        font-weight: 600;
+        text-decoration: none !important;
+      }
+    }
+
     a:hover,
     a.active {
       color: #01B8BC !important;
@@ -100,6 +100,12 @@
     .nav-dropdown {
       display: block;
     }
+  }
+}
+
+.nav-item-right {
+  .nav-link {
+    padding-left: 0 !important;
   }
 }
 

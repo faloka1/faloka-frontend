@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
-import CurrencyFormat from 'react-currency-format';
+import CurrencyFormatter from '../CurrencyFormatter/CurrencyFormatter';
 
 import './ProductCard.scss';
 
@@ -34,26 +34,9 @@ const ProductCard = ({ product }) => {
           <div className="product-brand text-truncate">{brandName}</div>
           <div className="product-name text-truncate">{name}</div>
           <div className="product-prize d-inline-flex">
-            <CurrencyFormat
-              value={price}
-              displayType={'text'}
-              prefix={'Rp'}
-              thousandSeparator="."
-              decimalSeparator=","
-              renderText={
-                value => <span className={` ${discount ? 'price--cut' : ''}`}>{value}</span>
-              }
-            />
+            <CurrencyFormatter value={price} renderText={value => <span className={` ${discount ? 'price--cut' : ''}`}>{value}</span>} />
             {discount > 0 &&
-              <CurrencyFormat
-                value={discountedPrice}
-                displayType={'text'}
-                prefix={'Rp'}
-                thousandSeparator="."
-                decimalSeparator=","
-                renderText={
-                  value => <span className="price--discount mx-3">{value}</span>}
-              />
+              <CurrencyFormatter value={discountedPrice} renderText={value => <span className="price--discount mx-3">{value}</span>} />
             }
           </div>
         </Card.Body>

@@ -19,7 +19,8 @@ a {
   text-decoration: none!important;
 
   &:hover {
-    text-decoration: underline!important;
+    text-decoration: underline !important;
+    color: inherit;
   }
 }
 
@@ -45,22 +46,23 @@ a {
 
 .btn-black {
   border: 1px solid $black;
-  background: $black;
+  background-color: $black;
   color: $white;
   cursor: pointer;
 
-  &:hover {
-    color: $white;
-    text-decoration: underline;
-  }
-
   &--invert {
-    background: $white;
+    background-color: $white;
     color: $black;
 
-    &:hover {
+    &:hover, 
+    &:focus {
+      background-color: $white;
       color: $black;
     }
+  }
+
+  &:hover {
+    text-decoration: underline;
   }
 
   &.disabled {
