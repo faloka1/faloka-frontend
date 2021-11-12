@@ -114,6 +114,10 @@ select:focus {
   white-space: initial;
 }
 
+.placeholder{
+  font-size: 1.5rem;
+}
+
 .left-addon .glyphicon  { left:  0px;}
 .right-addon .glyphicon { right: 0px;}
 
@@ -154,4 +158,9 @@ select:focus {
   .tab-content{
     padding: 1rem .75rem;
   }
+}
+
+.small-toast{
+  font-weight: 500!important;
+  font-size: .85em!important;
 }

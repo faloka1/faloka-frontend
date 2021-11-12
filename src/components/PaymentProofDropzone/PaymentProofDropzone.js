@@ -9,7 +9,7 @@ import CloudUploadImage from '../../assets/images/bi_cloud-upload.png';
 import { ReactComponent as XIcon } from '../SVG/x.svg';
 import uploadPaymentProof from '../../helpers/api/upload-payment-proof';
 
-const PaymentProofDropzone = ({ closeFunc, orderId, onSuccess, ...props }) => {
+const PaymentProofDropzone = ({ closeFunc, orderId, onError, onSuccess, ...props }) => {
   const [uploadedFile, setUploadedFile] = useState(null);
   const { mutate, isLoading } = useMutation(async (file) => {
     const formData = new FormData();
@@ -20,7 +20,12 @@ const PaymentProofDropzone = ({ closeFunc, orderId, onSuccess, ...props }) => {
 
     return response;
   }, {
-    onError: (err) => console.log(err),
+    onError: (err) => {
+      if (onError) {
+        onError();
+      }
+      console.log(err);
+    },
     onSuccess: () => {
       if (onSuccess) {
         onSuccess();
@@ -58,18 +63,18 @@ const PaymentProofDropzone = ({ closeFunc, orderId, onSuccess, ...props }) => {
   const content = !isLoading
     ? (
       <>
-        <img className="col-5 mx-auto" src={CloudUploadImage} alt="upload_illustration" />
+        <img className="mx-auto" src={CloudUploadImage} alt="upload_illustration" />
         {!isDragActive && !!!uploadedFile && !isDragAccept &&
           <>
-            <p className="text-gray mb-1 text-center">Drag and drop bukti pembayaran disini</p>
+            <p className="text-gray mt-3 mb-0 text-center">Drag and drop bukti pembayaran disini</p>
             <p className="text-gray text-center">atau</p>
           </>
         }
         {isDragActive &&
-          <p className="text-gray mb-3 text-center">Lepaskan file</p>
+          <p className="text-gray mt-3 mb-3 text-center">Lepaskan file</p>
         }
         {!isDragActive && !!uploadedFile &&
-          <div className="d-flex justify-content-between align-items-center border mb-3 p-2">
+          <div className="d-flex justify-content-between align-items-center border mt-4 mb-3 p-2 file-name">
             <p className="text-gray mb-0">{uploadedFile.name}</p>
             <XIcon className="icon mb-0 text-gray" role="button" onClick={deleteFileHandler} />
           </div>
@@ -88,10 +93,12 @@ const PaymentProofDropzone = ({ closeFunc, orderId, onSuccess, ...props }) => {
     );
 
   return (
-    <Modal {...props}>
+    <Modal className="payment-proof-upload-modal" {...props}>
+      <Modal.Header>
+        <Modal.Title>Upload Bukti Pembayaran</Modal.Title>
+      </Modal.Header>
       <Modal.Body>
-        <p className="h3 text-center mb-3">Upload Bukti Pembayaran</p>
-        <div {...getRootProps({ className: "border-2 d-flex flex-column p-4 payment-dropzone" })}>
+        <div {...getRootProps({ className: "border-2 d-flex flex-column align-items-center payment-dropzone" })}>
           <input {...getInputProps()} />
           {content}
         </div>

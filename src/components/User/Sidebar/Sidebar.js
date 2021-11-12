@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { Nav } from 'react-bootstrap';
+import { Nav, Placeholder } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 import { BASE_CONTENT_URL } from '../../../config/api';
+import { useQuery } from 'react-query';
+import getUserProfile from '../../../helpers/api/get-user-profile';
 
 import { ReactComponent as ChevronUp } from '../../SVG/chevron-up.svg';
 import { ReactComponent as ChevronDown } from '../../SVG/chevron-down.svg';
@@ -10,7 +12,26 @@ import { ReactComponent as BagIcon } from '../../SVG/shopping-bag.svg';
 
 import './Sidebar.scss';
 
-const Sidebar = ({ account }) => {
+const Sidebar = () => {
+    const [profileData, setProfileData] = useState('');
+    const [pictureLoaded, setPictureLoaded] = useState(false);
+
+    const {isLoading} = useQuery('user-data', async () => {
+        const response = await getUserProfile();
+        return response.data;
+    },{
+        onSuccess: (data) => {
+            setProfileData(data);
+        },
+        onError: (err) => {
+            console.log(err);
+        }
+    });
+
+    const handleImageLoaded = () => {
+        setPictureLoaded(true);
+    }
+
     const [navlist, setNavlist] = useState(false);
     const showNavlist = () => setNavlist(!navlist);
     const location = useLocation();
@@ -18,11 +39,12 @@ const Sidebar = ({ account }) => {
     return (
         <div className="tab-account">
             <div className="account-header">
-                <div className="header-image">
-                    <img src="https://static.vecteezy.com/system/resources/previews/002/275/847/original/male-avatar-profile-icon-of-smiling-caucasian-man-vector.jpg"/>
-                </div>
-                <div className="header-name">
-                    <span>Ahmad Ilham Santosa</span>
+                <div className={`header-image ${!pictureLoaded ? 'placeholder-glow' : ''}`}>
+                    {!pictureLoaded ? <Placeholder className="image-profile" bg="secondary" /> : ''}
+                    <img alt={profileData.name} className={`image-profile ${!pictureLoaded ? 'd-none' : ''}`} onLoad={handleImageLoaded} src={!isLoading ? `${BASE_CONTENT_URL}${profileData.photo_profile_url}` : ``}/>
+                </div>     
+                <div className={`header-name ${!pictureLoaded ? 'placeholder-glow' : ''}`}>
+                    <span className={!pictureLoaded ? 'col-12 placeholder bg-secondary' : ''}>{pictureLoaded && profileData.name}</span>
                 </div>
                 <div className="d-xl-block d-xxl-none">
                     <button type="button" className="btn" onClick={showNavlist}>
@@ -32,11 +54,11 @@ const Sidebar = ({ account }) => {
             </div>
             <div className={`account-nav d-xxl-block ${navlist ? '' : 'd-none'}`}>
                 <Nav className="flex-column">
-                    <Nav.Link as={Link} to="/user/profile" className={(location.pathname == "/user/profile"? "active" : "")}>
+                    {/* <Nav.Link as={Link} to="/user/profile" className={(location.pathname === "/user/profile"? "active" : "")}>
                         <UserIcon className="icon" />
                         <span>User info</span>
-                    </Nav.Link>
-                    <Nav.Link as={Link} to="/user/transaction" className={(location.pathname == "/user/transaction"? "active" : "")}>
+                    </Nav.Link> */}
+                    <Nav.Link as={Link} to="/user/transaction" className={(location.pathname === "/user/transaction"? "active" : "")}>
                         <BagIcon className="icon" />
                         <span>Pembelian</span>
                     </Nav.Link>

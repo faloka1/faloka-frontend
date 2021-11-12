@@ -14,10 +14,10 @@
             display: inline-block;
             margin-right: .35rem;
 
-            img{
+            .image-profile{
                 object-fit: cover;
                 width: 2.25rem;
-                height: auto;
+                height: 2.25rem;
                 border-radius: 50%;
             }
         }
@@ -27,11 +27,9 @@
             flex: 1 1 auto !important;
             overflow: hidden;
 
-
             span{
                 white-space: nowrap;
                 overflow: hidden;
-                max-width: 90%;
                 display: block;
             }
         }

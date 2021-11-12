@@ -1,4 +1,38 @@
-.payment-dropzone {
-  border-style: dashed !important;
-  border-color: gray;
+.payment-proof-upload-modal{
+  .modal-dialog{
+    width:40%;
+    max-width: none!important;
+
+    .modal-content{
+      .modal-header{
+        border : 0;
+        padding:2rem;
+
+        .modal-title{
+          text-align: center!important;
+          width:100%;
+        }
+      }
+
+      .modal-body{
+        padding:2.75rem;
+        padding-top: 0;
+
+        .payment-dropzone {
+          border-style: dashed !important;
+          border-color: gray;
+          padding:2rem;
+
+          button,  .file-name{
+            width:75%;
+          }
+
+          button:hover{
+            background-color: #1E1E1E;
+            text-decoration: none!important;
+          }
+        }
+      }
+    }
+  }  
 }
