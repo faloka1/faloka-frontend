@@ -47,7 +47,7 @@ const Navbar = ({ categories }) => {
 
   return (
     <>
-      <SearchModal show={show} onHide={handleClose} closeFunc={handleClose} centered />
+      <SearchModal show={show} onHide={handleClose} centered />
       <LoginRegisterModal className="auth-modal" show={toggle} onHide={setToggleOff} closeFunc={setToggleOff} centered />
       <BootstrapNavbar fixed="top" expand="xl">
         <Container className="position-relative">

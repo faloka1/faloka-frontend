@@ -1,0 +1,231 @@
+@import '../../styles/variables';
+@import '../../styles/typography';
+@import '../../styles/faloka';
+
+.transaction-detail-modal{
+    .modal-header{
+        border:0!important
+    }
+
+    .modal-body{
+        background-color: #EAEAEA;
+        padding:0;
+        border-radius: 0 0 0.3rem 0.3rem;
+    }
+
+    [class*="detail-"]{
+        background-color: #FFF;
+        margin: .25rem 0 0 0;
+        padding: 1rem;
+
+        [class*="-header"]{
+            padding: 0 .25rem;
+            border-bottom: 1.75px solid #e0e0e0;
+            margin-bottom: .75rem;
+
+            h6{
+                font-weight: bold!important;
+            }
+        }
+
+        [class*="-content"]{
+            padding: 0 .25rem;
+        }
+
+        span{
+            display:block;
+        }
+    }
+
+    .detail-payment{
+        .payment-content{
+            .row{
+                margin-bottom: .5rem;
+            }
+
+            .content-left{
+                color:#888;
+                text-align: left;
+            }
+
+            .content-right{
+                font-weight: bold;
+                text-align: right;
+
+                .right-account{
+                    font-weight: 400;
+                    color:#888;
+                }
+
+                a{
+                    color:$green-accent;
+                }
+
+                a:hover{
+                    color:$green-secondary-accent;
+                    text-decoration: none!important;
+                }
+            }
+        }
+
+        .payment-footer{
+            border-top: 1.75px solid #e0e0e0;
+            margin-top: 1.25rem;
+            padding: 0 .25rem;
+            padding-top: .5rem;
+
+            .content-left{
+                text-align: left;
+                align-self: center !important;
+            }
+
+            .content-right{
+                font-weight: bold;
+                text-align: right;
+                font-size:1.5em;
+                align-self: center !important;
+            }
+        }
+    }
+
+    .detail-product{
+        .product-header{
+            border:0!important;
+        }
+
+        .product-content{
+            .content-brand{
+                margin: 1rem 0;
+                border: 1.75px solid #e0e0e0;
+
+                .brand-name{
+                    padding:1rem 1rem 0 1rem;
+                    margin-bottom: .75rem;
+                    font-weight: bold;
+                    font-size: 1em;
+                }
+
+                .brand-product{
+                    .product-list{
+                        padding: 0 1rem 1rem 1rem;
+                        border-bottom: 1.75px solid #e0e0e0;
+
+                        span{
+                            display:inline-block;
+                        }
+                    }
+
+                    .product-total{
+                        margin: 0;
+                        padding: .5rem 1rem;
+                        border-bottom: 1.75px solid #e0e0e0;
+
+                        .content-left{
+                            padding: 0;
+                            text-align: left;
+                            align-self: center !important;
+                        }
+            
+                        .content-right{
+                            padding: 0;
+                            text-align: right;
+                            font-size:1em;
+                            font-weight: bold;
+                            align-self: center !important;
+                        }
+                    }
+                }
+
+                .brand-shipping{
+                    padding: 1rem 1rem .5rem 1rem;
+                    border-bottom: 1.75px solid #e0e0e0;
+
+                    .shipping-header, .shipping-content{
+                        border:0;
+                        padding:0;
+                    }
+
+                    .shipping-header{
+                        font-weight: bold;
+                    }
+
+                    .shipping-content{
+                        white-space: nowrap;
+
+                        .row{
+                            margin-bottom: .5rem;
+                        }
+            
+                        .content-left{
+                            color:#888;
+                            text-align: left;
+                        }
+            
+                        .content-right{
+                            font-weight: bold;
+                            text-align: right;
+                        }
+
+                        .content-left{
+                            text-align: left;
+                        }
+                    }
+                }
+
+                .brand-subtotal{
+                    .subtotal-content{
+                        margin: 0;
+                        padding: .5rem 1rem;
+                        
+
+                        .content-left{
+                            padding: 0;
+                            text-align: left;
+                            align-self: center !important;
+                        }
+            
+                        .content-right{
+                            padding: 0;
+                            text-align: right;
+                            font-size:1em;
+                            font-weight: bold;
+                            align-self: center !important;
+                        }
+                    }
+                }
+            }
+
+            .content-brand:nth-child(n+2){
+                margin-top: 1.5rem;
+            }
+        }
+    }
+
+    .detail-address{
+        border-radius: 0 0 0.3rem 0.3rem;
+
+        .address-header{
+            margin-bottom: 1rem;
+        }
+
+        .address-content{
+            .content-name{
+                font-weight: bold;
+                margin-bottom: .5rem;
+            }
+
+            .content-phone{
+                color:#333;
+                margin-top: .5rem;
+            }
+        }
+    }
+
+    .total{
+        color: #333 !important;
+    }
+
+    .price{
+        color:$pink-accent;
+    }
+}

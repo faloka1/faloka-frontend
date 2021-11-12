@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { useQuery } from 'react-query';
-import getProfile from '../../../helpers/api/get-profile';
+import getUserProfile from '../../../helpers/api/get-user-profile';
 
 import ProductsSummary from '../../../components/ProductsSummary/ProductsSummary';
 import ShipmentAddress from '../../../components/ShipmentAddress/ShipmentAddress';
@@ -14,7 +14,7 @@ const Shipment = () => {
     product
   } = useContext(CheckoutContext);
   const { isLoading } = useQuery('user-data', async () => {
-    const response = await getProfile();
+    const response = await getUserProfile();
 
     return response.data;
   },

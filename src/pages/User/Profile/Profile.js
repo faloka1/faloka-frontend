@@ -10,7 +10,7 @@ const Profile = () => {
         <Container>
             <Row className="profile g-4">
                 <Col xs={12} md={2}>
-                    <Sidebar account="cok"/>
+                    <Sidebar />
                 </Col>
                 <Col xs={12} md={10}>
                     

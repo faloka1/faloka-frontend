@@ -1,0 +1,17 @@
+@import '../../styles/variables';
+@import '../../styles/typography';
+@import '../../styles/faloka';
+
+.payment-proof-modal{
+    .modal-body{
+        min-height:16rem!important;
+        align-items: center !important;
+        justify-content: center;
+        display: flex;
+
+        .spinner-border{
+            width:4rem;
+            height:4rem;
+        }
+    }
+}
