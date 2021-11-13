@@ -1,0 +1,9 @@
+.inspire-me-form {
+  &__products {
+    img {
+      height: 100px;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+}

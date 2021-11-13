@@ -29,9 +29,11 @@ import SearchModal from '../SearchModal/SearchModal';
 import UserDropdown from './UserDropdown/UserDropdown';
 import CategoryDropdown from './CategoryDropdown/CategoryDropdown';
 import CounterBadge from './CounterBadge/CounterBadge';
+import CreateInspireMeModal from '../CreateInspireMeModal/CreateInspireMeModal';
 
 const Navbar = ({ categories }) => {
   const { setToggleOff, setToggleOn, toggle } = useToggle();
+  const { setToggleOff: closeCreateInspireMe, setToggleOn: openCreateInspireMe, toggle: showCreateInspireMe } = useToggle();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -49,8 +51,13 @@ const Navbar = ({ categories }) => {
     }
   };
 
+  const createInspireMeOpenHandler = () => {
+    openCreateInspireMe();
+  };
+
   return (
     <>
+      <CreateInspireMeModal show={showCreateInspireMe} onClose={closeCreateInspireMe} />
       <SearchModal show={show} onHide={handleClose} centered />
       <LoginRegisterModal className="auth-modal" show={toggle} onHide={setToggleOff} closeFunc={setToggleOff} centered />
       <BootstrapNavbar fixed="top" expand="xl">
@@ -59,33 +66,53 @@ const Navbar = ({ categories }) => {
           <NavbarBrand as={Link} className="brand" to="/">FALOKA</NavbarBrand>
           <Nav className="navbar-right d-flex order-lg-1">
             <ul className="navbar-nav">
-              <li className="nav-item-group">
-                <NavLink as={Link} to="#" className="d-block d-lg-none">
-                  <SearchIcon onClick={handleShow} className="icon" />
-                </NavLink>
-                <div className="d-none d-lg-block">
-                  <Form className="d-flex search-input">
-                    <InputGroup>
-                      <Button variant="primary" className="search-icon">
-                        <SearchIcon className="icon" />
-                      </Button>
-                      <FormControl type="text" placeholder="Search" />
-                    </InputGroup>
-                  </Form>
-                </div>
-              </li>
-              <li className="nav-item-group nav-item-right">
-                <NavLink as={Link} to="#">
-                  <UserIcon onClick={userClickHandler} className="icon" />
-                </NavLink>
-                {isLoggedIn && <UserDropdown />}
-              </li>
-              <li className="nav-item-group nav-item-right">
-                <NavLink as={Link} to="/cart" className="ps-0">
-                  <CartIcon className="icon ps-0" />
-                  {!!cartQuantity && <CounterBadge count={cartQuantity} />}
-                </NavLink>
-              </li>
+              <Switch>
+                <Route path="/inspiration">
+                  <li className="nav-item-group nav-item-right">
+                    <button onClick={createInspireMeOpenHandler} className="btn btn-black px-4 rounded-0">Share outfitmu</button>
+                  </li>
+                  <li className="nav-item-group nav-item-right">
+                    <NavLink as={Link} to="#">
+                      <UserIcon onClick={userClickHandler} className="icon" />
+                    </NavLink>
+                    {isLoggedIn && <UserDropdown />}
+                  </li>
+                </Route>
+                <Route path="/checkout">
+                </Route>
+                <Route path="*">
+                  <li className="nav-item-group">
+                    <NavLink as={Link} to="#" className="d-block d-lg-none">
+                      <SearchIcon onClick={handleShow} className="icon" />
+                    </NavLink>
+                    <div className="d-none d-lg-block">
+                      <Form className="d-flex search-input">
+                        <InputGroup>
+                          <Button variant="primary" className="search-icon">
+                            <SearchIcon className="icon" />
+                          </Button>
+                          <FormControl type="text" placeholder="Search" />
+                        </InputGroup>
+                      </Form>
+                    </div>
+                  </li>
+                  <li className="nav-item-group nav-item-right">
+                    <Link to="/inspiration">Inspo</Link>
+                  </li>
+                  <li className="nav-item-group nav-item-right">
+                    <NavLink as={Link} to="#">
+                      <UserIcon onClick={userClickHandler} className="icon" />
+                    </NavLink>
+                    {isLoggedIn && <UserDropdown />}
+                  </li>
+                  <li className="nav-item-group nav-item-right">
+                    <NavLink as={Link} to="/cart" className="ps-0">
+                      <CartIcon className="icon ps-0" />
+                      {!!cartQuantity && <CounterBadge count={cartQuantity} />}
+                    </NavLink>
+                  </li>
+                </Route>
+              </Switch>
             </ul>
           </Nav>
           <Switch>
@@ -93,6 +120,8 @@ const Navbar = ({ categories }) => {
             </Route>
             <Route path="/checkout">
               <CheckoutProgressBar className="d-none d-lg-block" />
+            </Route>
+            <Route path="/inspiration">
             </Route>
             <Route path="*">
               <BootstrapNavbar.Collapse id="basic-navbar-nav">

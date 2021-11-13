@@ -1,0 +1,14 @@
+@import '../../../styles/variables';
+
+.select-products {
+  &__image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  &__done {
+    color: $accent-2;
+  }
+}

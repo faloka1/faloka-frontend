@@ -1,0 +1,10 @@
+.inspire-me-post {
+  cursor: pointer;
+
+  &__photo {
+    height: 375px;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+  
