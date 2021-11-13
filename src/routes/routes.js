@@ -7,12 +7,13 @@ import Transaction from "../pages/User/Transaction/Transaction";
 import ProductList from "../pages/Product/List/ProductList";
 import ProductDetail from "../pages/Product/Detail/Detail";
 import RouteNotFound from "../pages/Error/RouteNotFound";
-
-import { isGuest } from "../middleware/is-guest";
-import { isLoggedIn } from "../middleware/is-logged-in";
 import Checkout from "../pages/Checkout/Checkout";
 import MixAndMatch from "../pages/MixAndMatch/MixAndMatch";
 import Cart from "../pages/Cart/Cart";
+import InspireMe from "../pages/InspireMe/InspireMe";
+
+import { isGuest } from "../middleware/is-guest";
+import { isLoggedIn } from "../middleware/is-logged-in";
 
 export const routes = [
   {
@@ -108,6 +109,12 @@ export const routes = [
       middleware: isLoggedIn,
       redirectPath: '/login',
     },
+  },
+  {
+    name: 'Checkout',
+    path: '/inspiration',
+    pageComponent: InspireMe,
+    exact: false,
   },
   {
     name: 'Any',

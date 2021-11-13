@@ -57,7 +57,7 @@ a {
     &:hover, 
     &:focus {
       background-color: $white;
-      color: $black;
+      color: $black !important;
     }
   }
 
