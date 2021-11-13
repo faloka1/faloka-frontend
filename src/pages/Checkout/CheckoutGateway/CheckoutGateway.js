@@ -5,7 +5,7 @@ import { useHistory, useLocation } from 'react-router';
 import { CheckoutContext } from '../../../context/CheckoutContext/CheckoutContext';
 import { INIT_CHECKOUT } from '../../../context/CheckoutContext/CheckoutActions';
 
-import getProfile from '../../../helpers/api/get-profile';
+import getUserProfile from '../../../helpers/api/get-user-profile';
 
 const CheckoutGateway = () => {
   const { search } = useLocation();
@@ -14,7 +14,7 @@ const CheckoutGateway = () => {
   const urlSearch = new URLSearchParams(search);
   const items = JSON.parse(urlSearch.get('items'));
   useQuery('user-data', async () => {
-    const response = await getProfile();
+    const response = await getUserProfile();
 
     return response.data;
   }, {

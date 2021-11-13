@@ -2,7 +2,7 @@ import axios from "axios";
 import { BASE_API_URL } from "../../config/api";
 import { getToken } from "../auth";
 
-const getProfile = async () => {
+const getUserProfile = async () => {
   const response = await axios.get(
     BASE_API_URL + "/user",
     {
@@ -15,4 +15,4 @@ const getProfile = async () => {
   return response;
 };
 
-export default getProfile;
+export default getUserProfile;

@@ -58,7 +58,7 @@ const Navbar = ({ categories }) => {
   return (
     <>
       <CreateInspireMeModal show={showCreateInspireMe} onClose={closeCreateInspireMe} />
-      <SearchModal show={show} onHide={handleClose} closeFunc={handleClose} centered />
+      <SearchModal show={show} onHide={handleClose} centered />
       <LoginRegisterModal className="auth-modal" show={toggle} onHide={setToggleOff} closeFunc={setToggleOff} centered />
       <BootstrapNavbar fixed="top" expand="xl">
         <Container className="position-relative">
