@@ -61,11 +61,11 @@ const Navbar = ({ categories }) => {
     <>
       <SearchModal show={show} onHide={handleClose} centered />
       <LoginRegisterModal className="auth-modal" show={toggle} onHide={setToggleOff} closeFunc={setToggleOff} centered />
-      <BootstrapNavbar fixed="top" expand="xl">
+      <BootstrapNavbar fixed="top" expand="lg">
         <Container className="position-relative">
           <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
           <NavbarBrand as={Link} className="brand" to="/">FALOKA</NavbarBrand>
-          <Nav className="navbar-right d-flex order-lg-1">
+          <Nav className="navbar-right d-flex order-md-1">
             <ul className="navbar-nav">
               <Switch>
                 <Route path="/inspiration">
@@ -83,10 +83,10 @@ const Navbar = ({ categories }) => {
                 </Route>
                 <Route path="*">
                   <li className="nav-item-group">
-                    <NavLink as={Link} to="#" className="d-block d-lg-none">
+                    <NavLink as={Link} to="#" className="d-block d-xl-none">
                       <SearchIcon onClick={handleShow} className="icon" />
                     </NavLink>
-                    <div className="d-none d-lg-block">
+                    <div className="d-none d-xl-block">
                       <Form className="d-flex search-input">
                         <InputGroup>
                           <Button variant="primary" className="search-icon">
@@ -101,16 +101,16 @@ const Navbar = ({ categories }) => {
                     <Link to="/inspiration">Inspo</Link>
                   </li>
                   <li className="nav-item-group nav-item-right">
-                    <NavLink as={Link} to="#">
-                      <UserIcon onClick={userClickHandler} className="icon" />
-                    </NavLink>
-                    {isLoggedIn && <UserDropdown />}
-                  </li>
-                  <li className="nav-item-group nav-item-right">
                     <NavLink as={Link} to="/cart" className="ps-0">
                       <CartIcon className="icon ps-0" />
                       {!!cartQuantity && <CounterBadge count={cartQuantity} />}
                     </NavLink>
+                  </li>
+                  <li className="nav-item-group nav-item-right">
+                    <NavLink as={Link} to="#">
+                      <UserIcon onClick={userClickHandler} className="icon" />
+                    </NavLink>
+                    {isLoggedIn && <UserDropdown />}
                   </li>
                 </Route>
               </Switch>
@@ -120,7 +120,7 @@ const Navbar = ({ categories }) => {
             <Route exact path="/checkout/finish">
             </Route>
             <Route path="/checkout">
-              <CheckoutProgressBar className="d-none d-lg-block" />
+              <CheckoutProgressBar className="d-none d-md-block" />
             </Route>
             <Route path="/inspiration">
             </Route>
