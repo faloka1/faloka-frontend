@@ -12,6 +12,7 @@ import '../../../components/ProductCard/ProductCard.scss';
 const ProductList = () => {
   const [count, setCount] = useState(0);
   const [category, setCategory] = useState('');
+  const [subCategory, setSubCategory] = useState('');
   const [products, setProducts] = useState([]);
 
   let query = new URLSearchParams(useLocation().search);
@@ -32,6 +33,7 @@ const ProductList = () => {
       onSuccess: (data) => {
         setCount(data.count);
         setCategory(data.category[0]?.name);
+        setSubCategory(data.sub_category[0]?.name)
         setProducts(data.product);
       }
     }
@@ -55,14 +57,16 @@ const ProductList = () => {
   );
 
   return (
-    <Container>
+    <Container className={isLoading ? 'placeholder-glow' : ''}>  
       <Breadcrumb className="pt-5">
         <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Home</Breadcrumb.Item>
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/products" }}>Blouse</Breadcrumb.Item>
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: "#" }} active>Jumpsuit Elegan</Breadcrumb.Item>
+        <Breadcrumb.Item className={isLoading ? 'd-none' : ''}>{category}</Breadcrumb.Item>
+        <Breadcrumb.Item className={isLoading ? 'd-none' : ''} active>{subCategory}</Breadcrumb.Item>
       </Breadcrumb>
-      <h3 className="text-center">{category}</h3>
-      <p className="text-muted text-center">({count} produk ditemukan)</p>
+      <div className="text-center">
+        <h3 className={` ${isLoading ? 'col-2 placeholder bg-secondary' : ''}`}>{!isLoading && subCategory}</h3>
+        <p className="text-muted">({count} produk ditemukan)</p>
+      </div>
       {content}
     </Container>
   );
