@@ -25,12 +25,12 @@ const Transaction = () => {
         }
     });
 
-    const updateComponentHandler = (order_id) => {
+    const updateComponentHandler = (order_id, paymentProofImageUrl) => {
         const selectedTransaction = unpaidTransaction.find(order => order.id === order_id);
         selectedTransaction.status = "pending";
+        selectedTransaction.image_payment_url = paymentProofImageUrl;
         setUnpaidTransaction(oldUnpaid => oldUnpaid.filter(order => order.id !== order_id));
         setPendingTransaction(oldPending => [selectedTransaction, ...oldPending]);
-        console.log(selectedTransaction)
     }
 
     return (

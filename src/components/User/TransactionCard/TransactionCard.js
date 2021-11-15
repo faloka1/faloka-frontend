@@ -27,11 +27,11 @@ const TransactionCard = ({ transaction, isLoading, onUpdate }) => {
         setToggleOff: setDropZoneOff
     } = useToggle();
     const [isUploaded, setIsUploaded] = useState(0);
+    const [paymentProof, setPaymentProof] = useState("");
 
     var transactionPrice = 0;
-    var buttonCaption;
-    var buttonHandler;
-
+    var buttonCaption, buttonHandler;
+    
     if (transaction){
         if (transaction.status === "unpaid"){
             buttonCaption = "Upload Bukti Bayar"
@@ -42,7 +42,8 @@ const TransactionCard = ({ transaction, isLoading, onUpdate }) => {
         }
     }
    
-    const uploadSuccessHandler = () => {
+    const uploadSuccessHandler = (paymentProofUrl) => {
+        setPaymentProof(paymentProofUrl)
         setIsUploaded(1);
     };
 
@@ -52,7 +53,7 @@ const TransactionCard = ({ transaction, isLoading, onUpdate }) => {
 
     const updateComponent = () => {
         if (onUpdate) {
-            onUpdate(transaction.id);
+            onUpdate(transaction.id, paymentProof);
         }
     };
 
@@ -74,14 +75,14 @@ const TransactionCard = ({ transaction, isLoading, onUpdate }) => {
                 icon: 'success',
                 title: '<small class="small-toast">Bukti pembayaran berhasil di-upload.</small>'
             })
-            setIsUploaded(false)
+            setIsUploaded(0)
             updateComponent()
         }else if (isUploaded === -1){
             Toast.fire({
                 icon: 'error',
                 title: '<small class="small-toast">Bukti pembayaran gagal di-upload.</small>'
             })
-            setIsUploaded(false)
+            setIsUploaded(0)
         }
     }, [isUploaded]);
 
