@@ -36,10 +36,10 @@ const Transaction = () => {
     return (
         <Container>
             <Row className="profile g-4">
-                <Col xs={12} xxl={2}>
+                <Col xs={12} lg={3}>
                     <Sidebar/>
                 </Col>
-                <Col xs={12} xxl={10}>
+                <Col xs={12} lg={9}>
                     <div className="custom-tab">
                         <Tabs defaultActiveKey="awaiting-payment" id="transaction-tab">
                             <Tab eventKey="awaiting-payment" title={`Menunggu pembayaran (${unpaidTransaction.length})`}>

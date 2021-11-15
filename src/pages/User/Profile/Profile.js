@@ -9,10 +9,10 @@ const Profile = () => {
     return (
         <Container>
             <Row className="profile g-4">
-                <Col xs={12} md={2}>
+                <Col xs={12} lg={3}>
                     <Sidebar />
                 </Col>
-                <Col xs={12} md={10}>
+                <Col xs={12} lg={9}>
                     
                 </Col>
             </Row>

@@ -46,13 +46,13 @@ const Sidebar = () => {
                 <div className={`header-name ${!pictureLoaded ? 'placeholder-glow' : ''}`}>
                     <span className={!pictureLoaded ? 'col-12 placeholder bg-secondary' : ''}>{pictureLoaded && profileData.name}</span>
                 </div>
-                <div className="d-xl-block d-xxl-none">
+                <div className="d-md-block d-lg-none">
                     <button type="button" className="btn" onClick={showNavlist}>
                         {navlist ? <ChevronUp className="icon" /> : <ChevronDown className="icon" />}
                     </button>
                 </div>
             </div>
-            <div className={`account-nav d-xxl-block ${navlist ? '' : 'd-none'}`}>
+            <div className={`account-nav d-lg-block ${navlist ? '' : 'd-none'}`}>
                 <Nav className="flex-column">
                     {/* <Nav.Link as={Link} to="/user/profile" className={(location.pathname === "/user/profile"? "active" : "")}>
                         <UserIcon className="icon" />
