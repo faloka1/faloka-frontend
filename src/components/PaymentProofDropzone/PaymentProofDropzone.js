@@ -26,9 +26,10 @@ const PaymentProofDropzone = ({ closeFunc, orderId, onError, onSuccess, ...props
       }
       console.log(err);
     },
-    onSuccess: () => {
+    onSuccess: (response) => {
+      console.log(response)
       if (onSuccess) {
-        onSuccess();
+        onSuccess(response.data.image_payment_url);
       }
 
       closeModal();
