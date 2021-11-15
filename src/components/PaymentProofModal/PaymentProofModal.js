@@ -12,7 +12,7 @@ const PaymentProofModal = ({ image, ...props }) => {
 
   return (
     <Modal className="payment-proof-modal" {...props} centered>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton={true}>
           <Modal.Title>Bukti Pembayaran</Modal.Title>
         </Modal.Header>
         <Modal.Body>

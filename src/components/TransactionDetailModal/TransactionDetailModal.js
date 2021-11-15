@@ -53,7 +53,7 @@ const TransactionDetailModal = ({ setDropZoneOn, showProof, close, transaction, 
 
   return (
     <Modal className="transaction-detail-modal" {...props} centered>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton={true}>
           <Modal.Title>Detail Transaksi</Modal.Title>
         </Modal.Header>
         <Modal.Body>

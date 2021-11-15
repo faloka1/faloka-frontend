@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import {React, useState, useEffect} from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import useToggle from '../../../hooks/use-toggle';
@@ -67,21 +67,23 @@ const TransactionCard = ({ transaction, isLoading, onUpdate }) => {
             toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
     })
-    
-    if (isUploaded === 1){
-        Toast.fire({
-            icon: 'success',
-            title: '<small class="small-toast">Bukti pembayaran berhasil di-upload.</small>'
-        })
-        setIsUploaded(false)
-        updateComponent()
-    }else if (isUploaded === -1){
-        Toast.fire({
-            icon: 'error',
-            title: '<small class="small-toast">Bukti pembayaran gagal di-upload.</small>'
-        })
-        setIsUploaded(false)
-    }
+
+    useEffect(() => {
+        if (isUploaded === 1){
+            Toast.fire({
+                icon: 'success',
+                title: '<small class="small-toast">Bukti pembayaran berhasil di-upload.</small>'
+            })
+            setIsUploaded(false)
+            updateComponent()
+        }else if (isUploaded === -1){
+            Toast.fire({
+                icon: 'error',
+                title: '<small class="small-toast">Bukti pembayaran gagal di-upload.</small>'
+            })
+            setIsUploaded(false)
+        }
+    }, [isUploaded]);
 
     return (
         <div className="transaction">
@@ -90,7 +92,7 @@ const TransactionCard = ({ transaction, isLoading, onUpdate }) => {
                     <div className={`header-date ${isLoading ? 'placeholder-glow' : ''}`}>
                         {isLoading ?
                             (
-                                <span class="col-12 placeholder bg-secondary"></span>
+                                <span className="col-12 placeholder bg-secondary"></span>
                             ):(
                                 <small>
                                     <CalendarIcon className="icon" />
@@ -101,7 +103,7 @@ const TransactionCard = ({ transaction, isLoading, onUpdate }) => {
                     </div>
                     <div className={`header-detail ${isLoading ? 'placeholder-glow' : ''}`}>
                         {isLoading ?
-                            (<span class="col-12 placeholder bg-secondary"></span>):
+                            (<span className="col-12 placeholder bg-secondary"></span>):
                             (<Link to="#" onClick={handleShowDetail}><small>Lihat Detail Transaksi</small></Link>)
                         }  
                     </div>
@@ -140,21 +142,21 @@ const TransactionCard = ({ transaction, isLoading, onUpdate }) => {
                 <Row xs={2} lg={4} className="transaction-footer g-2">
                     <Col md={6} lg={6} className={isLoading ? 'placeholder-glow' : ''}>
                         {isLoading ?
-                            (<span class="col-4 placeholder bg-secondary"></span>):
+                            (<span className="col-4 placeholder bg-secondary"></span>):
                             (<span className="total-label">Total Pembayaran</span>)
                         }  
                     </Col>
                     <Col className="d-flex justify-content-end">
                         <div className={`transaction-price ${isLoading ? 'placeholder-glow' : ''}`}>
                             {isLoading ?
-                                (<span class="col-12 placeholder bg-secondary"></span>):
+                                (<span className="col-12 placeholder bg-secondary"></span>):
                                 (<CurrencyFormat value={transactionPrice} displayType={'text'} prefix={'Rp'} thousandSeparator="." decimalSeparator="," />)
                             }  
                         </div>
                     </Col>
                     <Col xs={12} className={`mt-3 mt-lg-2 ${isLoading ? 'placeholder-glow' : ''}`}>
                         {isLoading ?
-                            (<span class="col-12 placeholder bg-primary"></span>):
+                            (<span className="col-12 placeholder bg-primary"></span>):
                             (<Button variant={'primary'} type={'button'} className={'btn-flat'} onClick={buttonHandler}>{buttonCaption}</Button>)
                         }  
                     </Col>
