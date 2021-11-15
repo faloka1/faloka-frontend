@@ -3,15 +3,18 @@ import { BASE_API_URL } from "../../config/api";
 import { getToken } from "../auth";
 
 const postLogoutData = async () => {
-  const response = await axios.post(
-    BASE_API_URL + "/auth/logout",
-    {},
-    {
-      headers: { Authorization: `Bearer ${getToken()}` },
-    },
-  );
+  try {
+    const response = await axios.post(
+      BASE_API_URL + "/auth/logout",
+      {},
+      {
+        headers: { Authorization: `Bearer ${getToken()}` },
+      },
+    );
 
-  return response;
+    return response;
+  } catch (error) {
+  }
 };
 
 export default postLogoutData;

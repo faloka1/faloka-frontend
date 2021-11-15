@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, Row, Col } from 'react-bootstrap';
 import CurrencyFormat from 'react-currency-format';
 
@@ -8,10 +8,15 @@ import ExpeditionSelector from './ExpeditionSelector/ExpeditionSelector';
 import Entry from './Entry/Entry';
 
 const ItemsSummary = ({ items, brand, itemsOnly, ...props }) => {
+  const [expeditionCost, setExpeditionCost] = useState(0);
   if (items.length === 0) {
     return null;
   }
-  const totalPrice = items.reduce((accumulator, item) => (accumulator + (item.price * item.quantity)), 0);
+  const totalPrice = items.reduce((accumulator, item) => (accumulator + (item.price * item.quantity)), 0) + expeditionCost;
+
+  const expeditionChangeHandler = (cost) => {
+    setExpeditionCost(cost);
+  };
 
   return (
     <Card {...props}>
@@ -35,7 +40,7 @@ const ItemsSummary = ({ items, brand, itemsOnly, ...props }) => {
                 </div>
               </Col>
               <Col xl={4} lg={4} md={4}>
-                <ExpeditionSelector assignedBrand={brand.slug} />
+                <ExpeditionSelector onChange={expeditionChangeHandler} assignedBrand={brand.slug} />
               </Col>
             </>
           }

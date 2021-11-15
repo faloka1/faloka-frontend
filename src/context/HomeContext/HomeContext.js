@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import useToggle from '../../hooks/use-toggle';
 
 const HomeContextInitialValue = {
   category: null,
@@ -12,6 +13,7 @@ export const HomeContextProvider = ({ children }) => {
   const [category, setCategory] = useState(HomeContextInitialValue.category);
   const [onHome, setOnHome] = useState(HomeContextInitialValue.onHome);
   const [homeData, setHomeData] = useState(HomeContextInitialValue.homeData);
+  const { toggle: showInspireMe, setToggleOff: closeInspireMe, setToggleOn: openInspireMe } = useToggle();
 
   return (
     <HomeContext.Provider value={{
@@ -20,7 +22,10 @@ export const HomeContextProvider = ({ children }) => {
       homeData,
       setCategory,
       setOnHome,
-      setHomeData
+      setHomeData,
+      showInspireMe,
+      closeInspireMe,
+      openInspireMe
     }}>
       {children}
     </HomeContext.Provider>

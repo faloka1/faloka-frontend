@@ -5,7 +5,7 @@ import './InspireMePost.scss';
 import useToggle from '../../hooks/use-toggle';
 import InspireMeDetail from '../InspireMeDetail/InspireMeDetail';
 
-const InspireMePost = (props) => {
+const InspireMePost = ({ post }) => {
   const { toggle, setToggleOff, setToggleOn } = useToggle();
 
   const clickHandler = () => {
@@ -14,10 +14,9 @@ const InspireMePost = (props) => {
 
   return (
     <>
-      <InspireMeDetail show={toggle} onClose={setToggleOff} />
-      <div className="inspire-me-post" onClick={clickHandler}>
-        <img className="inspire-me-post__photo w-100 mb-2" src={`./assets/images/products/product_${props.photo}.png`} alt="" />
-        <p className="text-center">This is just an ordinary post</p>
+      <InspireMeDetail post={post} show={toggle} onClose={setToggleOff} />
+      <div className="inspire-me-post mb-4" onClick={clickHandler}>
+        <img className="inspire-me-post__photo w-100" src={post.photo} alt="" />
       </div>
     </>
   );

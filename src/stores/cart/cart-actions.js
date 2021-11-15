@@ -7,9 +7,12 @@ import deleteCartItem from '../../helpers/api/cart/delete-cart-item';
 
 export const fetchItems = () => {
   return async (dispatch) => {
+    dispatch(cartActions.resetCart());
     try {
       const response = await getCartItems();
       const items = response.data;
+
+      console.log(items);
 
       items.forEach(item => {
         dispatch(cartActions.addItem({
@@ -23,6 +26,7 @@ export const fetchItems = () => {
             product_id: item.product_id,
             variant_id: item.variant_id,
             name: item.products.name,
+            slug: item.products.slug,
             image: BASE_CONTENT_URL + item.variants.variants_image[0].image_url,
             size: item.variants.name,
             price: item.products.price,

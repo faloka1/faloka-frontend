@@ -1,12 +1,46 @@
 import { authActions } from './auth-slice';
+import { cartActions } from '../cart/cart-slice';
 import {
   setExpirationTimestamp,
   login as saveLoginToken,
   logout as processLogout,
   removeExpirationTimestamp,
+  getExpirationTimestamp,
 } from '../../helpers/auth';
 import postLoginData from '../../helpers/api/post-login-data';
 import postLogoutData from '../../helpers/api/post-logout-data';
+import getUserProfile from '../../helpers/api/get-user-profile';
+import { BASE_CONTENT_URL } from '../../config/api';
+
+export const initAuth = () => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(runLogoutTimer(getExpirationTimestamp()));
+
+      const isLoggedIn = getState().auth.isLoggedIn;
+
+      console.log(isLoggedIn);
+      if (isLoggedIn) {
+        const userDataResponse = await getUserProfile();
+        const userData = userDataResponse.data;
+        const user = {
+          name: userData.name,
+          profile_photo: `${BASE_CONTENT_URL}${userData.photo_profile_url}`,
+          email: userData.email,
+          phone_number: userData.phone_number,
+          addresses: userData.addresses,
+        };
+
+        console.log(user);
+
+        dispatch(authActions.setUser({ user }));
+      }
+
+    } catch (error) {
+      dispatch(logout());
+    }
+  }
+};
 
 export const login = (loginData) => {
   return async (dispatch) => {
@@ -15,12 +49,22 @@ export const login = (loginData) => {
     const { access_token: token, expires_in: expiresIn } = response.data;
 
     const now = Math.floor(Date.now());
-    const later = now + (+expiresIn) * 1000 * 60;
+    const later = now + (+expiresIn) * 1000;
 
-    dispatch(authActions.login({ token, expirationTime: later }));
     saveLoginToken(token);
-
     setExpirationTimestamp(later);
+
+    const userDataResponse = await getUserProfile();
+    const userData = userDataResponse.data;
+    const user = {
+      name: userData.name,
+      profile_photo: `${BASE_CONTENT_URL}${userData.photo_profile_url}`,
+      email: userData.email,
+      phone_number: userData.phone_number,
+      addresses: userData.addresses,
+    };
+
+    dispatch(authActions.login({ token, expirationTime: later, user }));
     dispatch(runLogoutTimer(later));
   };
 };
@@ -28,17 +72,12 @@ export const login = (loginData) => {
 export const logout = () => {
   return async (dispatch) => {
     try {
-      postLogoutData();
+      await postLogoutData();
     } catch (err) {
       console.log(err);
     }
 
-    dispatch(
-      authActions.logout()
-    );
-
-    processLogout();
-    removeExpirationTimestamp();
+    removeLoggedInAttribute(dispatch);
   };
 };
 
@@ -49,10 +88,18 @@ export const runLogoutTimer = (expirationTime) => {
 
     if (remainingTime > 0) {
       setTimeout(() => {
-        dispatch(logout())
+        removeLoggedInAttribute(dispatch);
       }, remainingTime);
     } else {
-      dispatch(logout());
+      removeLoggedInAttribute(dispatch);
     }
   };
+};
+
+const removeLoggedInAttribute = (dispatch) => {
+  dispatch(authActions.logout());
+
+  processLogout();
+  removeExpirationTimestamp();
+  dispatch(cartActions.resetCart());
 };
