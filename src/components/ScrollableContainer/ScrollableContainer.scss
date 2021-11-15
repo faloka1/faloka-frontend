@@ -1,7 +1,8 @@
 @import '../../styles/variables';
 
 .scrollable {
-  overflow: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
-  height: 30rem;
+  min-height: fit-content;
+  max-height: 30rem;
 }

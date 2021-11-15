@@ -80,8 +80,8 @@ const Detail = () => {
             <Tab eventKey="description" title="Deskripsi">
               <ScrollableContainer product={product} />
             </Tab>
-            <Tab eventKey="size-detail" title="Detail Ukuran">
-            </Tab>
+            {/* <Tab eventKey="size-detail" title="Detail Ukuran">
+            </Tab> */}
           </Tabs>
         </div>
         <ItemContainer title="Mungkin Kamu Suka">
