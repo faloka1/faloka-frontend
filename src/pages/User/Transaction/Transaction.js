@@ -30,6 +30,7 @@ const Transaction = () => {
         selectedTransaction.status = "pending";
         setUnpaidTransaction(oldUnpaid => oldUnpaid.filter(order => order.id !== order_id));
         setPendingTransaction(oldPending => [selectedTransaction, ...oldPending]);
+        console.log(selectedTransaction)
     }
 
     return (

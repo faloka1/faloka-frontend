@@ -8,7 +8,7 @@ import './TransactionProductCard.scss';
 
 const TransactionProductCard = ({ product, isLoading}) => {
     const [pictureLoaded, setPictureLoaded] = useState(false);
-
+    
     const handleImageLoaded = () => {
         setPictureLoaded(true);
     }
@@ -16,7 +16,7 @@ const TransactionProductCard = ({ product, isLoading}) => {
     return (
         <Row as={Link} className="card-product" to={isLoading ? '#' : `/products/${product.products.slug}`}>
             <Col className={`product-image ${!pictureLoaded || isLoading ? 'placeholder-glow' : ''}`}>
-                {!pictureLoaded && <span class="image placeholder bg-primary"></span>}
+                {!pictureLoaded && <span className="image placeholder bg-primary"></span>}
                 {!isLoading && <img alt={product.products.name} className={`image ${!pictureLoaded ? 'd-none' : ''}`} onLoad={handleImageLoaded} src={`${BASE_CONTENT_URL}${product.variants.variants_image[0].image_url}`}/>}
             </Col>
             <Col className={`product-detail ${isLoading ? 'placeholder-glow' : ''}`}>
