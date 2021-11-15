@@ -29,17 +29,15 @@ import SearchModal from '../SearchModal/SearchModal';
 import UserDropdown from './UserDropdown/UserDropdown';
 import CategoryDropdown from './CategoryDropdown/CategoryDropdown';
 import CounterBadge from './CounterBadge/CounterBadge';
-import CreateInspireMeModal from '../CreateInspireMeModal/CreateInspireMeModal';
 
 const Navbar = ({ categories }) => {
   const { setToggleOff, setToggleOn, toggle } = useToggle();
-  const { setToggleOff: closeCreateInspireMe, setToggleOn: openCreateInspireMe, toggle: showCreateInspireMe } = useToggle();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const { category: currentCategory, setCategory, onHome } = useContext(HomeContext);
+  const { category: currentCategory, setCategory, onHome, openInspireMe } = useContext(HomeContext);
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
   const cartQuantity = useSelector(state => state.cart.totalQuantity);
 
@@ -52,12 +50,15 @@ const Navbar = ({ categories }) => {
   };
 
   const createInspireMeOpenHandler = () => {
-    openCreateInspireMe();
+    if (isLoggedIn) {
+      openInspireMe();
+    } else {
+      setToggleOn();
+    }
   };
 
   return (
     <>
-      <CreateInspireMeModal show={showCreateInspireMe} onClose={closeCreateInspireMe} />
       <SearchModal show={show} onHide={handleClose} centered />
       <LoginRegisterModal className="auth-modal" show={toggle} onHide={setToggleOff} closeFunc={setToggleOff} centered />
       <BootstrapNavbar fixed="top" expand="xl">

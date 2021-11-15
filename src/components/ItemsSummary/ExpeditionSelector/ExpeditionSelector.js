@@ -7,7 +7,7 @@ import getExpeditions from '../../../helpers/api/get-expeditions';
 import getShipmentCost from '../../../helpers/api/get-shipment-cost';
 import { ASSIGN_EXPEDITION } from '../../../context/CheckoutContext/CheckoutActions';
 
-const ExpeditionSelector = ({ assignedBrand }) => {
+const ExpeditionSelector = ({ assignedBrand, onChange = (cost) => { } }) => {
   const [expeditions, setExpeditions] = useState([]);
   const [value, setValue] = useState(null);
   const {
@@ -78,6 +78,7 @@ const ExpeditionSelector = ({ assignedBrand }) => {
           expedition: selectedExpedition,
         }
       });
+      onChange(selectedExpedition.cost);
     } else {
       setValue(null);
       dispatch({
@@ -87,6 +88,7 @@ const ExpeditionSelector = ({ assignedBrand }) => {
           expedition: null,
         }
       });
+      onChange(0);
     }
   };
 

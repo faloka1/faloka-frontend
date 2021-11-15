@@ -5,25 +5,25 @@ import { useDispatch, useSelector } from 'react-redux';
 import './App.scss';
 
 import MainLayout from './components/Layout/MainLayout';
-import { runLogoutTimer } from './stores/auth/auth-actions';
+import { initAuth, runLogoutTimer } from './stores/auth/auth-actions';
 import { fetchItems } from './stores/cart/cart-actions';
 import { routes } from './routes/routes';
 import RouteComponent from './routes/RouteComponent';
 import { HomeContextProvider } from './context/HomeContext/HomeContext';
 
 const App = () => {
-  const expirationTime = useSelector(state => state.auth.expirationTime);
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchItems());
-  });
+    dispatch(initAuth());
+  }, [dispatch]);
 
   useEffect(() => {
-    if (expirationTime) {
-      dispatch(runLogoutTimer(expirationTime));
+    if (isLoggedIn) {
+      dispatch(fetchItems());
     }
-  }, [dispatch, expirationTime]);
+  });
 
   return (
     <>

@@ -20,6 +20,7 @@ const cartSlice = createSlice({
         },
         product_id: item.product_id,
         variant_id: item.variant_id,
+        slug: item.slug,
         name: item.name,
         image: item.image,
         size: item.size,
@@ -55,6 +56,11 @@ const cartSlice = createSlice({
       const { isLoading } = action.payload;
 
       state.isLoading = isLoading;
+    },
+    resetCart(state) {
+      state.totalQuantity = 0;
+      state.items = [];
+      state.isLoading = false;
     }
   }
 });

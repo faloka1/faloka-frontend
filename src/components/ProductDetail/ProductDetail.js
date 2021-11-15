@@ -39,13 +39,14 @@ const ProductDetail = ({ className, product }) => {
             name: brands.name,
           },
           price: price,
+          slug: slug,
           name: name,
           variant_id: variants[0].id,
           product_id: variants[0].product_id,
           image: `${BASE_CONTENT_URL}${variants_image[0].image_url}`,
           size: variantName
         },
-        quantity
+        +quantity
       ));
       setShowToast(true);
     } else {
@@ -62,6 +63,7 @@ const ProductDetail = ({ className, product }) => {
     },
     product_id: variants[0].product_id,
     variant_id: variants[0].id,
+    slug: slug,
     name: name,
     image: `${BASE_CONTENT_URL}${variants_image[0].image_url}`,
     size: variantName,
