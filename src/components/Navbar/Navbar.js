@@ -1,14 +1,10 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import {
   Container,
   Navbar as BootstrapNavbar,
   Nav,
   NavLink,
   NavbarBrand,
-  Form,
-  FormControl,
-  InputGroup,
-  Button
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -18,7 +14,6 @@ import './Navbar.scss';
 
 import { ReactComponent as UserIcon } from '../SVG/user.svg';
 import { ReactComponent as CartIcon } from '../SVG/shopping-bag.svg';
-import { ReactComponent as SearchIcon } from '../SVG/search.svg';
 import { HomeContext } from '../../context/HomeContext/HomeContext';
 import CheckoutProgressBar from '../CheckoutProgressBar/CheckoutProgressBar';
 
@@ -29,13 +24,11 @@ import SearchModal from '../SearchModal/SearchModal';
 import UserDropdown from './UserDropdown/UserDropdown';
 import CategoryDropdown from './CategoryDropdown/CategoryDropdown';
 import CounterBadge from './CounterBadge/CounterBadge';
+import Search from './Search/Search';
 
 const Navbar = ({ categories }) => {
   const { setToggleOff, setToggleOn, toggle } = useToggle();
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const { setToggleOff: closeSearchModal, setToggleOn: openSearchModal, toggle: showSearchModal } = useToggle();
 
   const { category: currentCategory, setCategory, onHome, openInspireMe } = useContext(HomeContext);
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
@@ -59,7 +52,7 @@ const Navbar = ({ categories }) => {
 
   return (
     <>
-      <SearchModal show={show} onHide={handleClose} centered />
+      <SearchModal show={showSearchModal} onHide={closeSearchModal} centered />
       <LoginRegisterModal className="auth-modal" show={toggle} onHide={setToggleOff} closeFunc={setToggleOff} centered />
       <BootstrapNavbar fixed="top" expand="lg">
         <Container className="position-relative">
@@ -83,19 +76,7 @@ const Navbar = ({ categories }) => {
                 </Route>
                 <Route path="*">
                   <li className="nav-item-group">
-                    <NavLink as={Link} to="#" className="d-block d-xl-none">
-                      <SearchIcon onClick={handleShow} className="icon" />
-                    </NavLink>
-                    <div className="d-none d-xl-block">
-                      <Form className="d-flex search-input">
-                        <InputGroup>
-                          <Button variant="primary" className="search-icon">
-                            <SearchIcon className="icon" />
-                          </Button>
-                          <FormControl type="text" placeholder="Search" />
-                        </InputGroup>
-                      </Form>
-                    </div>
+                    <Search onOpenSearchModal={openSearchModal} />
                   </li>
                   <li className="nav-item-group nav-item-right">
                     <Link to="/inspiration">Inspo</Link>

@@ -3,12 +3,12 @@ import {
   Col,
   Container,
   Row,
-  Breadcrumb,
   Tabs,
   Tab,
   Spinner
 } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { useQuery } from 'react-query';
 
 import './Detail.scss';
 
@@ -16,13 +16,13 @@ import ItemContainer from '../../../components/ItemContainer/ItemContainer';
 import ScrollableContainer from '../../../components/ScrollableContainer/ScrollableContainer';
 import ProductCard from '../../../components/ProductCard/ProductCard';
 import ProductDetail from '../../../components/ProductDetail/ProductDetail';
-import { useParams } from 'react-router';
-import { useQuery } from 'react-query';
 import getProductDetail from '../../../helpers/api/get-product-detail';
 import getRelatedProducts from '../../../helpers/api/get-related-products';
 import ProductNotFound from '../../Error/ProductNotFound';
+import Breadcrumb from '../../../components/Breadcrumb/Breadcrumb';
 
 const Detail = () => {
+  const [breadcrumbData, setBreadcrumbData] = useState(null);
   const [foundProduct, setFoundProduct] = useState(true);
   const { productSlug } = useParams();
   const { data: product, ...productDetailQuery } = useQuery(
@@ -40,7 +40,38 @@ const Detail = () => {
           setFoundProduct(false);
         }
       }
+    }, {
+    onSuccess: (data) => {
+      const home = {
+        label: 'Home',
+        path: {
+          to: '/',
+        }
+      };
+      const categories = data.categories.map(ct => ({
+        label: ct.name,
+        path: {
+          to: '/products',
+          search: `?categories=${ct.slug}`
+        }
+      }));
+      const subCategory = {
+        label: data.sub_categories.name,
+        path: {
+          to: '/products',
+          search: `?subcategories=${data.sub_categories.slug}`
+        }
+      };
+      const current = {
+        label: data.name,
+        path: {
+          to: `/products/${data.slug}`
+        },
+        active: true
+      }
+      setBreadcrumbData([home, categories, subCategory, current]);
     }
+  }
   );
   const { data: relatedProducts, ...relatedProductQuery } = useQuery(
     ['related-products', { productSlug }],
@@ -60,7 +91,13 @@ const Detail = () => {
     }
   );
 
-  if (!foundProduct) {
+  if (productDetailQuery.isLoading) {
+    return (
+      <p className="fs-2 text-center my-4">Mengambil data..</p>
+    )
+  }
+
+  if (!foundProduct || !!!product) {
     return (
       <ProductNotFound />
     );
@@ -69,11 +106,14 @@ const Detail = () => {
   return (!productDetailQuery.isLoading && !productDetailQuery.isError &&
     <>
       <Container>
-        <Breadcrumb className="pt-5">
+        {/* <Breadcrumb className="pt-5">
           <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Home</Breadcrumb.Item>
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/products", search: `${product.sub_categories.name}` }}>{product.sub_categories.name}</Breadcrumb.Item>
-          <Breadcrumb.Item href="#" active>{product.name}</Breadcrumb.Item>
-        </Breadcrumb>
+          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/products", search: `${product?.sub_categories.name}` }}>{product?.sub_categories.name}</Breadcrumb.Item>
+          <Breadcrumb.Item href="#" active>{product?.name}</Breadcrumb.Item>
+        </Breadcrumb> */}
+        {!!breadcrumbData &&
+          <Breadcrumb breadcrumbData={breadcrumbData} className="pt-5" />
+        }
         <ProductDetail product={product} />
         <div className="product-tab">
           <Tabs defaultActiveKey="description" id="product-tab">
