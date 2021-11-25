@@ -19,7 +19,6 @@ export const initAuth = () => {
 
       const isLoggedIn = getState().auth.isLoggedIn;
 
-      console.log(isLoggedIn);
       if (isLoggedIn) {
         const userDataResponse = await getUserProfile();
         const userData = userDataResponse.data;
@@ -30,8 +29,6 @@ export const initAuth = () => {
           phone_number: userData.phone_number,
           addresses: userData.addresses,
         };
-
-        console.log(user);
 
         dispatch(authActions.setUser({ user }));
       }

@@ -16,15 +16,12 @@ const InspireMe = () => {
   const [posts, setPosts] = useState([]);
   const user = useSelector(state => state.auth.user);
 
-  console.log(user)
-
   const { isLoading } = useQuery('inspire-me-posts', async () => {
     const response = await getInspireMePosts()
 
     return response.data;
   }, {
     onSuccess: (data) => {
-      console.log(data);
       setPosts(data.map(im => ({
         id: im.id,
         photo: `${BASE_CONTENT_URL}${im.image_url}`,
@@ -66,23 +63,23 @@ const InspireMe = () => {
         <Row>
           {!isLoading &&
             posts.map(post => (
-              <Col key={post.id} xs={6} lg={3}>
+              <Col key={post.id} xs={12} md={6} xl={3}>
                 <InspireMePost post={post} />
               </Col>
             ))
           }
           {isLoading &&
             <>
-              <Col xs={6} lg={3}>
+              <Col xs={12} md={6} xl={3}>
                 <PostPlaceholder />
               </Col>
-              <Col xs={6} lg={3}>
+              <Col xs={12} md={6} xl={3}>
                 <PostPlaceholder />
               </Col>
-              <Col xs={6} lg={3}>
+              <Col xs={12} md={6} xl={3}>
                 <PostPlaceholder />
               </Col>
-              <Col xs={6} lg={3}>
+              <Col xs={12} md={6} xl={3}>
                 <PostPlaceholder />
               </Col>
             </>

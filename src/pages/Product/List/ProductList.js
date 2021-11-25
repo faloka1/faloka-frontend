@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
-import { Row, Col, Container, Breadcrumb } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Row, Col, Container } from 'react-bootstrap';
 import { useQuery } from 'react-query';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 
-import ProductCard from '../../../components/ProductCard/ProductCard';
 import getProducts from "../../../helpers/api/get-products";
+import ProductCard from '../../../components/ProductCard/ProductCard';
 import ProductCardPlaceholder from '../../../components/ProductCard/Placeholder/Placeholder';
+import Breadcrumb from '../../../components/Breadcrumb/Breadcrumb';
 
 import '../../../components/ProductCard/ProductCard.scss';
 
 const ProductList = () => {
   const [count, setCount] = useState(0);
-  const [category, setCategory] = useState('');
-  const [subCategory, setSubCategory] = useState('');
+  const [title, setTitle] = useState('');
+  const [breadcrumbData, setBreadcrumbData] = useState(null);
   const [products, setProducts] = useState([]);
+  const history = useHistory();
 
   let query = new URLSearchParams(useLocation().search);
   var categorySlug = query.get("categories");
@@ -23,7 +25,7 @@ const ProductList = () => {
     async ({ queryKey }) => {
       const [, { categorySlug, subcategory }] = queryKey;
       try {
-        const response = await getProducts(categorySlug, subcategory);
+        const response = await getProducts({ category: categorySlug, sub_category: subcategory });
         return response.data;
       } catch (error) {
         console.log(error);
@@ -31,10 +33,64 @@ const ProductList = () => {
     },
     {
       onSuccess: (data) => {
+        const homeBreadcrumb = { label: 'Home', path: { to: '/' } };
+        let otherBreadcrumb = [];
         setCount(data.count);
-        setCategory(data.category[0]?.name);
-        setSubCategory(data.sub_category[0]?.name)
-        setProducts(data.product);
+        setProducts(data.products);
+
+        if (!!data.category && data.sub_category) {
+          setTitle(data.sub_category[0].name);
+          otherBreadcrumb = [
+            {
+              label: data.category[0].name,
+              path: {
+                to: '/products',
+                search: `?categories=${data.category[0].name}`
+              }
+            },
+            {
+              label: data.sub_category[0].name,
+              path: {
+                to: '/products',
+                search: `?subcategories=${data.sub_category[0].slug}`
+              },
+              active: true
+            }
+          ];
+        } else if (!!data.category) {
+          setTitle(data.category[0].name);
+          otherBreadcrumb = [
+            {
+              label: data.category[0].name,
+              path: {
+                to: '/products',
+                search: `?categories=${data.category[0].name}`
+              },
+              active: true
+            }
+          ];
+        } else {
+          setTitle(data.sub_category[0].name);
+          otherBreadcrumb = [
+            data.sub_category[0].category.map(ct => ({
+              label: ct.name,
+              path: {
+                to: '/products',
+                search: `?categories=${ct.slug}`
+              }
+            })),
+            {
+              label: data.sub_category[0].name,
+              path: {
+                to: '/products',
+                search: `?subcategories=${data.sub_category[0].slug}`
+              },
+              active: true
+            }
+          ];
+        }
+
+        setBreadcrumbData([homeBreadcrumb, ...otherBreadcrumb]);
       }
     }
   );
@@ -56,15 +112,19 @@ const ProductList = () => {
     </Row>
   );
 
+  useEffect(() => {
+    if (!!!categorySlug && !!!subcategory) {
+      history.replace('/');
+    }
+  });
+
   return (
-    <Container className={isLoading ? 'placeholder-glow' : ''}>  
-      <Breadcrumb className="pt-5">
-        <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Home</Breadcrumb.Item>
-        <Breadcrumb.Item className={isLoading ? 'd-none' : ''}>{category}</Breadcrumb.Item>
-        <Breadcrumb.Item className={isLoading ? 'd-none' : ''} active>{subCategory}</Breadcrumb.Item>
-      </Breadcrumb>
+    <Container className={isLoading ? 'placeholder-glow' : ''}>
+      {!!breadcrumbData &&
+        <Breadcrumb breadcrumbData={breadcrumbData} className="pt-5" />
+      }
       <div className="text-center">
-        <h3 className={` ${isLoading ? 'col-2 placeholder bg-secondary' : ''}`}>{!isLoading && subCategory}</h3>
+        <h3 className={` ${isLoading ? 'col-2 placeholder bg-secondary' : ''}`}>{!isLoading && title}</h3>
         <p className="text-muted">({count} produk ditemukan)</p>
       </div>
       {content}

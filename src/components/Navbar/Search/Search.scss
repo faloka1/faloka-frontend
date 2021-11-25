@@ -1,0 +1,17 @@
+.search {
+  &__suggestion {
+    img {
+      width: 4rem;
+      height: 4rem;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    li {
+      a:hover {
+        text-decoration: none !important;
+        background-color: #eeeeee;
+      } 
+    }
+  }
+}
