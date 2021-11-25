@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Row, Col, Spinner } from 'react-bootstrap';
 import { useQuery } from 'react-query';
 
 import HomeSection from '../HomeSection/HomeSection';
 import PopularCategoryCard from './PopularCategoryCard/PopularCategoryCard';
 import getPopularCategory from '../../helpers/api/get-popular-category';
+import { BASE_CONTENT_URL } from '../../config/api';
 
 const PopularCategory = ({ category }) => {
+  const [popularCategories, setPopularCategories] = useState([]);
   const { data, isLoading, isSuccess } = useQuery(
     ['popular-sub-categories', { category }],
     async ({ queryKey }) => {
@@ -15,13 +17,20 @@ const PopularCategory = ({ category }) => {
       try {
         const response = await getPopularCategory(category);
 
-        return response.data.sub_categories;
+        return response.data;
       } catch (error) {
         console.log(error);
       }
     },
     {
-      enabled: !!category
+      enabled: !!category,
+      onSuccess: (data) => {
+        setPopularCategories(data.map(ct => ({
+          ...ct,
+          image_url: `${BASE_CONTENT_URL}${ct.image_url}`,
+          category_slug: category,
+        })))
+      }
     }
   );
 
@@ -37,9 +46,9 @@ const PopularCategory = ({ category }) => {
       ? (
         <HomeSection title="Kategori Populer">
           <Row xs={1} md={3} className="g-4">
-            {data.map(sub_category => (
-              <Col key={sub_category.slug}>
-                <PopularCategoryCard categoryName={sub_category.name} backgroundImage="assets/images/popular-categories/popular-category-1.png" />
+            {popularCategories.map(ct => (
+              <Col key={ct.slug}>
+                <PopularCategoryCard data={ct} />
               </Col>
             ))}
           </Row>

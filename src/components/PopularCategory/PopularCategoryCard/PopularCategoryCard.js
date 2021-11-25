@@ -4,13 +4,16 @@ import { Card } from 'react-bootstrap';
 
 import './PopularCategoryCard.scss';
 
-const PopularCategoryCard = ({ categoryName, backgroundImage }) => {
+const PopularCategoryCard = ({ data }) => {
   return (
-    <Link to="/products">
+    <Link to={{
+      pathname: '/products',
+      search: `?categories=${data.category_slug}&subcategories=${data.slug}`
+    }}>
       <Card className="popular-category-card">
-        <Card.Img src={backgroundImage} alt="Card image" />
+        <Card.Img src={data.image_url} className="w-100" alt="Card image" />
         <Card.ImgOverlay>
-          <Card.Text>{categoryName}</Card.Text>
+          <Card.Text>{data.name}</Card.Text>
         </Card.ImgOverlay>
       </Card>
     </Link>
