@@ -16,6 +16,7 @@ const Footer = () => {
             <Link to="#" className="me-4"><FontAwesomeIcon icon={faInstagram} size="lg" /></Link>
             <Link to="#" className="me-4"><FontAwesomeIcon icon={faTwitter} size="lg" /></Link>
             <Link to="#"><FontAwesomeIcon icon={faFacebookSquare} size="lg" /></Link>
+            <Link to="/privacy-policy" className="d-block mt-2">Privacy & Policy</Link>
           </Col>
           <Col xs={12} md={6} lg={3} className="mb-4 mb-lg-0">
             <p className="h5">Customer Support</p>
