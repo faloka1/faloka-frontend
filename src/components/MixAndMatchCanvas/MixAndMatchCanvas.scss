@@ -1,22 +1,133 @@
-.mix-and-match-canvas {
-  .placeholder {
-    color: #848484;
-    background-color: #f4f4f4;
-    height: 240px;
-  }
+.mix-and-match {
+  
+  .tool-items{
+    display: flex;
+    padding: 1rem;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
 
-  .item {
-    width: 240px;
+    .gender-picker{
+      .gender-button{
+        display: block;
+        width:6.5rem;
+        height:2.25rem;
 
-    img {
-      object-fit: contain;
-      object-position: center;
+        margin-bottom: .5rem;
+        border-radius: 0;
+      }
+  
+      .gender-button.selected{
+        color: #fff;
+        background-color: #212529;
+        border-color: #212529;
+      }
     }
+
+    .outfit-remover{
+      .outfit-button{
+        width:3rem;
+        height:2.25rem;
+        border-radius: 0;
+        margin-right: .5rem;
+        margin-bottom: .5rem;
+        position: relative;
+        .icon-tooltip{
+          --icon-size: 1rem;
+          position: absolute;
+          top: 1px;
+          right: 4.5px;
+          stroke: white;
+        }
+      }
+
+      .outfit-button:hover{
+        .icon-tooltip{
+          stroke: #212529;
+        }
+      }
+
+      .clear-button{
+        display: block;
+        width:6.5rem;
+        height:2.25rem;
+        margin-bottom: .5rem;
+        border-radius: 0;
+      }
+    }
+
   }
 
-  svg {
-    path {
-      stroke: #848484;
+  .mix-and-match-canvas {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    margin-top: -7.5rem;
+    padding: 3.75rem;
+    position: relative;
+
+    .canvas{
+      width:auto;
+      height:auto;
+      max-height: 31rem;   
+      max-width: 12rem;   
+      text-align: center;
+      position: relative;
+      
+      .manequin{
+        width: 100%;
+        height:auto;
+        object-fit:scale-down;
+        object-position: center;
+      }
+  
+      .top-male {
+        position: absolute;
+        top:15%;
+        left: 50%;
+        transform: translate(-50%, 0%);
+        width: 82.5%;
+        height: auto;
+        object-fit: scale-down;
+        object-position: center;
+        z-index: 1;
+      }
+    
+      .bottom-male {
+        position: absolute;
+        bottom: 7%;
+        left: 50%;
+        transform: translate(-50%, 0%);
+        width: 55.25%;
+        height: auto;
+        object-fit: scale-down;
+        object-position: center;
+        z-index: 0;
+      }
+
+      .top-female {
+        position: absolute;
+        top:17.5%;
+        left: 50%;
+        transform: translate(-50%, 0%);
+        width: 67.5%;
+        height: auto;
+        object-fit: scale-down;
+        object-position: center;
+        z-index: 1;
+      }
+    
+      .bottom-female {
+        position: absolute;
+        bottom: 15%;
+        left: 50%;
+        transform: translate(-50%, 0%);
+        width: 46.65%;
+        height: auto;
+        object-fit: scale-down;
+        object-position: center;
+        z-index: 0;
+      }
     }
-  }
+  }  
 }
