@@ -5,10 +5,11 @@ import { Link } from 'react-router-dom';
 import './Search.scss';
 
 import { ReactComponent as SearchIcon } from '../../SVG/search.svg';
+import { ReactComponent as CameraIcon } from '../../SVG/camera.svg';
 import CurrencyFormatter from '../../CurrencyFormatter/CurrencyFormatter';
 import useProductsSearch from '../../../hooks/use-products-search';
 
-const Search = ({ onOpenSearchModal }) => {
+const Search = ({ onOpenSearchModal, onVisualSearchClick }) => {
   const {
     search,
     isSearching,
@@ -26,7 +27,7 @@ const Search = ({ onOpenSearchModal }) => {
       <NavLink as={Link} to="#" className="d-block d-xl-none">
         <SearchIcon onClick={onOpenSearchModal} className="icon" />
       </NavLink>
-      <div className="d-none d-xl-block">
+      <div className="d-none d-xl-block position-relative">
         <Form className="d-flex search-input">
           <InputGroup>
             <Button variant="primary" className="search-icon">
@@ -42,6 +43,7 @@ const Search = ({ onOpenSearchModal }) => {
             />
           </InputGroup>
         </Form>
+        <CameraIcon className="icon visual-search-icon position-absolute top-50 end-0 translate-middle" color="#a1a1a1" onClick={onVisualSearchClick} />
       </div>
       {showSuggestion &&
         <ul

@@ -44,7 +44,18 @@ const Breadcrumb = ({ breadcrumbData, ...props }) => {
           )
         } else {
           return (
-            <BsBreadcrumb.Item key={`${b.path.to}${b.path.search}`} linkAs={Link} linkProps={{ to: `${b.path.to}${b.path.search}` }} active={b.active}>{b.label}</BsBreadcrumb.Item>
+            <BsBreadcrumb.Item
+              key={`${b.path.to}${b.path.search}`}
+              linkAs={Link}
+              linkProps={{
+                to: {
+                  pathname: b.path.to,
+                  search: b.path.search
+                }
+              }}
+              active={b.active}>
+              {b.label}
+            </BsBreadcrumb.Item>
           )
         }
       })}

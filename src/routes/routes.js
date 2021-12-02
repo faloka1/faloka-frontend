@@ -1,19 +1,23 @@
-import Home from "../pages/Home";
-import Login from "../pages/Auth/Login/Login";
-import Register from "../pages/Auth/Register/Register";
-import Logout from "../pages/Auth/Logout/Logout";
-import Profile from "../pages/User/Profile/Profile";
-import Transaction from "../pages/User/Transaction/Transaction";
-import ProductList from "../pages/Product/List/ProductList";
-import ProductDetail from "../pages/Product/Detail/Detail";
-import RouteNotFound from "../pages/Error/RouteNotFound";
-import Checkout from "../pages/Checkout/Checkout";
-import MixAndMatch from "../pages/MixAndMatch/MixAndMatch";
-import Cart from "../pages/Cart/Cart";
-import InspireMe from "../pages/InspireMe/InspireMe";
+import React from "react";
 
 import { isGuest } from "../middleware/is-guest";
 import { isLoggedIn } from "../middleware/is-logged-in";
+
+const Home = React.lazy(() => import("../pages/Home"));
+const Login = React.lazy(() => import("../pages/Auth/Login/Login"));
+const Register = React.lazy(() => import("../pages/Auth/Register/Register"));
+const Logout = React.lazy(() => import("../pages/Auth/Logout/Logout"));
+const Profile = React.lazy(() => import("../pages/User/Profile/Profile"));
+const Transaction = React.lazy(() => import("../pages/User/Transaction/Transaction"));
+const ProductList = React.lazy(() => import("../pages/Product/List/ProductList"));
+const ProductDetail = React.lazy(() => import("../pages/Product/Detail/Detail"));
+const RouteNotFound = React.lazy(() => import("../pages/Error/RouteNotFound"));
+const Checkout = React.lazy(() => import("../pages/Checkout/Checkout"));
+const MixAndMatch = React.lazy(() => import("../pages/MixAndMatch/MixAndMatch"));
+const Cart = React.lazy(() => import("../pages/Cart/Cart"));
+const InspireMe = React.lazy(() => import("../pages/InspireMe/InspireMe"));
+const PrivacyPolicy = React.lazy(() => import("../pages/PrivacyPolicy/PrivacyPolicy"));
+const VisualSearch = React.lazy(() => import("../pages/VisualSearch/VisualSearch"));
 
 export const routes = [
   {
@@ -111,10 +115,22 @@ export const routes = [
     },
   },
   {
-    name: 'Checkout',
+    name: 'Inspire Me',
     path: '/inspiration',
     pageComponent: InspireMe,
     exact: false,
+  },
+  {
+    name: 'Visual Search',
+    path: '/visual-search',
+    pageComponent: VisualSearch,
+    exact: true,
+  },
+  {
+    name: 'Privacy Policy',
+    path: '/privacy-policy',
+    pageComponent: PrivacyPolicy,
+    exact: true,
   },
   {
     name: 'Any',

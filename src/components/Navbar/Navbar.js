@@ -25,10 +25,12 @@ import UserDropdown from './UserDropdown/UserDropdown';
 import CategoryDropdown from './CategoryDropdown/CategoryDropdown';
 import CounterBadge from './CounterBadge/CounterBadge';
 import Search from './Search/Search';
+import VisualSearchModal from '../VisualSearchModal/VisualSearchModal';
 
 const Navbar = ({ categories }) => {
   const { setToggleOff, setToggleOn, toggle } = useToggle();
   const { setToggleOff: closeSearchModal, setToggleOn: openSearchModal, toggle: showSearchModal } = useToggle();
+  const { setToggleOff: closeVisualSearch, setToggleOn: openVisualSearch, toggle: showVisualSearch } = useToggle();
 
   const { category: currentCategory, setCategory, onHome, openInspireMe } = useContext(HomeContext);
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
@@ -50,9 +52,14 @@ const Navbar = ({ categories }) => {
     }
   };
 
+  const visualSearchSuccessHandler = () => {
+    console.log('success');
+  };
+
   return (
     <>
       <SearchModal show={showSearchModal} onHide={closeSearchModal} centered />
+      <VisualSearchModal show={showVisualSearch} onSuccess={visualSearchSuccessHandler} onClose={closeVisualSearch} onHide={closeVisualSearch} centered />
       <LoginRegisterModal className="auth-modal" show={toggle} onHide={setToggleOff} closeFunc={setToggleOff} centered />
       <BootstrapNavbar fixed="top" expand="lg">
         <Container className="position-relative">
@@ -76,7 +83,7 @@ const Navbar = ({ categories }) => {
                 </Route>
                 <Route path="*">
                   <li className="nav-item-group">
-                    <Search onOpenSearchModal={openSearchModal} />
+                    <Search onOpenSearchModal={openSearchModal} onVisualSearchClick={openVisualSearch} />
                   </li>
                   <li className="nav-item-group nav-item-right">
                     <Link to="/inspiration">Inspo</Link>
