@@ -9,7 +9,7 @@ const PrivacyPolicy = () => {
       <p>Updated on: 2021-11-24</p>
       <p>
         This Privacy Policy explains the policies of Faloka on the collection
-        and use of the information we collect when you access http://104.131.90.37/privacy-policy (the “Service”). This Privacy Policy describes your
+        and use of the information we collect when you access http://faloka.me/privacy-policy (the “Service”). This Privacy Policy describes your
         privacy rights and how you are protected under privacy laws.</p>
       <p>
         By using our Service, you are consenting to the collection and use of your information in accordance
@@ -19,13 +19,13 @@ const PrivacyPolicy = () => {
       <p>Faloka is authorized to modify this Privacy Policy at any time.
         This may occur without prior notice.</p>
       <p>
-        Faloka will post the revised Privacy Policy on the http://104.131.90.37/privacy-policy website</p>
+        Faloka will post the revised Privacy Policy on the http://faloka.me/privacy-policy website</p>
 
       <h3>Collection and Use of Your Personal Information</h3>
       <h4>Information We Collect</h4>
       <p>
         When using our Service, you will be prompted to provide us with personal information used to
-        contact or identify you. http://104.131.90.37/privacy-policy collects the following information:    </p>
+        contact or identify you. http://faloka.me/privacy-policy collects the following information:    </p>
 
       <ul>
         <li>Usage Data</li>
@@ -48,7 +48,7 @@ const PrivacyPolicy = () => {
 
       <h4>How We Collect Information</h4>
       <p>
-        http://104.131.90.37/privacy-policy collects and receives information from you in the following manner:    </p>
+        http://faloka.me/privacy-policy collects and receives information from you in the following manner:    </p>
       <ul>
         <li>When you fill a registration form or otherwise submit your personal information.</li>
       </ul>
@@ -60,7 +60,7 @@ const PrivacyPolicy = () => {
 
       <h4>How We Use Your Information</h4>
       <p>
-        http://104.131.90.37/privacy-policy may use your information for the following purposes:        </p>
+        http://faloka.me/privacy-policy may use your information for the following purposes:        </p>
       <ul>
         <li><b>Providing and maintaining our Service,</b> as well as monitoring the usage of our Service.</li>
         <li><b>For other purposes.</b> Faloka will use your information for data analysis to identify usage
@@ -101,7 +101,7 @@ const PrivacyPolicy = () => {
 
       <h4>Security</h4>
       <p>
-        Your information’s security is important to us. http://104.131.90.37/privacy-policy
+        Your information’s security is important to us. http://faloka.me/privacy-policy
         utilizes a range of security measures to prevent the misuse, loss, or alteration of the information you have given us.
         However, because we cannot guarantee the security of the information you provide us, you must access our service at your
         own risk.    </p>
@@ -115,7 +115,7 @@ const PrivacyPolicy = () => {
       <p>Name: Faloka</p>
       <p>Address: Institut Teknologi Sepuluh Nopember, Kampus, Jl. Raya ITS, Keputih, Kec. Sukolilo, Kota SBY, Jawa Timur 60111</p>
       <p>Email: faloka39@gmail.com</p>
-      <p>Website: http://104.131.90.37/privacy-policy</p>
+      <p>Website: http://faloka.me/privacy-policy</p>
       <p>Phone: 085738887799</p>
     </div>
   );
