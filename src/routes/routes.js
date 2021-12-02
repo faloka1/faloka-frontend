@@ -17,6 +17,7 @@ const MixAndMatch = React.lazy(() => import("../pages/MixAndMatch/MixAndMatch"))
 const Cart = React.lazy(() => import("../pages/Cart/Cart"));
 const InspireMe = React.lazy(() => import("../pages/InspireMe/InspireMe"));
 const PrivacyPolicy = React.lazy(() => import("../pages/PrivacyPolicy/PrivacyPolicy"));
+const VisualSearch = React.lazy(() => import("../pages/VisualSearch/VisualSearch"));
 
 export const routes = [
   {
@@ -120,10 +121,16 @@ export const routes = [
     exact: false,
   },
   {
+    name: 'Visual Search',
+    path: '/visual-search',
+    pageComponent: VisualSearch,
+    exact: true,
+  },
+  {
     name: 'Privacy Policy',
     path: '/privacy-policy',
     pageComponent: PrivacyPolicy,
-    exact: false,
+    exact: true,
   },
   {
     name: 'Any',

@@ -123,9 +123,9 @@ const ProductList = () => {
       {!!breadcrumbData &&
         <Breadcrumb breadcrumbData={breadcrumbData} className="pt-5" />
       }
-      <div className="text-center">
-        <h3 className={` ${isLoading ? 'col-2 placeholder bg-secondary' : ''}`}>{!isLoading && title}</h3>
-        <p className="text-muted">({count} produk ditemukan)</p>
+      <div className="d-flex justify-content-between align-items-center">
+        <p className={`fs-3 ${isLoading ? 'col-2 placeholder bg-secondary' : ''}`}>{!isLoading && title}</p>
+        <p className="text-muted"><span className="fw-bold text-dark">{count}</span> produk ditemukan</p>
       </div>
       {content}
     </Container>
