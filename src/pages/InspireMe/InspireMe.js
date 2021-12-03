@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import React, { useContext, useEffect, useState } from 'react';
+import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import { useQuery } from 'react-query';
-
+import { useSelector } from 'react-redux';
 
 import InspireMePost from '../../components/InspireMePost/InspireMePost';
 import PostPlaceholder from '../../components/InspireMePost/Placeholder/Placeholder'
@@ -9,36 +9,69 @@ import getInspireMePosts from '../../helpers/api/inspire-me/get-inspire-me-posts
 import { BASE_CONTENT_URL } from '../../config/api';
 import { HomeContext } from '../../context/HomeContext/HomeContext';
 import CreateInspireMeModal from '../../components/CreateInspireMeModal/CreateInspireMeModal';
-import { useSelector } from 'react-redux';
 
 const InspireMe = () => {
   const { showInspireMe, closeInspireMe } = useContext(HomeContext);
   const [posts, setPosts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [touchedBottomPage, setTouchedBottomPage] = useState(false);
+  const [lastPage, setLastPage] = useState(9999999);
   const user = useSelector(state => state.auth.user);
 
-  const { isLoading } = useQuery('inspire-me-posts', async () => {
-    const response = await getInspireMePosts()
+  // fetch posts by page
+  const { isLoading: isFetchingPosts } = useQuery(
+    ['inspire-me-posts', { page }],
+    async ({ queryKey }) => {
+      const [, { page }] = queryKey;
 
-    return response.data;
-  }, {
-    onSuccess: (data) => {
-      setPosts(data.map(im => ({
-        id: im.id,
-        photo: `${BASE_CONTENT_URL}${im.image_url}`,
-        caption: im.caption,
-        user: {
-          name: im.user.name,
-          profile_photo: `${BASE_CONTENT_URL}${im.user.photo_profile_url}`,
-        },
-        products: im.inspiremeproducts.map(imp => ({
-          slug: imp.products.slug,
-          image: `${BASE_CONTENT_URL}${imp.variants.variants_image[0].image_url}`,
-          price: imp.products.price,
-        }))
-      })));
+      const response = await getInspireMePosts(page);
+
+      return response.data;
     },
-    onError: (error) => console.log(error)
-  });
+    {
+      enabled: page <= lastPage,
+      onSuccess: (data) => {
+        setPosts(prevData => {
+          const newData = data.data.map(im => ({
+            id: im.id,
+            photo: `${BASE_CONTENT_URL}${im.image_url}`,
+            caption: im.caption,
+            user: {
+              name: im.user.name,
+              profile_photo: `${BASE_CONTENT_URL}${im.user.photo_profile_url}`,
+            },
+            products: im.inspiremeproducts.map(imp => ({
+              slug: imp.products.slug,
+              image: `${BASE_CONTENT_URL}${imp.variants.variants_image[0].image_url}`,
+              price: imp.products.price,
+            }))
+          }));
+
+          return [...prevData, ...newData];
+        });
+        setTouchedBottomPage(false);
+        setLastPage(data.last_page);
+      },
+      onError: (error) => console.log(error),
+    }
+  );
+  // detect whether user have reached bottom page
+  useEffect(() => {
+    const check = () => {
+      const scrollEnd = (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 400;
+
+      if (scrollEnd && !isFetchingPosts && !touchedBottomPage && page <= lastPage) {
+        setTouchedBottomPage(true);
+        setPage(prevPage => prevPage + 1);
+      }
+    };
+
+    window.addEventListener('scroll', check);
+
+    return () => {
+      window.removeEventListener('scroll', check);
+    }
+  }, [isFetchingPosts, lastPage, page, touchedBottomPage]);
 
   const postedHandler = (postData) => {
     setPosts(prev => [
@@ -53,22 +86,16 @@ const InspireMe = () => {
         products: postData.products
       },
       ...prev
-    ])
+    ]);
   };
+
 
   return (
     <>
       <CreateInspireMeModal show={showInspireMe} onClose={closeInspireMe} onPosted={postedHandler} />
       <Container className="my-4">
         <Row>
-          {!isLoading &&
-            posts.map(post => (
-              <Col key={post.id} xs={12} md={6} xl={3}>
-                <InspireMePost post={post} />
-              </Col>
-            ))
-          }
-          {isLoading &&
+          {isFetchingPosts && page === 1 &&
             <>
               <Col xs={12} md={6} xl={3}>
                 <PostPlaceholder />
@@ -84,7 +111,22 @@ const InspireMe = () => {
               </Col>
             </>
           }
+          {posts.map(post => (
+            <Col key={post.id} xs={12} md={6} xl={3}>
+              <InspireMePost post={post} />
+            </Col>
+          ))}
         </Row>
+        {isFetchingPosts && page > 1 &&
+          <div className="d-flex justify-content-center align-items-center mt-3">
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
+        }
+        {page > lastPage &&
+          <p className="text-muted text-center mb-0">Kamu sudah melihat semua post.</p>
+        }
       </Container>
     </>
   );

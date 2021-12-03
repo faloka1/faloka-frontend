@@ -29,22 +29,6 @@ const InspireMeDetail = ({ show, onClose, detail, post }) => {
                   <CurrencyFormatter value={product.price} renderText={(value) => <p className="text-center mb-0">{value}</p>} />
                 </div>
               ))}
-              {/* <div className="inspire-me-detail__product">
-                <img className="me-2" src="./assets/images/products/product_1.png" alt="" />
-                <CurrencyFormatter value={30000} renderText={(value) => <p className="text-center mb-0">{value}</p>} />
-              </div>
-              <div className="inspire-me-detail__product">
-                <img className="me-2" src="./assets/images/products/product_1.png" alt="" />
-                <CurrencyFormatter value={30000} renderText={(value) => <p className="text-center mb-0">{value}</p>} />
-              </div>
-              <div className="inspire-me-detail__product">
-                <img className="me-2" src="./assets/images/products/product_1.png" alt="" />
-                <CurrencyFormatter value={30000} renderText={(value) => <p className="text-center mb-0">{value}</p>} />
-              </div>
-              <div className="inspire-me-detail__product">
-                <img className="me-2" src="./assets/images/products/product_1.png" alt="" />
-                <CurrencyFormatter value={30000} renderText={(value) => <p className="text-center mb-0">{value}</p>} />
-              </div> */}
             </div>
           </Col>
         </Row>
