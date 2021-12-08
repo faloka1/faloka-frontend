@@ -12,12 +12,6 @@ import CurrencyFormatter from '../CurrencyFormatter/CurrencyFormatter';
 import { BASE_CONTENT_URL } from '../../config/api';
 
 const ProductDetail = ({ className, product }) => {
-  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
-  const isAddingToCart = useSelector(state => state.cart.isLoading);
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const [quantity, setQuantity] = useState(1);
-  const [showToast, setShowToast] = useState(false);
   const {
     name,
     brands,
@@ -26,10 +20,17 @@ const ProductDetail = ({ className, product }) => {
     variants,
     slug,
   } = product;
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  const isAddingToCart = useSelector(state => state.cart.isLoading);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [quantity, setQuantity] = useState(1);
+  const [size_id, setSizeID] = useState(variants[0].variants_sizes[0].id);
+  const [size_name, setSizeName] = useState(variants[0].variants_sizes[0].name);
+  const [showToast, setShowToast] = useState(false);
   const discountPercentage = `${discount * 100}%`;
   const discountedPrice = (1 - discount) * price;
   const { name: variantName, variants_image } = variants[0];
-
   const addToCartHandler = () => {
     if (isLoggedIn) {
       dispatch(addItem(
@@ -43,9 +44,10 @@ const ProductDetail = ({ className, product }) => {
           slug: slug,
           name: name,
           variant_id: variants[0].id,
+          variantsize_id: size_id,
           product_id: variants[0].product_id,
           image: `${BASE_CONTENT_URL}${variants_image[0].image_url}`,
-          size: variantName
+          size: size_name
         },
         +quantity
       ));
@@ -64,10 +66,11 @@ const ProductDetail = ({ className, product }) => {
     },
     product_id: variants[0].product_id,
     variant_id: variants[0].id,
+    variantsize_id: size_id,
     slug: slug,
     name: name,
     image: `${BASE_CONTENT_URL}${variants_image[0].image_url}`,
-    size: variantName,
+    size: size_name,
     price,
     quantity: +quantity,
   };
@@ -103,8 +106,6 @@ const ProductDetail = ({ className, product }) => {
               <Tab eventKey="description" title="Deskripsi">
                 <ScrollableContainer product={product} />
               </Tab>
-              {/* <Tab eventKey="size-detail" title="Detail Ukuran">
-              </Tab> */}
             </Tabs>
           </div>
         </Col>
@@ -114,19 +115,12 @@ const ProductDetail = ({ className, product }) => {
             <div className="product-size">
               <small>Ukuran</small>
               <div className="size-select">
-                <ToggleButtonGroup type="radio" name="size" defaultValue={'S'}>
-                  <ToggleButton id="size-s" value={'S'} className="select-button" variant="outline-dark">
-                    S
-                  </ToggleButton>
-                  <ToggleButton id="size-m" value={'M'} className="select-button" variant="outline-dark">
-                    M
-                  </ToggleButton>
-                  <ToggleButton id="size-l" value={'L'} className="select-button" variant="outline-dark">
-                    L
-                  </ToggleButton>
-                  <ToggleButton id="size-xl" value={'XL'} className="select-button" variant="outline-dark">
-                    XL
-                  </ToggleButton>
+                <ToggleButtonGroup type="radio" name="size" defaultValue={variants[0].variants_sizes[0].id}>
+                  {variants[0].variants_sizes.map(variants_sizes => (
+                    <ToggleButton onChange={(e) => {setSizeID(e.currentTarget.value); setSizeName(variants_sizes.name)}} key={variants_sizes.id} id={`size-${variants_sizes.id}`} value={variants_sizes.id} className="select-button" variant="outline-dark">
+                      {variants_sizes.name}
+                    </ToggleButton>
+                  ))}
                 </ToggleButtonGroup>
               </div>
             </div>

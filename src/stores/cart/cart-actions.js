@@ -43,7 +43,7 @@ export const fetchItems = () => {
 export const addItem = (item, quantity) => {
   return async (dispatch, getState) => {
     const { items } = getState().cart;
-    const foundItem = items.find(p => (p.product_id === item.product_id && p.variant_id === item.variant_id));
+    const foundItem = items.find(p => (p.product_id === item.product_id && p.variant_id === item.variant_id && p.variantsize_id === item.variantsize_id));
 
     dispatch(cartActions.updateIsLoading({ isLoading: true }));
 
@@ -56,6 +56,7 @@ export const addItem = (item, quantity) => {
         dispatch(cartActions.updateQuantity({
           product_id: foundItem.product_id,
           variant_id: foundItem.variant_id,
+          variantsize_id: foundItem.variantsize_id,
           quantity: newQuantity
         }));
       } catch (error) {
@@ -63,7 +64,7 @@ export const addItem = (item, quantity) => {
       }
     } else {
       try {
-        const response = await addToCart({ quantity, product_id: item.product_id, variant_id: item.variant_id });
+        const response = await addToCart({ quantity, product_id: item.product_id, variant_id: item.variant_id, variantsize_id: item.variantsize_id });
         item.id = response.data.cart_id;
 
         dispatch(cartActions.addItem({ item, quantity }));
