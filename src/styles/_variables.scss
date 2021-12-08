@@ -1,4 +1,7 @@
 @import 'typography';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins/_breakpoints';
 
 // Font
 $josefin: 'Josefin Sans', sans-serif;
