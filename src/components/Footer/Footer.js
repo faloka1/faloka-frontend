@@ -30,7 +30,14 @@ const Footer = () => {
             <Link to="#" className="d-block">Join komunitas kami</Link>
           </Col>
           <Col xs={12} md={6} lg={3} className="mb-4 mb-lg-0">
-            <Link to="#"><img src="/assets/images/get_on_googleplay.png" alt="" /></Link>
+            <Link
+              to={{
+                pathname: "https://play.google.com/store/apps/details?id=com.faloka.faloka_mobile&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
+              }}
+              target="_blank"
+            >
+              <img className="google-play-logo" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' />
+            </Link>
           </Col>
         </Row>
       </Container>

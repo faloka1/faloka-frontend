@@ -4,6 +4,7 @@
 
 .product-card {
   border-radius: 0;
+  border: none;
   font-size: 1rem;
   font-family: $lato;
   white-space: nowrap;
@@ -41,18 +42,19 @@
   }
 
   .product-detail {
+    padding: 0 !important;
+    padding-top: 1rem !important;
     .product-brand {
-      font-size: 1.25rem;
+      font-weight: 500;
     }
 
     .product-name {
-      color: $black-muted;
-      font-weight: 375;
       margin-bottom:.75rem;
+      color: $gray;
     }
 
-    .product-prize {
-      font-weight: 700!important;
+    .product-price {
+      font-weight: 900!important;
 
       .price {
         &--cut {

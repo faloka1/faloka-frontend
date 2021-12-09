@@ -106,11 +106,6 @@ const Detail = () => {
   return (!productDetailQuery.isLoading && !productDetailQuery.isError &&
     <>
       <Container>
-        {/* <Breadcrumb className="pt-5">
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Home</Breadcrumb.Item>
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/products", search: `${product?.sub_categories.name}` }}>{product?.sub_categories.name}</Breadcrumb.Item>
-          <Breadcrumb.Item href="#" active>{product?.name}</Breadcrumb.Item>
-        </Breadcrumb> */}
         {!!breadcrumbData &&
           <Breadcrumb breadcrumbData={breadcrumbData} className="pt-5" />
         }
@@ -120,8 +115,6 @@ const Detail = () => {
             <Tab eventKey="description" title="Deskripsi">
               <ScrollableContainer product={product} />
             </Tab>
-            {/* <Tab eventKey="size-detail" title="Detail Ukuran">
-            </Tab> */}
           </Tabs>
         </div>
         <ItemContainer title="Mungkin Kamu Suka">

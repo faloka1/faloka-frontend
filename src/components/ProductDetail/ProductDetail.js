@@ -14,6 +14,7 @@ const ProductDetail = ({ className, product }) => {
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
   const isAddingToCart = useSelector(state => state.cart.isLoading);
   const dispatch = useDispatch();
+  const [imageLoaded, setImageLoaded] = useState(false);
   const history = useHistory();
   const [quantity, setQuantity] = useState(1);
   const [showToast, setShowToast] = useState(false);
@@ -28,6 +29,10 @@ const ProductDetail = ({ className, product }) => {
   const discountPercentage = `${discount * 100}%`;
   const discountedPrice = (1 - discount) * price;
   const { name: variantName, variants_image } = variants[0];
+
+  const loadedImageHandler = () => {
+    setImageLoaded(true);
+  }
 
   const addToCartHandler = () => {
     if (isLoggedIn) {
@@ -81,8 +86,9 @@ const ProductDetail = ({ className, product }) => {
       <Row className={`product-item`}>
         <Col md={6} lg={4} xl={3}>
           <Link to="#">
-            <div className="product-image">
-              <img src={`${BASE_CONTENT_URL}${variants_image[0].image_url}`} alt={name} />
+            <div className="product-image placeholder-glow">
+              {!imageLoaded && <span className="placeholder w-100 image"></span>}
+              <img className={`image ${!imageLoaded ? 'd-none' : ''}`} src={`${BASE_CONTENT_URL}${variants_image[0].image_url}`} alt={name} onLoad={loadedImageHandler} />
             </div>
           </Link>
         </Col>

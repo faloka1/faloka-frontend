@@ -5,8 +5,8 @@ import '../InspireMePost.scss';
 
 const Placeholder = () => {
   return (
-    <div className="inspire-me-post mb-4">
-      <BootstrapPlaceholder className="inspire-me-post__photo w-100" />
+    <div className="inspire-me-post mb-4 placeholder-glow">
+      <BootstrapPlaceholder className="inspire-me-post__photo w-100 h-100" />
     </div>
   );
 };

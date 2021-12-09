@@ -49,7 +49,7 @@ const Transaction = () => {
                                     </Col>
                                 ) : (
                                     unpaidTransaction.map(unpaidTransaction => (
-                                        <Col key={unpaidTransaction.id}>
+                                        <Col key={unpaidTransaction.id} className="mb-5">
                                             <TransactionCard transaction={unpaidTransaction} status="unpaid" isLoading={isLoading} onUpdate={updateComponentHandler} />
                                         </Col>
                                     )))}
@@ -62,7 +62,7 @@ const Transaction = () => {
                                     </Col>
                                 ) : (
                                     pendingTransaction.map(pendingTransaction => (
-                                        <Col key={pendingTransaction.id}>
+                                        <Col key={pendingTransaction.id} className="mb-5">
                                             <TransactionCard transaction={pendingTransaction} status="paid" isLoading={isLoading} onUpdate={updateComponentHandler} />
                                         </Col>
                                     )))}
