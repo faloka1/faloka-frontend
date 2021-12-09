@@ -33,7 +33,11 @@ a {
 }
 
 .container{
-  padding: 0 2rem;
+  padding: 0;
+
+  @include media-breakpoint-down(sm) {
+    padding: 0 2rem;
+  }
 }
 
 .text-gray {
