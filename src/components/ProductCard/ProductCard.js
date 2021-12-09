@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
-import CurrencyFormatter from '../CurrencyFormatter/CurrencyFormatter';
 
 import './ProductCard.scss';
 
+import CurrencyFormatter from '../CurrencyFormatter/CurrencyFormatter';
 import { BASE_CONTENT_URL } from '../../config/api';
 
 const ProductCard = ({ product }) => {
@@ -32,7 +32,7 @@ const ProductCard = ({ product }) => {
         <Card.Body className="product-detail">
           <div className="product-brand text-truncate">{brandName}</div>
           <div className="product-name text-truncate">{name}</div>
-          <div className="product-prize d-inline-flex">
+          <div className="product-price d-inline-flex">
             <CurrencyFormatter value={price} renderText={value => <span className={` ${discount ? 'price--cut' : ''}`}>{value}</span>} />
             {discount > 0 &&
               <CurrencyFormatter value={discountedPrice} renderText={value => <span className="price--discount mx-3">{value}</span>} />

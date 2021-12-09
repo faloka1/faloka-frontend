@@ -63,7 +63,7 @@ const Shipment = () => {
     <>
       <ShipmentAddress shipmentAddress={shipment_address} className="mb-4" />
       {items.map(item => (
-        <ItemsSummary key={item.slug} brand={{ name: item.name, slug: item.slug }} items={item.items} className="mb-2" />
+        <ItemsSummary key={item.slug} brand={{ name: item.name, slug: item.slug }} items={item.items} className="mb-4" />
       ))}
     </>
   );

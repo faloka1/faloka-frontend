@@ -103,7 +103,7 @@ const ShoppingSummaryModal = ({ closeFunc, ...props }) => {
         </section>
         <section className="summary-section">
           <div className="summary-section__container">
-            <p className="h5 mb-2 summary-section__title border-bottom pb-2">Pembayaran</p>
+            <p className="fw-bold mb-2 summary-section__title border-bottom pb-2">Pembayaran</p>
             <div className="d-flex justify-content-between">
               <p className="text-gray">Metode Pembayaran</p>
               <div>
@@ -127,7 +127,7 @@ const ShoppingSummaryModal = ({ closeFunc, ...props }) => {
         </section>
         <section className="summary-section">
           <div className="summary-section__container">
-            <p className="h5 mb-3 summary-section__title">Daftar Produk</p>
+            <p className="fw-bold mb-3 summary-section__title">Daftar Produk</p>
             {items.map(item => (
               <ItemsExpeditionSummary key={item.slug} brandName={item.name} items={item.items} expedition={item.expedition} itemsOnly className="mb-2" />
             ))}
@@ -135,7 +135,7 @@ const ShoppingSummaryModal = ({ closeFunc, ...props }) => {
         </section>
         <section className="summary-section">
           <div className="summary-section__container">
-            <p className="h5 mb-3 summary-section__title border-bottom pb-2">Alamat Pengiriman</p>
+            <p className="fw-bold mb-3 summary-section__title border-bottom pb-2">Alamat Pengiriman</p>
             <p className="fw-bold">{shipment_address.name}</p>
             <p>{concatAddress(shipment_address.address)}</p>
             <p className="mb-0">{shipment_address.phone_number}</p>

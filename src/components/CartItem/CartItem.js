@@ -43,7 +43,7 @@ const CartItem = ({ className, cartData, onQuantityChange, onChecked, onDeleteHa
         <img src={image} alt="product" />
         <div className="d-flex flex-column flex-md-row justify-content-between ms-3 flex-grow-1 align-items-baseline align-items-md-center">
           <div className="d-flex flex-column justify-content-center">
-            <Link to={`/p/${slug}`} className="mb-2">{name}</Link>
+            <Link to={`/products/${slug}`} className="mb-2">{name}</Link>
             <p className="fw-bold"><span className="text-gray fw-normal">Ukuran</span>: {size}</p>
           </div>
           <CurrencyFormatter value={price} renderText={value => <p className="fw-bold">{value}</p>} />

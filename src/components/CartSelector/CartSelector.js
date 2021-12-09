@@ -15,8 +15,6 @@ const CartSelector = () => {
   const items = useSelector(state => state.cart.items);
   const grouped = groupCartItem(items);
 
-  console.log(items);
-
   const quantityChangeHandler = (cart_id, quantity) => {
     dispatch(updateQuantity(cart_id, quantity));
   };

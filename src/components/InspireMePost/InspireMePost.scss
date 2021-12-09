@@ -1,8 +1,8 @@
 .inspire-me-post {
   cursor: pointer;
+  height: 375px;
 
   &__photo {
-    height: 375px;
     object-fit: cover;
     object-position: center;
   }
