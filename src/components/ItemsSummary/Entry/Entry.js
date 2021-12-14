@@ -8,7 +8,7 @@ const Entry = ({ className, item }) => {
   const {
     name,
     price,
-    size,
+    variant_size,
     image
   } = item;
 
@@ -17,7 +17,7 @@ const Entry = ({ className, item }) => {
       <img src={image} alt="product_image" />
       <div className="flex-grow-1">
         <p className="mb-0">{name}</p>
-        <p className="mb-3"><span className="text-gray">Ukuran : </span> {size}</p>
+        <p className="mb-3"><span className="text-gray">Ukuran : </span> {variant_size.name}</p>
         <CurrencyFormatter value={price} renderText={value => <p className="mb-0"><strong>{value}</strong></p>} />
       </div>
       <p className="price mb-0"><strong>{item.quantity}x</strong></p>

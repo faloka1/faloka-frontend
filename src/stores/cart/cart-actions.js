@@ -25,10 +25,13 @@ export const fetchItems = () => {
             },
             product_id: item.product_id,
             variant_id: item.variant_id,
+            variant_size: {
+              id: item.variantsize_id,
+              name: item.variants.variants_sizes[0].name,
+            },
             name: item.products.name,
             slug: item.products.slug,
             image: BASE_CONTENT_URL + item.variants.variants_image[0].image_url,
-            size: item.variants.name,
             price: item.products.price,
           },
           quantity: item.quantity
@@ -43,7 +46,7 @@ export const fetchItems = () => {
 export const addItem = (item, quantity) => {
   return async (dispatch, getState) => {
     const { items } = getState().cart;
-    const foundItem = items.find(p => (p.product_id === item.product_id && p.variant_id === item.variant_id && p.variantsize_id === item.variantsize_id));
+    const foundItem = items.find(p => (p.product_id === item.product_id && p.variant_id === item.variant_id && p.variant_size.id === item.variant_size.id));
 
     dispatch(cartActions.updateIsLoading({ isLoading: true }));
 
@@ -56,7 +59,7 @@ export const addItem = (item, quantity) => {
         dispatch(cartActions.updateQuantity({
           product_id: foundItem.product_id,
           variant_id: foundItem.variant_id,
-          variantsize_id: foundItem.variantsize_id,
+          variant_size_id: foundItem.variant_size.id,
           quantity: newQuantity
         }));
       } catch (error) {
@@ -64,8 +67,15 @@ export const addItem = (item, quantity) => {
       }
     } else {
       try {
-        const response = await addToCart({ quantity, product_id: item.product_id, variant_id: item.variant_id, variantsize_id: item.variantsize_id });
+        const response = await addToCart({
+          quantity,
+          product_id: item.product_id,
+          variant_id: item.variant_id,
+          variantsize_id: item.variant_size.id
+        });
         item.id = response.data.cart_id;
+
+        console.log(item)
 
         dispatch(cartActions.addItem({ item, quantity }));
       } catch (error) {
@@ -103,22 +113,14 @@ export const updateQuantity = (cart_id, newQuantity) => {
     dispatch(cartActions.updateQuantity({
       product_id: foundItem.product_id,
       variant_id: foundItem.variant_id,
+      variant_size_id: foundItem.variant_size.id,
       quantity: newQuantity
     }));
   }
 };
 
 export const completeCheckout = (cartIds) => {
-  return (dispatch, getState) => {
-    // const { items } = getState().cart;
-    // const checkedCartIds = items.reduce((ids, item) => {
-    //   if (item.checked) {
-    //     return [...ids, item.id];
-    //   }
-
-    //   return [...ids];
-    // }, []);
-
+  return (dispatch) => {
     dispatch(cartActions.updateIsLoading({ isLoading: true }));
 
     try {
