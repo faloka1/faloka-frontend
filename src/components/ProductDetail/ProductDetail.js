@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import InputSpinner from 'react-bootstrap-input-spinner'
 import { Link, useHistory } from 'react-router-dom';
-import { Col, Row, Button, Toast, ToggleButtonGroup, ToggleButton, Tabs, Tab} from 'react-bootstrap';
+import { Col, Row, Button, Toast, ToggleButtonGroup, ToggleButton, Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from '../../stores/cart/cart-actions';
 import ScrollableContainer from '../ScrollableContainer/ScrollableContainer';
@@ -26,8 +26,12 @@ const ProductDetail = ({ className, product }) => {
   const history = useHistory();
   const [imageLoaded, setImageLoaded] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const [size_id, setSizeID] = useState(variants[0].variants_sizes[0].id);
-  const [size_name, setSizeName] = useState(variants[0].variants_sizes[0].name);
+  // const [size_id, setSizeID] = useState(variants[0].variants_sizes[0].id);
+  // const [size_name, setSizeName] = useState(variants[0].variants_sizes[0].name);
+  const [variantSize, setVariantSize] = useState({
+    id: variants[0].variants_sizes[0].id,
+    name: variants[0].variants_sizes[0].name
+  });
   const [showToast, setShowToast] = useState(false);
   const discountPercentage = `${discount * 100}%`;
   const discountedPrice = (1 - discount) * price;
@@ -50,10 +54,12 @@ const ProductDetail = ({ className, product }) => {
           slug: slug,
           name: name,
           variant_id: variants[0].id,
-          variantsize_id: size_id,
           product_id: variants[0].product_id,
           image: `${BASE_CONTENT_URL}${variants_image[0].image_url}`,
-          size: size_name
+          variant_size: {
+            id: variantSize.id,
+            name: variantSize.name
+          }
         },
         +quantity
       ));
@@ -72,11 +78,13 @@ const ProductDetail = ({ className, product }) => {
     },
     product_id: variants[0].product_id,
     variant_id: variants[0].id,
-    variantsize_id: size_id,
     slug: slug,
     name: name,
     image: `${BASE_CONTENT_URL}${variants_image[0].image_url}`,
-    size: size_name,
+    variant_size: {
+      id: variantSize.id,
+      name: variantSize.name
+    },
     price,
     quantity: +quantity,
   };
@@ -118,37 +126,37 @@ const ProductDetail = ({ className, product }) => {
         </Col>
         <Col md={12} lg={4} xl={4} className="product-action">
           <div className="action-box">
-          <div className="action-product">
-            <div className="product-size">
-              <small>Ukuran</small>
-              <div className="size-select">
-                <ToggleButtonGroup type="radio" name="size" defaultValue={variants[0].variants_sizes[0].id}>
-                  {variants[0].variants_sizes.map(variants_sizes => (
-                    <ToggleButton onChange={(e) => {setSizeID(e.currentTarget.value); setSizeName(variants_sizes.name)}} key={variants_sizes.id} id={`size-${variants_sizes.id}`} value={variants_sizes.id} className="select-button" variant="outline-dark">
-                      {variants_sizes.name}
-                    </ToggleButton>
-                  ))}
-                </ToggleButtonGroup>
+            <div className="action-product">
+              <div className="product-size">
+                <small>Ukuran</small>
+                <div className="size-select">
+                  <ToggleButtonGroup type="radio" name="size" defaultValue={variants[0].variants_sizes[0].id}>
+                    {variants[0].variants_sizes.map(variants_size => (
+                      <ToggleButton onChange={(e) => { setVariantSize({ id: e.currentTarget.value, name: variants_size.name }) }} key={variants_size.id} id={`size-${variants_size.id}`} value={variants_size.id} className="select-button" variant="outline-dark">
+                        {variants_size.name}
+                      </ToggleButton>
+                    ))}
+                  </ToggleButtonGroup>
+                </div>
+              </div>
+              <div className="product-quantity">
+                <small>Kuantitas</small>
+                <div className="quantity-spinner mt-1">
+                  <InputSpinner type="int" min={1} variant={'primary'} value={quantity} onChange={num => setQuantity(num)} size="sm" />
+                </div>
               </div>
             </div>
-            <div className="product-quantity">
-              <small>Kuantitas</small>
-              <div className="quantity-spinner mt-1">
-                <InputSpinner type="int" min={1} variant={'primary'} value={quantity} onChange={num => setQuantity(num)} size="sm" />
-              </div>
+            <div className="action-button">
+              <Link
+                to={{
+                  pathname: "/checkout",
+                  search: `items=${encodeURIComponent(JSON.stringify([itemJson]))}`
+                }}
+              >
+                <Button className={`mb-1 btn-black rounded-0 w-100 ${isAddingToCart ? 'disabled' : ''}`}>Beli Sekarang</Button>
+              </Link>
+              <Button className={`mt-1 btn-black btn-black--invert rounded-0 w-100 ${isAddingToCart ? 'disabled' : ''}`} onClick={addToCartHandler}>Masukkan Keranjang</Button>
             </div>
-          </div>
-          <div className="action-button">
-            <Link
-              to={{
-                pathname: "/checkout",
-                search: `items=${encodeURIComponent(JSON.stringify([itemJson]))}`
-              }}
-            >
-              <Button className={`mb-1 btn-black rounded-0 w-100 ${isAddingToCart ? 'disabled' : ''}`}>Beli Sekarang</Button>
-            </Link>
-            <Button className={`mt-1 btn-black btn-black--invert rounded-0 w-100 ${isAddingToCart ? 'disabled' : ''}`} onClick={addToCartHandler}>Masukkan Keranjang</Button>
-          </div>
           </div>
         </Col>
       </Row>

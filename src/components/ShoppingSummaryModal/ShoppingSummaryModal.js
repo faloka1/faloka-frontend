@@ -84,6 +84,7 @@ const ShoppingSummaryModal = ({ closeFunc, ...props }) => {
               quantity: i.quantity,
               variant_id: i.variant_id,
               product_id: i.product_id,
+              variantsize_id: i.variant_size.id,
             };
           }),
         };

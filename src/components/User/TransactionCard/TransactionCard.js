@@ -154,7 +154,6 @@ const TransactionCard = ({ transaction, isLoading, onUpdate }) => {
                             {isLoading ?
                                 (<span className="col-12 placeholder bg-secondary"></span>) :
                                 (<CurrencyFormatter value={transactionPrice} renderText={(value) => <p className="mb-0 fs-5 text-accent fw-bold">{value}</p>} />)
-                                // (<CurrencyFormat value={transactionPrice} displayType={'text'} prefix={'Rp'} thousandSeparator="." decimalSeparator="," />)
                             }
                         </div>
                     </Col>

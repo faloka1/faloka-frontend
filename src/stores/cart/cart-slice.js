@@ -23,7 +23,10 @@ const cartSlice = createSlice({
         slug: item.slug,
         name: item.name,
         image: item.image,
-        size: item.size,
+        variant_size: {
+          id: item.variant_size.id,
+          name: item.variant_size.name,
+        },
         price: item.price,
         quantity: +quantity,
         checked: true
@@ -32,9 +35,9 @@ const cartSlice = createSlice({
       state.totalQuantity += +quantity;
     },
     updateQuantity(state, action) {
-      const { product_id, variant_id, quantity } = action.payload;
+      const { product_id, variant_id, variant_size_id, quantity } = action.payload;
 
-      const foundItem = state.items.find(p => (p.product_id === product_id && p.variant_id === variant_id));
+      const foundItem = state.items.find(p => (p.product_id === product_id && p.variant_id === variant_id && p.variant_size.id === variant_size_id));
       state.totalQuantity -= foundItem.quantity;
       foundItem.quantity = +quantity;
       state.totalQuantity += +quantity;
@@ -47,9 +50,9 @@ const cartSlice = createSlice({
       state.items = state.items.filter(item => item.id !== cart_id);
     },
     updateCheck(state, action) {
-      const { product_id, variant_id, checked } = action.payload;
+      const { product_id, variant_id, variant_size_id, checked } = action.payload;
 
-      const foundItem = state.items.find(p => (p.product_id === product_id && p.variant_id === variant_id));
+      const foundItem = state.items.find(p => (p.product_id === product_id && p.variant_id === variant_id && p.variant_size.id === variant_size_id));
       foundItem.checked = checked;
     },
     updateIsLoading(state, action) {
