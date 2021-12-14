@@ -16,8 +16,8 @@ const MixAndMatchCanvas = ({ className, top, bottom, setTop, setBottom, ...props
   }
   
   const [gender, setGender] = useState('male');
-  const topContent = top && <img className={`top-${gender}`} src={top.image} alt="mix_and_match_outfit" />
-  const bottomContent = bottom && <img className={`bottom-${gender}`} src={bottom.image} alt="mix_and_match_outfit" />
+  const topContent = top && <img className={`top-${gender}`} src={top.mix_and_match} alt="mix_and_match_outfit" />
+  const bottomContent = bottom && <img className={`bottom-${gender}`} src={bottom.mix_and_match} alt="mix_and_match_outfit" />
 
   return (
     <div className="mix-and-match border">
@@ -31,15 +31,15 @@ const MixAndMatchCanvas = ({ className, top, bottom, setTop, setBottom, ...props
           </Button>
         </div>
         <div className="outfit-remover">
-          <Button className={`outfit-button`} onClick={()=> setTop(null)} variant="outline-dark" size="sm" disabled={!top && 'false'}>
+          <Button className={`outfit-button`} onClick={()=> setTop(null)} variant="outline-dark" size="sm" disabled={!top}>
             <TopOutfitIcon className="icon"/>
             <MinusIcon className="icon icon-tooltip"/>
           </Button>
-          <Button className={`outfit-button`} onClick={()=> setBottom(null)} variant="outline-dark" size="sm" disabled={!bottom && 'false'}>
+          <Button className={`outfit-button`} onClick={()=> setBottom(null)} variant="outline-dark" size="sm" disabled={!bottom}>
             <BottomOutfitIcon className="icon"/>
             <MinusIcon className="icon icon-tooltip"/>
           </Button>
-          <Button className={`clear-button`} onClick={()=> {setTop(null); setBottom(null)}} variant="outline-dark" size="sm" disabled={!top && !bottom && 'false'}>
+          <Button className={`clear-button`} onClick={()=> {setTop(null); setBottom(null)}} variant="outline-dark" size="sm" disabled={!top && !bottom}>
             Clear
           </Button>
         </div>
