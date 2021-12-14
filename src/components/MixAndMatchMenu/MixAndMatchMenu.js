@@ -27,8 +27,10 @@ const MixAndMatchMenu = ({ onSetTop, onSetBottom }) => {
     {
       onSuccess: (data) => {
         setProducts(data.map(d => ({
-          image: `${BASE_CONTENT_URL}${d.mix_and_match_image}`,
-          ...d
+          id: d.id,
+          thumbnail: `${BASE_CONTENT_URL}${d.image_url}`,
+          mix_and_match: `${BASE_CONTENT_URL}${d.mix_and_match_image}`,
+          slug: d.slug
         })));
       }
     }
@@ -45,7 +47,7 @@ const MixAndMatchMenu = ({ onSetTop, onSetBottom }) => {
           <Row className="g-4">
             {!isLoading && products.map(p =>
               <Col xs={4} key={p.slug} onClick={() => onSetTop(p)}>
-                <Item image={p.image} path={`/products/${p.slug}`} />
+                <Item image={p.thumbnail} path={`/products/${p.slug}`} />
               </Col>
             )}
             {isLoading && (
@@ -61,7 +63,7 @@ const MixAndMatchMenu = ({ onSetTop, onSetBottom }) => {
           <Row className="g-4">
             {!isLoading && products.map(p =>
               <Col xs={4} key={p.slug} onClick={() => onSetBottom(p)}>
-                <Item image={p.image} path={`/products/${p.slug}`} />
+                <Item image={p.thumbnail} path={`/products/${p.slug}`} />
               </Col>
             )}
             {isLoading && (
