@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+  web:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        - BASE_API_URL=${BASE_API_URL}
+        - BASE_ASSETS_URL=${BASE_ASSETS_URL}
+    image: faloka-frontend
+    ports:
+      - 80:80
+    container_name: faloka-frontend
