@@ -3,8 +3,6 @@ import {
   Col,
   Container,
   Row,
-  Tabs,
-  Tab,
   Spinner
 } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
@@ -13,7 +11,6 @@ import { useQuery } from 'react-query';
 import './Detail.scss';
 
 import ItemContainer from '../../../components/ItemContainer/ItemContainer';
-import ScrollableContainer from '../../../components/ScrollableContainer/ScrollableContainer';
 import ProductCard from '../../../components/ProductCard/ProductCard';
 import ProductDetail from '../../../components/ProductDetail/ProductDetail';
 import getProductDetail from '../../../helpers/api/get-product-detail';
@@ -106,24 +103,10 @@ const Detail = () => {
   return (!productDetailQuery.isLoading && !productDetailQuery.isError &&
     <>
       <Container>
-        {/* <Breadcrumb className="pt-5">
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>Home</Breadcrumb.Item>
-          <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/products", search: `${product?.sub_categories.name}` }}>{product?.sub_categories.name}</Breadcrumb.Item>
-          <Breadcrumb.Item href="#" active>{product?.name}</Breadcrumb.Item>
-        </Breadcrumb> */}
         {!!breadcrumbData &&
           <Breadcrumb breadcrumbData={breadcrumbData} className="pt-5" />
         }
         <ProductDetail product={product} />
-        <div className="product-tab">
-          <Tabs defaultActiveKey="description" id="product-tab">
-            <Tab eventKey="description" title="Deskripsi">
-              <ScrollableContainer product={product} />
-            </Tab>
-            {/* <Tab eventKey="size-detail" title="Detail Ukuran">
-            </Tab> */}
-          </Tabs>
-        </div>
         <ItemContainer title="Mungkin Kamu Suka">
           {relatedProductQuery.isLoading &&
             <div className="d-flex justify-content-center my-3">

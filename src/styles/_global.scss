@@ -33,7 +33,11 @@ a {
 }
 
 .container{
-  padding: 0 2rem;
+  padding: 0;
+
+  @include media-breakpoint-down(sm) {
+    padding: 0 2rem;
+  }
 }
 
 .text-gray {
@@ -48,7 +52,7 @@ a {
   border: 1px solid $black;
   background-color: $black;
   color: $white;
-  // cursor: pointer;
+  cursor: pointer;
 
   &--invert {
     background-color: $white;

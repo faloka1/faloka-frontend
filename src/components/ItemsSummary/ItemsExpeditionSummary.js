@@ -26,7 +26,7 @@ const ItemsExpeditionSummary = ({ items, brandName, expedition, ...props }) => {
             ))}
           </Row>
           <div className="d-flex justify-content-between">
-            <p className="mb-0">Total Produk</p>
+            <p className="mb-0 fw-bold">Total Produk</p>
             <CurrencyFormatter value={totalItemsPrice} renderText={value => <p className="text-accent mb-0">{value}</p>} />
           </div>
         </div>

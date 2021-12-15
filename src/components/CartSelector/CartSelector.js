@@ -15,14 +15,12 @@ const CartSelector = () => {
   const items = useSelector(state => state.cart.items);
   const grouped = groupCartItem(items);
 
-  console.log(items);
-
   const quantityChangeHandler = (cart_id, quantity) => {
     dispatch(updateQuantity(cart_id, quantity));
   };
 
-  const itemCheckedHandler = (product_id, variant_id, checked) => {
-    dispatch(cartActions.updateCheck({ product_id, variant_id, checked }));
+  const itemCheckedHandler = (product_id, variant_id, variant_size_id, checked) => {
+    dispatch(cartActions.updateCheck({ product_id, variant_id, variant_size_id, checked }));
   };
 
   const deleteItemHandler = (cart_id) => {
@@ -35,10 +33,16 @@ const CartSelector = () => {
     filteredItem.forEach(item => {
       const {
         product_id,
-        variant_id
+        variant_id,
+        variant_size
       } = item;
 
-      dispatch(cartActions.updateCheck({ product_id, variant_id, checked: event.target.checked }));
+      dispatch(cartActions.updateCheck({
+        product_id,
+        variant_id,
+        variant_size_id: variant_size.id,
+        checked: event.target.checked
+      }));
     });
   };
 
@@ -46,10 +50,16 @@ const CartSelector = () => {
     items.forEach(item => {
       const {
         product_id,
-        variant_id
+        variant_id,
+        variant_size
       } = item;
 
-      dispatch(cartActions.updateCheck({ product_id, variant_id, checked: event.target.checked }));
+      dispatch(cartActions.updateCheck({
+        product_id,
+        variant_id,
+        variant_size_id: variant_size.id,
+        checked: event.target.checked
+      }));
     });
   };
 
@@ -85,7 +95,7 @@ const CartSelector = () => {
               className="my-2"
               cartData={item}
               onQuantityChange={quantityChangeHandler.bind(null, item.id)}
-              onChecked={itemCheckedHandler.bind(null, item.product_id, item.variant_id)}
+              onChecked={itemCheckedHandler.bind(null, item.product_id, item.variant_id, item.variant_size.id)}
               onDeleteHandler={deleteItemHandler.bind(null, item.id)}
             />
           )}
