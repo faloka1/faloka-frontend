@@ -11,6 +11,7 @@ import PopularCategory from '../components/PopularCategory/PopularCategory';
 const Home = () => {
   const { category, homeData } = useContext(HomeContext);
   const filteredCategories = homeData.find(ctgr => ctgr.slug === category);
+  const homeProducts = filteredCategories.products.slice(0, 4);
 
   return (
     <>
@@ -22,7 +23,7 @@ const Home = () => {
           <Link to={`/products?categories=${category}`} className="btn btn-black rounded-0 py-2 px-4">Belanja Sekarang</Link>
         </div>
         <Row xs={1} lg={2} xl={4} className="g-4 mb-5">
-          {filteredCategories.products.map(product => (
+          {homeProducts.map(product => (
             <Col xs={12} sm={6} key={product.slug}>
               <ProductCard product={product} />
             </Col>
