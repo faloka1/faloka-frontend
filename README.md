@@ -62,7 +62,8 @@ Faloka is a Marketplace for Local Fashion Business in Indonesia. This repo conta
 * login to your account
 * buy prefered product
 * enter checkout, 
-* input necessary information like, address, user data, and payment. 
+* input necessary information like, address, user data, and payment. <br />
+This demo website is deployed on <a href="http://faloka.me">faloka.me</a>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -71,23 +72,35 @@ Faloka is a Marketplace for Local Fashion Business in Indonesia. This repo conta
 __Sprint #1__
 * Login
 * Home
-* Product List
-* Product Detail
-* Checkout with One Product
+* Product List <br />
+  Use this feature by clicking categories on top navigation bar.
+* Product Detail <br />
+  Use this feature by clicking product card.
+* Checkout with One Product <br />
+  Use this feature by clicking "Beli sekarang" button in product detail page. This feature requires user to be logged in.
 * Payment with manual payment proof upload
 
 __Sprint #2__
-* Account Registration
-* Cart and Checkout Multiple Products
-* Mix and Match
-* Inspire Me
-* Upload Your Inspire Me
-* User Shopping History
+* Account Registration <br />
+  Use this feature by clicking user icon on top navigation bar and click "Register" button. This feature requires user to be a guest / not logged in.
+* Cart and Checkout Multiple Products <br />
+  Use this feature by clicking "Masukkan keranjang" button in product detail product. You can also manage your cart by clicking shopping bag icon on top navigation bar. This feature requires user to be logged in.
+* Mix and Match <br />
+  Use this feature by clicking "Mixmatch" button on top navigation baru.
+* Inspire Me <br />
+  Use this feature by clicking "Inspo" beside search bar. You can see other users photo and their related products.
+* Upload Your Inspire Me <br />
+  Use this feature by clicking "Inspo" beside search bar, and click "Share outfitmu" butotn. This feature requires user to be logged in.
+* User Shopping History <br />
+  Use this feature by accessing user profile section and then click Transaction.
 
 __Sprint #3__
-* Visual Search
-* Text Search
-* Improving Mix and Match
+* Visual Search <br />
+  Use this feature by clicking camera icon on search input on top navigation bar.
+* Text Search <br />
+  Use this feature by inputting text in search input on top navigation bar.
+* Improving Mix and Match <br />
+  Add mannequin for both male and female to improve user experience.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
