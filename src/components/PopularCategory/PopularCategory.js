@@ -16,13 +16,13 @@ import CowoKaos from '../../assets/images/popular_category/cowo/kaos.png';
 import CowoKemeja from '../../assets/images/popular_category/cowo/kemeja.png';
 
 const PopularCategory = ({ category }) => {
-  const cewekImage = '[{"name":"Kaos","slug":"kaos","image_url":"' + CeweKaos + '"},' +
-                    '{"name":"Kardigan","slug":"kardigan","image_url":"' + CeweKardingan + '"},' +
-                    '{"name":"Hoodie","slug":"hoodie","image_url":"' + CeweHoodie + '"}]';
+  const cewekImage = '[{"name":"Kaos","slug":"kaos","image_url":"' + CeweKaos + '", "category_slug": "' + category + '"},' +
+                    '{"name":"Kardigan","slug":"kardigan","image_url":"' + CeweKardingan + '", "category_slug": "' + category + '"},' +
+                    '{"name":"Hoodie","slug":"hoodie","image_url":"' + CeweHoodie + '", "category_slug": "' + category + '"}]';
 
-  const cowokImage = '[{"name":"Kaos","slug":"kaos","image_url":"' + CowoKaos + '"},' +
-                    '{"name":"Kemeja","slug":"kemeja","image_url":"' + CowoKemeja + '"},' +
-                    '{"name":"Hoodie","slug":"hoodie","image_url":"' + CowoHoodie + '"}]';
+  const cowokImage = '[{"name":"Kaos","slug":"kaos","image_url":"' + CowoKaos + '", "category_slug": "' + category + '"},' +
+                    '{"name":"Kemeja","slug":"kemeja","image_url":"' + CowoKemeja + '", "category_slug": "' + category + '"},' +
+                    '{"name":"Hoodie","slug":"hoodie","image_url":"' + CowoHoodie + '", "category_slug": "' + category + '"}]';
 
   const [popularCategories, setPopularCategories] = useState([]);
 
@@ -52,9 +52,11 @@ const PopularCategory = ({ category }) => {
             category_slug: category,
           })))
         } 
+
       }
     }
   );
+  console.log(popularCategories)
 
   const content = isLoading
     ? (
