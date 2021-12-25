@@ -110,9 +110,9 @@ const ProductDetail = ({ className, product }) => {
             <Link to="#" className="product-brand">{brands.name}</Link>
             <h4 className="product-name text-uppercase">{name}</h4>
             <div className="product-price">
-              <CurrencyFormatter value={price} renderText={value => <span className={` ${discount ? 'product-price--cut' : ''}`}>{value}</span>} />
-              {discount &&
-                <CurrencyFormatter value={discountedPrice} renderText={value => <span className="product-price--discount mx-3">{value}</span>} />
+              {discount && discount > 0
+                ? <CurrencyFormatter value={discountedPrice} renderText={value => <span className="product-price--discount mx-3">{value}</span>} />
+                : <CurrencyFormatter value={price} renderText={value => <span className={` ${discount ? 'product-price--cut' : ''}`}>{value}</span>} />
               }
             </div>
           </div>
