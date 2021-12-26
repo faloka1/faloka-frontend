@@ -10,9 +10,9 @@ const UserDropdown = () => {
   const currentUrl = encodeURIComponent(pathname + search);
 
   return (
-    <NavDropdown className="user-dropdown text-center" centered>
+    <NavDropdown className="user-dropdown p-3" align="right">
       {/* <Link className="d-block mb-3 text-center" to="/user/profile">Profile</Link> */}
-      <Link className="d-block mb-3 text-center" to="/user/transaction">Transaction</Link>
+      <Link className="d-block mb-3" to="/user/transaction">Transaction</Link>
       <Link as={Link} to={`/logout?from=${currentUrl}`}>
         Logout
       </Link>
