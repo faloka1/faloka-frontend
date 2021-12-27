@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useHistory, Prompt } from 'react-router-dom';
 import { Form, Button, Container, Spinner, Alert } from 'react-bootstrap';
 import { useFormik } from 'formik';
+import { useDispatch } from 'react-redux';
 import { useMutation } from 'react-query';
 import Swal from 'sweetalert2';
 import * as Yup from 'yup';
@@ -10,6 +11,7 @@ import "yup-phone";
 import './Register.scss';
 
 import postRegisterData from '../../../helpers/api/post-register-data';
+import { login } from '../../../stores/auth/auth-actions';
 
 import { ReactComponent as UserIcon } from '../../../components/SVG/user.svg';
 import { ReactComponent as GenderIcon } from '../../../components/SVG/gender.svg';
@@ -23,10 +25,12 @@ const Register = () => {
   const [isInitial, setIsInitial] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const registerMutation = useMutation(async registerData => {
     const response = await postRegisterData(registerData);
-    
+    await dispatch(login(registerData));
+
     if (response.data.message){
       setIsSuccess(true);
     }
@@ -42,7 +46,7 @@ const Register = () => {
           timer: 2500  
         }).then(function (result) {
           if (true) {
-            history.replace('/login');
+            history.replace('/');
           }
         }); 
       },
