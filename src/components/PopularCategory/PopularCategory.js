@@ -56,7 +56,6 @@ const PopularCategory = ({ category }) => {
       }
     }
   );
-  console.log(popularCategories)
 
   const content = isLoading
     ? (
